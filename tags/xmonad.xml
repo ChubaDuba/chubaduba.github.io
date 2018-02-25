@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>ChubaDuba - Posts tagged xmonad</title>
+        <link>https://chubaduba.github.io</link>
+        <description><![CDATA[ChubaDuba - Блог]]></description>
+        <atom:link href="https://chubaduba.github.io/tags/xmonad.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Sun, 25 Feb 2018 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Меню программ для xmonad</title>
+    <link>https://chubaduba.github.io/posts/2018-02-25-myGtkMenu.html</link>
+    <description><![CDATA[<p>Такого плана программ существует много. Мне импонирует простое в использовании решение <a href="https://sites.google.com/site/jvinla/mygtkmenu">myCtkMenu</a></p>
+<figure>
+<img src="/images/myGtkMenu.png" alt="myGtkMenu" /><figcaption>myGtkMenu</figcaption>
+</figure>]]></description>
+    <pubDate>Sun, 25 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-25-myGtkMenu.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+
+    </channel>
+</rss>
