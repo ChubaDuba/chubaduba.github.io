@@ -7,8 +7,40 @@
         <description><![CDATA[ChubaDuba - Блог]]></description>
         <atom:link href="https://chubaduba.github.io/tags/xmonad.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 27 Feb 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Thu, 01 Mar 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Прозрачность неактивных окон в xmonad</title>
+    <link>https://chubaduba.github.io/posts/2018-03-01-1.html</link>
+    <description><![CDATA[<p>Сам я этой фишкой не пользуюсь, так как считаю, что тайлинг, он на то и тайлинг, чтобы видеть всё и сразу. Но учитывая то, что фломастеры на вкус у всех разные, опишу как это сделать:</p>
+<p>Установим композитный менеджер окон <a href="https://packages.debian.org/ru/stretch/xcompmgr">xcompmgr</a>:</p>
+<pre><code>sudo apt-get install xcompmgr
+</code></pre>
+<p>Добавим его в автозагрузку. Для это отредактируем наш файл <code>~/.xinitrc</code>:</p>
+<pre><code>xcompmgr -r0 &amp;
+</code></pre>
+<p>Вносим изменения в <code>xmonad.hs</code>. Добавляем модуль <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-FadeInactive.html">XMonad.Hooks.FadeInactive</a>, удаляем границу у окон и устанавливаем степень непрозрачности:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Hooks.FadeInactive</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">myConfig <span class="fu">=</span> <span class="fu">....</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">          {<span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">          <span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">          , borderWidth <span class="fu">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">          , logHook <span class="fu">=</span> fadeInactiveLogHook <span class="fl">0.8</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">          <span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">          }</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">...</span></a></code></pre></div>
+<hr />
+<p>Со значением степени непрозрачности можно поиграться и выбрать оптимальное для себя.</p>
+<figure>
+<img src="/images/2018-03-01-1.jpg" alt="calc - активное окно, writer - неактивное окно." /><figcaption>calc - активное окно, writer - неактивное окно.</figcaption>
+</figure>]]></description>
+    <pubDate>Thu, 01 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-03-01-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Иконки для рабочих столов xmonad в xmobar</title>
     <link>https://chubaduba.github.io/posts/2018-02-27-1.html</link>
     <description><![CDATA[<p>Какие имена у моих рабочих столов в xmonad, и в какой последовательности они расположены, я уже давно запомнил. Поэтому отображение имени рабочего стола в xmobar для меня стало лишней информацией. Было принято решение заменить имена столов на иконки, тем самым увеличить полезную площадь xmobar.</p>
