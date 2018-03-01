@@ -15,7 +15,7 @@
 <p>Установим композитный менеджер окон <a href="https://packages.debian.org/ru/stretch/xcompmgr">xcompmgr</a>:</p>
 <pre><code>sudo apt-get install xcompmgr
 </code></pre>
-<p>Добавим его в автозагрузку. Для это отредактируем наш файл <code>~/.xinitrc</code>:</p>
+<p>Добавим его в автозагрузку. Для этого отредактируем наш файл <code>~/.xinitrc</code>:</p>
 <pre><code>xcompmgr -r0 &amp;
 </code></pre>
 <p>Вносим изменения в <code>xmonad.hs</code>. Добавляем модуль <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-FadeInactive.html">XMonad.Hooks.FadeInactive</a>, удаляем границу у окон и устанавливаем степень непрозрачности:</p>
