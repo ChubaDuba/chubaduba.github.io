@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>ChubaDuba - Posts tagged urxvt</title>
+        <link>https://chubaduba.github.io</link>
+        <description><![CDATA[ChubaDuba - Блог]]></description>
+        <atom:link href="https://chubaduba.github.io/tags/urxvt.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Fri, 23 Feb 2018 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Тема Zenburn для Urxvt</title>
+    <link>https://chubaduba.github.io/posts/2018-02-23-1.html</link>
+    <description><![CDATA[<p><code>.urxvtrc</code>:</p>
+<hr />
+<pre><code>
+URxvt.cursorColor:     #705051
+URxvt.cursorColor2:    #F0E0AF
+
+URxvt*background: #3F3F3F
+URxvt*foreground: #DCDCCC
+
+! Black + DarkGrey
+URxvt.color0:     #3F3F3F
+URxvt.color8:     #DBA3A2
+
+! DarkRed + Red
+URxvt.color1:     #DBA3A2
+URxvt.color9:     #DBA3A2
+
+! DarkGreen + Green
+URxvt.color2:     #709180
+URxvt.color10:    #709180
+
+! DarkYellow + Yellow
+URxvt.color3:     #DFAF8F
+URxvt.color11:    #F0DFAF
+
+! DarkBlue + Blue
+URxvt.color4:     #1E2320
+URxvt.color12:    #94BFF3
+
+! DarkMagenta + Magenta
+URxvt.color5:     #DC8CC3
+URxvt.color13:    #EC93D3
+
+! DarkCyan + Cyan
+URxvt.color6:     #C4BF9F
+URxvt.color14:    #84AAD9
+
+! LightGrey + White
+URxvt.color7:     #DCDCCC
+URxvt.color15:    #F0DFAF
+</code></pre>
+<hr />
+<figure>
+<img src="/images/2018-02-23-screenshot.png" alt="htop" /><figcaption>htop</figcaption>
+</figure>]]></description>
+    <pubDate>Fri, 23 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-23-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+
+    </channel>
+</rss>

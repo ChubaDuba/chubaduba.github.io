@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>ChubaDuba - Posts tagged debian</title>
+        <link>https://chubaduba.github.io</link>
+        <description><![CDATA[ChubaDuba - Блог]]></description>
+        <atom:link href="https://chubaduba.github.io/tags/debian.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Sat, 24 Feb 2018 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Boeing Debian Edition</title>
+    <link>https://chubaduba.github.io/posts/2018-02-24-1.html</link>
+    <description><![CDATA[<blockquote>
+<p>Пассажиры загружаются в два самолета - Linux и Windows,<br />
+только в первый каждый несёт свою запчасть и знает,<br />
+что долетит, а во второй все садятся и думают: “долетят, не долетят?”…</p>
+</blockquote>
+<figure>
+<img src="/images/boeing_debian.jpg" alt="1600x900" /><figcaption>1600x900</figcaption>
+</figure>]]></description>
+    <pubDate>Sat, 24 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-24-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+
+    </channel>
+</rss>

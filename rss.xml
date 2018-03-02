@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>ChubaDuba - All posts</title>
+        <link>https://chubaduba.github.io</link>
+        <description><![CDATA[ChubaDuba - Блог]]></description>
+        <atom:link href="https://chubaduba.github.io/rss.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Thu, 01 Mar 2018 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Прозрачность неактивных окон в xmonad</title>
+    <link>https://chubaduba.github.io/posts/2018-03-01-1.html</link>
+    <description><![CDATA[<p>Сам я этой фишкой не пользуюсь, так как считаю, что тайлинг, он на то и тайлинг, чтобы видеть всё и сразу. Но учитывая то, что фломастеры на вкус у всех разные, опишу как это сделать:</p>
+<p>Установим композитный менеджер окон <a href="https://packages.debian.org/ru/stretch/xcompmgr">xcompmgr</a>:</p>
+<pre><code>sudo apt-get install xcompmgr
+</code></pre>
+<p>Добавим его в автозагрузку. Для этого отредактируем наш файл <code>~/.xinitrc</code>:</p>
+<pre><code>xcompmgr -r0 &amp;
+</code></pre>
+<p>Вносим изменения в <code>xmonad.hs</code>. Добавляем модуль <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-FadeInactive.html">XMonad.Hooks.FadeInactive</a>, удаляем границу у окон и устанавливаем степень непрозрачности:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Hooks.FadeInactive</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">myConfig <span class="fu">=</span> <span class="fu">....</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">          {<span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">          <span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">          , borderWidth <span class="fu">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">          , logHook <span class="fu">=</span> fadeInactiveLogHook <span class="fl">0.8</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">          <span class="fu">...</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">          }</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">...</span></a></code></pre></div>
+<hr />
+<p>Со значением степени непрозрачности можно поиграться и выбрать оптимальное для себя.</p>
+<figure>
+<img src="/images/2018-03-01-1.jpg" alt="calc - активное окно, writer - неактивное окно." /><figcaption>calc - активное окно, writer - неактивное окно.</figcaption>
+</figure>]]></description>
+    <pubDate>Thu, 01 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-03-01-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Иконки для рабочих столов xmonad в xmobar</title>
+    <link>https://chubaduba.github.io/posts/2018-02-27-1.html</link>
+    <description><![CDATA[<p>Какие имена у моих рабочих столов в xmonad, и в какой последовательности они расположены, я уже давно запомнил. Поэтому отображение имени рабочего стола в xmobar для меня стало лишней информацией. Было принято решение заменить имена столов на иконки, тем самым увеличить полезную площадь xmobar.</p>
+<p>Для иконок мне понадобился шрифт, в котором они есть. Вариантов много, я у себя использую шрифт <a href="https://mega.nz/#!dQ1zzBqD!PeismxbJABJINXsMcUrZ3B3kScxLHFKeaeeZ_Ls__U8">Terminus Re33 Nerd</a>. Чтобы определить коды иконок, можно воспользоваться вот этим <a href="http://forall.ru-board.com/Svarga/cyr_letters_gen.html">ресурсом</a>.</p>
+<p>После того как мы определили коды для всех наших выбранных иконок, вносим изменения в файл <code>xmonad.hs</code>:</p>
+<p><img src="/images/27.02.2018-10:43:08-049659119.png" /></p>
+<p>И теперь нужно прописать наш шрифт в файле <code>.xmobarrc</code>:</p>
+<hr />
+<pre><code>Config { font = &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot;
+       , additionalFonts = [ &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot; ]
+       , ...</code></pre>
+<hr />
+<p>После всех этих изменений в xmobar у нас будут отображаться иконки рабочих столов, вместо их названий:</p>
+<p><img src="/images/27.02.2018-12:00:49-798885628.png" /></p>]]></description>
+    <pubDate>Tue, 27 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-27-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Меню программ для xmonad</title>
+    <link>https://chubaduba.github.io/posts/2018-02-25-1.html</link>
+    <description><![CDATA[<p>Такого плана программ существует много. Мне импонирует простое в использовании решение <a href="https://sites.google.com/site/jvinla/mygtkmenu">myCtkMenu</a></p>
+<figure>
+<img src="/images/myGtkMenu.jpg" alt="myGtkMenu" /><figcaption>myGtkMenu</figcaption>
+</figure>]]></description>
+    <pubDate>Sun, 25 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-25-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Boeing Debian Edition</title>
+    <link>https://chubaduba.github.io/posts/2018-02-24-1.html</link>
+    <description><![CDATA[<blockquote>
+<p>Пассажиры загружаются в два самолета - Linux и Windows,<br />
+только в первый каждый несёт свою запчасть и знает,<br />
+что долетит, а во второй все садятся и думают: “долетят, не долетят?”…</p>
+</blockquote>
+<figure>
+<img src="/images/boeing_debian.jpg" alt="1600x900" /><figcaption>1600x900</figcaption>
+</figure>]]></description>
+    <pubDate>Sat, 24 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-24-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Тема Zenburn для Urxvt</title>
+    <link>https://chubaduba.github.io/posts/2018-02-23-1.html</link>
+    <description><![CDATA[<p><code>.urxvtrc</code>:</p>
+<hr />
+<pre><code>
+URxvt.cursorColor:     #705051
+URxvt.cursorColor2:    #F0E0AF
+
+URxvt*background: #3F3F3F
+URxvt*foreground: #DCDCCC
+
+! Black + DarkGrey
+URxvt.color0:     #3F3F3F
+URxvt.color8:     #DBA3A2
+
+! DarkRed + Red
+URxvt.color1:     #DBA3A2
+URxvt.color9:     #DBA3A2
+
+! DarkGreen + Green
+URxvt.color2:     #709180
+URxvt.color10:    #709180
+
+! DarkYellow + Yellow
+URxvt.color3:     #DFAF8F
+URxvt.color11:    #F0DFAF
+
+! DarkBlue + Blue
+URxvt.color4:     #1E2320
+URxvt.color12:    #94BFF3
+
+! DarkMagenta + Magenta
+URxvt.color5:     #DC8CC3
+URxvt.color13:    #EC93D3
+
+! DarkCyan + Cyan
+URxvt.color6:     #C4BF9F
+URxvt.color14:    #84AAD9
+
+! LightGrey + White
+URxvt.color7:     #DCDCCC
+URxvt.color15:    #F0DFAF
+</code></pre>
+<hr />
+<figure>
+<img src="/images/2018-02-23-screenshot.png" alt="htop" /><figcaption>htop</figcaption>
+</figure>]]></description>
+    <pubDate>Fri, 23 Feb 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-02-23-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+
+    </channel>
+</rss>
