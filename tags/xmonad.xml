@@ -7,8 +7,44 @@
         <description><![CDATA[ChubaDuba - Блог]]></description>
         <atom:link href="https://chubaduba.github.io/tags/xmonad.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Thu, 01 Mar 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sat, 03 Mar 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>XMonad.Layout.ThreeColumns - отличная штука для широких экранов!</title>
+    <link>https://chubaduba.github.io/posts/2018-03-03-1.html</link>
+    <description><![CDATA[<p>Если вы используете xmonad и у вас в хозяйстве есть <code>ultrawide</code> монитор, то компановка окон <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-ThreeColumns.html">XMonad.Layout.ThreeColumns</a> точно будет одной из самых востребованных.<br />
+Чтобы установить компоновку, вносим изменения в <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Layout.ThreeColumns</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">myLayouts <span class="fu">=</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>) <span class="fu">|||</span> <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">myConfig <span class="fu">=</span> defaultConfig</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">         { <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">         </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">         </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">         , layoutHook <span class="fu">=</span> myLayouts</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">         </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">         </a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">         }</a></code></pre></div>
+<hr />
+<figure>
+<img src="/images/2018-03-03-1.png" alt="ThreeColMid" /><figcaption>ThreeColMid</figcaption>
+</figure>
+<blockquote>
+<p>Можно использовать другой вариант компоновки: <code>ThreeCol 1 (3/100) (1/2)</code></p>
+</blockquote>]]></description>
+    <pubDate>Sat, 03 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-03-03-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Прозрачность неактивных окон в xmonad</title>
     <link>https://chubaduba.github.io/posts/2018-03-01-1.html</link>
     <description><![CDATA[<p>Сам я этой фишкой не пользуюсь, так как считаю, что тайлинг, он на то и тайлинг, чтобы видеть всё и сразу. Но учитывая то, что фломастеры на вкус у всех разные, опишу как это сделать:</p>
@@ -46,7 +82,7 @@
     <description><![CDATA[<p>Какие имена у моих рабочих столов в xmonad, и в какой последовательности они расположены, я уже давно запомнил. Поэтому отображение имени рабочего стола в xmobar для меня стало лишней информацией. Было принято решение заменить имена столов на иконки, тем самым увеличить полезную площадь xmobar.</p>
 <p>Для иконок мне понадобился шрифт, в котором они есть. Вариантов много, я у себя использую шрифт <a href="https://mega.nz/#!dQ1zzBqD!PeismxbJABJINXsMcUrZ3B3kScxLHFKeaeeZ_Ls__U8">Terminus Re33 Nerd</a>. Чтобы определить коды иконок, можно воспользоваться вот этим <a href="http://forall.ru-board.com/Svarga/cyr_letters_gen.html">ресурсом</a>.</p>
 <p>После того как мы определили коды для всех наших выбранных иконок, вносим изменения в файл <code>xmonad.hs</code>:</p>
-<p><img src="/images/27.02.2018-10:43:08-049659119.png" /></p>
+<p><img src="/images/2018-02-27-1.png" /></p>
 <p>И теперь нужно прописать наш шрифт в файле <code>.xmobarrc</code>:</p>
 <hr />
 <pre><code>Config { font = &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot;
@@ -54,7 +90,7 @@
        , ...</code></pre>
 <hr />
 <p>После всех этих изменений в xmobar у нас будут отображаться иконки рабочих столов, вместо их названий:</p>
-<p><img src="/images/27.02.2018-12:00:49-798885628.png" /></p>]]></description>
+<p><img src="/images/2018-02-27-2.png" /></p>]]></description>
     <pubDate>Tue, 27 Feb 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io/posts/2018-02-27-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>

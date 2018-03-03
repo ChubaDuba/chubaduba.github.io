@@ -10,7 +10,7 @@
         <title>ChubaDuba - Home page</title>
 
         <!-- Stylesheets. -->
-        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <link rel="stylesheet" type="text/css" href="../style.css" />
 
         <!-- RSS. -->
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
@@ -28,11 +28,11 @@
                
         <div id="navigation">
             <h5>ChubaDuba</h5>
-            <a href="./" style="color: #94BFF2">Обо мне</a>
-            <a href="./posts.html" style="color: #94BFF2">Архив</a>
-            <a href="./photos.html" style="color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="./contact.html" style="color: #94BFF2">Контакты</a>
-            <a href="./resume.html" style="color: #94BFF2">Резюме</a>
+            <a href="../" style="color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="color: #94BFF2">Архив</a>
+            <a href="../photos.html" style="color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../contact.html" style="color: #94BFF2">Контакты</a>
+            <a href="../resume.html" style="color: #94BFF2">Резюме</a>
             <a href="https://www.flickr.com/photos/chubaduba/albums" style="color: #EC93D3">Flickr</a>
             <h4>Ссылки</h4>
             <a href="https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/" style="color: #709180">Debian CD's</a>
@@ -41,68 +41,48 @@
         </div>
 
         <div id="content">
-    <h1>Обо мне</h1>
-<div class="avatar-wrap">
-    <img src="./images/avatar.jpg" alt="Это я!" class="avatar" />
+    <h1>XMonad.Layout.ThreeColumns - отличная штука для широких экранов!</h1>
+<div class="soft">
+    Компоновка окон для xmonad<br />
+    Posted in: <a href="../tags/xmonad.html">xmonad</a>.
 </div>
-<p>
-    Меня зовут Алексей Чубаков. С 2013 года живу в городе Ростове-на-Дону.
-</p>
-<p>
-    Увлекаюсь всем тем, что связано с ипользованием
-    <a href="https://www.debian.org/">Debian</a> и
-    <a href="http://xmonad.org//">xmonad</a> на
-    десктопе, а также немного фотографирую.
-</p>
-<p>
-    Если вы ищете в Ростове-на-Дону фотографа для своего
-    интернет-магазина, или вам нужно сфотографировать
-    свою собаку, то вы его уже нашли!
 
-</p>
-<h1 style="clear: left">Последнее в б&lambda;оге:</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="./posts/2018-03-03-1.html">XMonad.Layout.ThreeColumns - отличная штука для широких экранов!</a>”
-            ‒ <span class="soft">March  3, 2018</span><br />
-            Компоновка окон для xmonad
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="./posts/2018-03-01-1.html">Прозрачность неактивных окон в xmonad</a>”
-            ‒ <span class="soft">March  1, 2018</span><br />
-            Как в xmonad сделать неактивные окна прозрачными
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="./posts/2018-02-27-1.html">Иконки для рабочих столов xmonad в xmobar</a>”
-            ‒ <span class="soft">February 27, 2018</span><br />
-            Как поменять в xmobar названия рабочих столов на иконки
-        </p>
-    </li>
-    
-</ul>
-
-
-<a type="application/rss+xml" href="./rss.xml" style="color: #8CD0D3">RSS</a>
-&nbsp;
-<a href="./posts.html" style="color: #8CD0D3">Все посты...</a>
-<p>
-    Просмотр по тэгу: <a href="./tags/debian.html">debian (1)</a>, <a href="./tags/urxvt.html">urxvt (1)</a>, <a href="./tags/wallpaper.html">wallpaper (1)</a>, <a href="./tags/xmobar.html">xmobar (1)</a>, <a href="./tags/xmonad.html">xmonad (4)</a>, <a href="./tags/zenburn.html">zenburn (1)</a>
-</p>
+<p>Если вы используете xmonad и у вас в хозяйстве есть <code>ultrawide</code> монитор, то компановка окон <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-ThreeColumns.html">XMonad.Layout.ThreeColumns</a> точно будет одной из самых востребованных.<br />
+Чтобы установить компоновку, вносим изменения в <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Layout.ThreeColumns</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">myLayouts <span class="fu">=</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>) <span class="fu">|||</span> <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">myConfig <span class="fu">=</span> defaultConfig</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">         { <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">         </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">         </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">         , layoutHook <span class="fu">=</span> myLayouts</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">         </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">         </a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">         }</a></code></pre></div>
+<hr />
+<figure>
+<img src="../images/2018-03-03-1.png" alt="ThreeColMid" /><figcaption>ThreeColMid</figcaption>
+</figure>
+<blockquote>
+<p>Можно использовать другой вариант компоновки: <code>ThreeCol 1 (3/100) (1/2)</code></p>
+</blockquote>
 
     <div style="clear: both"></div>
     <div id="footer">
         Site generated by
         <a href="http://jaspervdj.be/hakyll" style="color: #EC93D3">Hakyll</a>
     </div>
-    <a href="http://validator.w3.org/check?uri=https://chubaduba.github.io"><img src="./images/w3c.png" alt="Valid XHTML 1.0 Strict" /></a>
+    <a href="http://validator.w3.org/check?uri=https://chubaduba.github.io"><img src="../images/w3c.png" alt="Valid XHTML 1.0 Strict" /></a>
 </div>
 
         
