@@ -50,25 +50,24 @@
 <p>Если вы используете xmonad и у вас в хозяйстве есть <code>ultrawide</code> монитор, то компановка окон <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-ThreeColumns.html">XMonad.Layout.ThreeColumns</a> точно будет одной из самых востребованных.<br />
 Чтобы установить компоновку, вносим изменения в <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Layout.ThreeColumns</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">myLayouts <span class="fu">=</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>) <span class="fu">|||</span> <span class="fu">...</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">myConfig <span class="fu">=</span> defaultConfig</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">         { <span class="fu">...</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">         </a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">         </a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">         , layoutHook <span class="fu">=</span> myLayouts</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">         </a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">         </a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">         }</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Layout.ThreeColumns</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">myLayouts <span class="fu">=</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>) <span class="fu">|||</span> <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">myConfig <span class="fu">=</span> defaultConfig</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">         { <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">         </a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">         </a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">         , layoutHook <span class="fu">=</span> myLayouts</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">         </a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">         </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">         }</a></code></pre></div>
 <hr />
 <figure>
 <img src="../images/2018-03-03-1.png" alt="ThreeColMid" /><figcaption>ThreeColMid</figcaption>
