@@ -118,8 +118,7 @@
     <link>https://chubaduba.github.io/posts/2018-02-23-1.html</link>
     <description><![CDATA[<p><code>.urxvtrc</code>:</p>
 <hr />
-<pre><code>
-URxvt.cursorColor:     #705051
+<pre><code>URxvt.cursorColor:     #705051
 URxvt.cursorColor2:    #F0E0AF
 
 URxvt*background: #3F3F3F
