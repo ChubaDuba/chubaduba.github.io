@@ -7,10 +7,24 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="yandex-verification" content="7ad767e88db9ca81" />
         
+        <style>
+           @media all and (min-width: 822px) {
+            html {
+                background: #3f3f3f;
+            }
+        
+            div.avatar-wrap {
+                margin: 6px 18px 6px 0px;
+                float: left;
+            }
+        
+            div.avatar-wrap img {
+                max-width: 128px;
+                margin: 0px;
+            }
+        </style>    
+        
         <title>ChubaDuba - Home page</title>
-
-        <!-- Stylesheets. -->
-        <link rel="stylesheet" type="text/css" href="./style.css" />
 
         <!-- RSS. -->
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
@@ -35,41 +49,39 @@
             <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
-        <noscript id="deferred-styles">
-          <link rel="stylesheet" type="text/css" href="small.css" />
-        </noscript>
-        <script>
-          var loadDeferredStyles = function() {
-            var addStylesNode = document.getElementById("deferred-styles");
-            var replacement = document.createElement("div");
-            replacement.innerHTML = addStylesNode.textContent;
-            document.body.appendChild(replacement)
-            addStylesNode.parentElement.removeChild(addStylesNode);
-          };
-          var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-          if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
-          else window.addEventListener('load', loadDeferredStyles);
-        </script>
-
         <div id="content">
-    <h1>Обо мне</h1>
+    <style>
+   @media all and (min-width: 822px) {
+    html {
+        background: #3f3f3f;
+    }   
+    div.avatar-wrap {
+        margin: 6px 18px 6px 0px;
+        float: left;
+    }   
+    div.avatar-wrap img {
+        max-width: 128px;
+        margin: 0px;
+    }
+</style>
+
+<h1>Обо мне</h1>
 <div class="avatar-wrap">
     <img src="./images/avatar.jpg" alt="Это я!" class="avatar" />
 </div>
 <p>
-Меня зовут Алексей Чубаков. С 2013 года живу в городе Ростове-на-Дону.
+   Меня зовут Алексей Чубаков. С 2013 года живу в городе Ростове-на-Дону.
 </p>
 <p>
-Увлекаюсь всем тем, что связано с иcпользованием
-<a href="https://www.debian.org/">Debian</a> и
-<a href="http://xmonad.org//">xmonad</a> на
-десктопе, а также немного фотографирую.
+   Увлекаюсь всем тем, что связано с иcпользованием
+   <a href="https://www.debian.org/">Debian</a> и
+   <a href="http://xmonad.org//">xmonad</a> на
+   десктопе, а также немного фотографирую.
 </p>
 <p>
-Если вы ищете в Ростове-на-Дону фотографа для своего
-интернет-магазина, или вам нужно сфотографировать
-свою собаку, то вы его уже нашли!
+   Если вы ищете в Ростове-на-Дону фотографа для своего
+   интернет-магазина, или вам нужно сфотографировать
+   свою собаку, то вы его уже нашли!
 </p>
 <h1 style="clear: left">Последнее в б&lambda;оге:</h1>
 <ul>
@@ -105,7 +117,7 @@
 &nbsp;
 <a href="./posts.html" style="color: #8CD0D3">Все посты...</a>
 <p>
-Просмотр по тэгу: <a href="./tags/debian.html">debian (1)</a>, <a href="./tags/urxvt.html">urxvt (1)</a>, <a href="./tags/wallpaper.html">wallpaper (1)</a>, <a href="./tags/xmobar.html">xmobar (1)</a>, <a href="./tags/xmonad.html">xmonad (4)</a>, <a href="./tags/zenburn.html">zenburn (1)</a>
+   Просмотр по тэгу: <a href="./tags/debian.html">debian (1)</a>, <a href="./tags/urxvt.html">urxvt (1)</a>, <a href="./tags/wallpaper.html">wallpaper (1)</a>, <a href="./tags/xmobar.html">xmobar (1)</a>, <a href="./tags/xmonad.html">xmonad (4)</a>, <a href="./tags/zenburn.html">zenburn (1)</a>
 </p>
 
     <div style="clear: both"></div>
@@ -117,6 +129,9 @@
 </div>
 
         
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript">
             (function (d, w, c) {
