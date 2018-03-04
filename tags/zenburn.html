@@ -7,6 +7,27 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="yandex-verification" content="7ad767e88db9ca81" />
         
+        <style>
+           div.avatar-wrap {
+               margin: 18px;
+               text-align: center;
+               }
+           @media all and (min-width: 822px) {
+               html {
+                   background: #3f3f3f;
+               }
+           
+               div.avatar-wrap {
+                   margin: 6px 18px 6px 0px;
+                   float: left;
+               }
+           
+               div.avatar-wrap img {
+                   max-width: 128px;
+                   margin: 0px;
+               }
+        </style>
+
         <title>ChubaDuba - Home page</title>
 
         <!-- Stylesheets. -->
@@ -34,6 +55,23 @@
             <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
             <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
+
+        <noscript id="deferred-styles">
+          <link rel="stylesheet" type="text/css" href="small.css" />
+        </noscript>
+        <script>
+          var loadDeferredStyles = function() {
+            var addStylesNode = document.getElementById("deferred-styles");
+            var replacement = document.createElement("div");
+            replacement.innerHTML = addStylesNode.textContent;
+            document.body.appendChild(replacement)
+            addStylesNode.parentElement.removeChild(addStylesNode);
+          };
+          var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+          if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+          else window.addEventListener('load', loadDeferredStyles);
+        </script>
 
         <div id="content">
     <h1>Все посты</h1>
