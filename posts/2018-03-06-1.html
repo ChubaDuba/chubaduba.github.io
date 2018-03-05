@@ -34,42 +34,32 @@
         </div>
 
         <div id="content">
-    <h1>Фотоб&lambda;ог</h1>
-<div class="photoblog">
-    <p>
-        Фотография - это моё хобби. Увлекаюсь ей очень давно. Конечно,
-        постоянно с собой фотоаппарат не таскаю, но в отпуск, и когда знаю,
-        что будет что-то интересное, беру практически всегда. 
-    </p>
-    <p>
-        Здесь некоторые фотографии из моего аккаунта 
-        <a href="https://www.flickr.com/photos/chubaduba/albums">Flickr</a>.
-    </p>
-
-    <h1></h1>
-    
-    <f1></f1>
-    <img src="https://farm5.staticflickr.com/4715/38730030000_434fbf2b53_o.jpg" alt />
-    
-    <f1>Крекер, 8 мес., 25.02.2018г.</f1>
-    <img src="https://farm5.staticflickr.com/4708/39769179404_8f43300801_o.jpg" alt />
-    
-    <f1></f1>
-    <img src="https://farm5.staticflickr.com/4611/25629245157_d2bec8cd65_o.jpg" alt />
-    
-
-    <div class="pagination">
-        
-            <a href="../photos/3.html">предыдущая</a>
-        
-        &mdash;
-        страница 4 из 5
-        &mdash;
-        
-            <a href="../photos/5.html">следующая</a>
-        
-    </div>
+    <h1>Автологин и "startx" без дисплейного менеджера - Debian 9 Stretch</h1>
+<div class="soft">
+    Как настроить автологин и запуск графической оболочки без использования дисплейного менеджера<br />
+    Posted in: <a href="../tags/debian.html">debian</a>, <a href="../tags/systemd.html">systemd</a>, <a href="../tags/startx.html">startx</a>.
 </div>
+
+<p>Этот пост предназначен для пользователей, которые хотят автоматически войти в свою систему Debian 9 Stretch и запустить Xserver без необходимости вводить <code>startx</code> в командной строке.</p>
+<blockquote>
+<p>Естественно, в качестве системы инициализации выступает <code>systemd</code> - изкоробочный вариант в Debian 9 Stretch.</p>
+</blockquote>
+<p>Для автологина создаём файл <code>/etc/systemd/system/getty@tty1.service.d/override.conf</code> (от имени root) со следующим содержимым:</p>
+<pre><code>[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin user_name --noclear %I $TERM
+</code></pre>
+<p>Здесь нужно заменить <code>user_name</code> на ваше имя пользователя.</p>
+<p>Для автозапуска <code>startx</code> добавляем строчку в конец нашего файла <code>~/.profile</code>:</p>
+<pre><code>[ &quot;$(tty)&quot; = &quot;/dev/tty1&quot; ] &amp;&amp; exec startx
+</code></pre>
+<p>В заключении нужно установить правильный параметр <code>default.target</code>, чтобы система загружалась на консоль (TTY), а не в диспетчер дисплея:</p>
+<pre><code># systemctl set-default multi-user.target
+</code></pre>
+<p>Если вы всё сделали правильно, и при условии того, что у вас всё работало в ручном режиме, т.е. вы могли залогинится после старта системы и потом запустить <code>startx</code>, то после перезагрузки вы автоматически загрузитесь под своим именем в свой оконный менеджер.</p>
+<p>Отменить изменение значения <code>default.target</code> можно с помощью команды:</p>
+<pre><code># systemctl set-default graphical.target
+</code></pre>
 
     <div style="clear: both"></div>
     <div id="footer">
