@@ -7,8 +7,22 @@
         <description><![CDATA[ChubaDuba - Блог]]></description>
         <atom:link href="https://chubaduba.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 06 Mar 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Wed, 07 Mar 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Debian Butterfly wallpaper</title>
+    <link>https://chubaduba.github.io/posts/2018-03-07-1.html</link>
+    <description><![CDATA[<blockquote>
+<p>Дело было вечером, делать было нечего…</p>
+</blockquote>
+<p>Для пользователей Debian, которые обожают кошек и котов.</p>
+<figure>
+<img src="/images/Debian_butterfly.jpg" alt="1600x900" /><figcaption>1600x900</figcaption>
+</figure>]]></description>
+    <pubDate>Wed, 07 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-03-07-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Автологин и "startx" без дисплейного менеджера - Debian 9 Stretch</title>
     <link>https://chubaduba.github.io/posts/2018-03-06-1.html</link>
     <description><![CDATA[<p>Этот пост предназначен для пользователей, которые хотят автоматически войти в свою систему Debian 9 Stretch и запустить Xserver без необходимости вводить <code>startx</code> в командной строке.</p>
