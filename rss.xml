@@ -7,8 +7,24 @@
         <description><![CDATA[ChubaDuba - Блог]]></description>
         <atom:link href="https://chubaduba.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Wed, 07 Mar 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sat, 10 Mar 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Откуда скачивать Debian?</title>
+    <link>https://chubaduba.github.io/posts/2018-03-10-1.html</link>
+    <description><![CDATA[<p>В Debian существуют набор критериев <a href="https://www.debian.org/social_contract#guidelines">Debian Free Software Guidelines (DFSG)</a>, по которым определяется, является ли программное обеспечение свободным.</p>
+<p>Если программное обеспечение свободное, то оно входит в официальную поставку Debian и является частью дистрибутива. Всё свободное программное обеспечение расположено в разделе <code>main</code>.</p>
+<p>Существет свободное программное обеспечение, для работы которого необходимы несвободные библиотеки или программы. Это программное обеспечение считается частью дистрибутива, и размещается в разделе <code>contrib</code>.</p>
+<p>Также есть несвободное программное обеспечение, без которого невозможно полноценное использование дистрибутива. Например, драйвер какой-нибудь карточки Wi-Fi. Такое программное обеспечение <em>не может входить в официальную поставку Debian и не является частью дистрибутива</em>. Всё такое программное обеспечение расположено в разделе <code>non-free</code>.</p>
+<p>Следуя всем этим критериям, проект Debian гордо позиционирет себя как полностью свободный дистрибутив.</p>
+<p>Свободный - это конечно хорошо, но на практике совсем всё по-другому. Например, решили вы установить Debian на свой ноутбук. Зашли на <a href="https://www.debian.org/">официальный сайт</a>, перешли по ссылке <a href="https://www.debian.org/distrib/">где взять Debian</a>, выбрали нужный вам вариант, скачали, установили. Загрузились, и первое с чем сталкиваетесь, не работает Wi-Fi. “Почему?! На другом дистрибутиве Linux у меня Wi-Fi работал из коробки! Что за хрень этот Debian?!”: скажете вы.</p>
+<p>Вот поэтому, чтобы не делать себе голову беременной при первом знакомстве с Debian, скачивайте нужный вам образ из <a href="https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/">Unofficial non-free images including firmware packages</a>:</p>
+<p><img src="/images/2018-03-10-1.jpg" /></p>
+<p>Это избавит вас от лишних телодвижений во время установки и после. Отличие от официальных образов заключается в том, что в этих образах присутствует программное обеспечение из раздела <code>non-free</code>. Вам не нужно будет перед установкой самостоятельно готовить ещё один носитель с нужными микропрограммами для вашего оборудования, а после установки не придётся сразу редактировать <a href="https://wiki.debian.org/ru/SourcesList">sources.list</a> для того, чтобы добавить тотже раздел <code>non-free</code>.</p>]]></description>
+    <pubDate>Sat, 10 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io/posts/2018-03-10-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Debian Butterfly wallpaper</title>
     <link>https://chubaduba.github.io/posts/2018-03-07-1.html</link>
     <description><![CDATA[<blockquote>
