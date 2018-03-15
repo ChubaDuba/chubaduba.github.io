@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
-        <title>ChubaDuba - Posts tagged xmobar</title>
+        <title>ChubaDuba - Posts tagged bash</title>
         <link>https://chubaduba.github.io</link>
         <description><![CDATA[ChubaDuba - Блог]]></description>
-        <atom:link href="https://chubaduba.github.io/tags/xmobar.xml" rel="self"
+        <atom:link href="https://chubaduba.github.io/tags/bash.xml" rel="self"
                    type="application/rss+xml" />
         <lastBuildDate>Thu, 15 Mar 2018 00:00:00 UT</lastBuildDate>
         <item>
@@ -86,25 +86,6 @@ commands = [
 </blockquote>]]></description>
     <pubDate>Thu, 15 Mar 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io/posts/2018-03-15-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Иконки для рабочих столов xmonad в xmobar</title>
-    <link>https://chubaduba.github.io/posts/2018-02-27-1.html</link>
-    <description><![CDATA[<p>Какие имена у моих рабочих столов в xmonad, и в какой последовательности они расположены, я уже давно запомнил. Поэтому отображение имени рабочего стола в xmobar для меня стало лишней информацией. Было принято решение заменить имена столов на иконки, тем самым увеличить полезную площадь xmobar.</p>
-<p>Для иконок мне понадобился шрифт, в котором они есть. Вариантов много, я у себя использую шрифт <a href="https://mega.nz/#!dQ1zzBqD!PeismxbJABJINXsMcUrZ3B3kScxLHFKeaeeZ_Ls__U8">Terminus Re33 Nerd</a>. Чтобы определить коды иконок, можно воспользоваться вот этим <a href="http://forall.ru-board.com/Svarga/cyr_letters_gen.html">ресурсом</a>.</p>
-<p>После того как мы определили коды для всех наших выбранных иконок, вносим изменения в файл <code>xmonad.hs</code>:</p>
-<p><img src="/images/2018-02-27-1.png" /></p>
-<p>И теперь нужно прописать наш шрифт в файле <code>.xmobarrc</code>:</p>
-<hr />
-<pre><code>Config { font = &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot;
-       , additionalFonts = [ &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot; ]
-       , ...</code></pre>
-<hr />
-<p>После всех этих изменений в xmobar у нас будут отображаться иконки рабочих столов, вместо их названий:</p>
-<p><img src="/images/2018-02-27-2.png" /></p>]]></description>
-    <pubDate>Tue, 27 Feb 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io/posts/2018-02-27-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
