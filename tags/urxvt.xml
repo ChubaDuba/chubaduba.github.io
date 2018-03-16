@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
-        <title>ChubaDuba - Posts tagged urxvt</title>
+        <title>ChubaDuba - Посты с тегом urxvt</title>
         <link>https://chubaduba.github.io</link>
         <description><![CDATA[ChubaDuba - Блог]]></description>
         <atom:link href="https://chubaduba.github.io/tags/urxvt.xml" rel="self"
