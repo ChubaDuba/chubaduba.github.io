@@ -10,7 +10,7 @@
         <title>ChubaDuba - Home page</title>
 
         <!-- Stylesheets. -->
-        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <link rel="stylesheet" type="text/css" href="../style.css" />
 
         <!-- RSS. -->
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
@@ -26,24 +26,38 @@
                
         <div id="navigation">
             <h5>ChubaDuba</h5>
-            <a href="./" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="./posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="./contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="./resume.html" style="font-size: 18px; color: #94BFF2">Резюме</a>
-            <a href="./photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../resume.html" style="font-size: 18px; color: #94BFF2">Резюме</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
             <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
-    <h1 id="контакты">Контакты</h1>
-<p><a href="mailto:achubakov@gmail.com">achubakov@gmail.com</a><br />
-JID: achubakov@jabber.ru<br />
-ICQ: 157843<br />
-Вы также можете попытаться связаться со мной в IRC – ник <code>ChubaDuba</code> на канале <code>#debian</code> сервера <a href="http://freenode.net/">freenode</a>.</p>
-<blockquote>
-<p>Предпочтительный способ связаться<br />
-со мной - написать мне письмо на <a href="mailto:achubakov@gmail.com">achubakov@gmail.com</a></p>
-</blockquote>
+    <h1>Мой выбор - Alpine e-mail клиент.</h1>
+<div class="soft">
+    Консольный почтовик.<br />
+    Posted in: <a href="../tags/alpine.html">alpine</a>.
+</div>
+
+<p>В своё время, когда в качестве рабочего окружения я использовал <code>Gnome 2</code>, работу почтового клиента выполнял <a href="http://www.claws-mail.org/">Claws Mail</a>. Почтовик, кстати, отличный, всё что от него требовалось, выполнял на 100%. Но после отказа от использования на десктопе рабочих окружений, встал вопрос о его замене на что-то более легковесное, с минимумом зависимостей и консольное. Консольное по той причине, что считаю отправку и получение электронной почты задачей тривиальной, которая должна решаться легко и быстро.</p>
+<p>И такое решение было найдено! Консольный почтовый клиент <a href="https://www.washington.edu/alpine/">Alpine</a>, который разработали в <a href="https://www.washington.edu/">Вашингтонском Университете</a>. В репозиториях Debian он есть, устанавливается обычным способом:</p>
+<pre><code>$ sudo apt-get install alpine
+</code></pre>
+<p>После успешной установки, запустить программу можно из терминала командой:</p>
+<pre><code>$ alpine
+</code></pre>
+<figure>
+<img src="../images/alpine.png" alt="Alpine. Главное окно." /><figcaption>Alpine. Главное окно.</figcaption>
+</figure>
+<p>Стоит отметить, что программа не имеет русского интерфейса, но это не мешает комфортно ей пользоваться. Я не буду в этом посте подробно описывать настройки и работу Alpine. Заинтересовавшимся найти эту информацию в интернете не составит труда. А вот разместить ссылку на видеоролик, в котором показано как настроить Alpine на работу с почтовым ящиком <code>Gmail</code>, думаю будет не лишним, пусть на забугорном языке, но всё очень подробно показано:</p>
+<iframe width="100%" height="240" src="https://www.youtube.com/embed/SNYLDDx4Mro" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/14"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
