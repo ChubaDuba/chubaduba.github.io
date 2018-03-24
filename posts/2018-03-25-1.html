@@ -1,22 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <channel>
-        <title>ChubaDuba - Посты с тегом bash</title>
-        <link>https://chubaduba.github.io/</link>
-        <description><![CDATA[Блог ChubaDuba]]></description>
-        <atom:link href="https://chubaduba.github.io//tags/bash.xml" rel="self"
-                   type="application/rss+xml" />
-        <lastBuildDate>Sun, 25 Mar 2018 00:00:00 UT</lastBuildDate>
-        <item>
-    <title>Xmonad+xmobar+ALSA.</title>
-    <link>https://chubaduba.github.io//posts/2018-03-25-1.html</link>
-    <description><![CDATA[<p>Сегодня речь пойдёт о настройке в <code>xmonad</code> горячих клавиш для управления громкостью, а также о выводе в <code>xmobar</code> некоторой информации о звуковых настройках в системе.</p>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
+                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>ChubaDuba</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../resume.html" style="font-size: 18px; color: #94BFF2">Резюме</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Xmonad+xmobar+ALSA.</h1>
+<div class="soft">
+    Громкость звука. Настраиваем управление и отображение.<br />
+    Posted in: <a href="../tags/alsa.html">alsa</a>, <a href="../tags/bash.html">bash</a>, <a href="../tags/xmobar.html">xmobar</a>, <a href="../tags/xmonad.html">xmonad</a>.
+</div>
+
+<p>Сегодня речь пойдёт о настройке в <code>xmonad</code> горячих клавиш для управления громкостью, а также о выводе в <code>xmobar</code> некоторой информации о звуковых настройках в системе.</p>
 <blockquote>
 <p>Всё нижеописанное справедливо для <a href="http://www.alsa-project.org/main/index.php/Main_Page">ALSA</a>.</p>
 </blockquote>
 <p>После того как я отказался от <a href="https://ru.wikipedia.org/wiki/Desktop_environment">DE</a> и стал использовать только <a href="https://ru.wikipedia.org/wiki/X_window_manager">WM</a>, управление громкостью сводилось к открытию <a href="https://en.wikipedia.org/wiki/Alsamixer">alsamixer</a> и последующей регулировке необходимых параметров. Скажем так, стандартный вариант у многих пользователей, которые не используют DE на своём компьютере:</p>
-<p><img src="/images/alsamixer.png" /></p>
+<p><img src="../images/alsamixer.png" /></p>
 <p>Всё как бы хорошо, но согласитесь, во время просмотра какого-нибудь очередного сериальчика, для того чтобы сделать чуть потише или громче, нужно было делать все эти манипуляции. Про жену вообще молчу! Первое время фраза: “Сделай чуть погромче”, вводила её в лёгкий ступор. Поэтому я решил всё это дело как-то облагородить. Вот, что у меня получилось…</p>
 <p>Первое, что пришло на ум, это назначить в xmonad горячие клавиши для для быстрого запуска <code>alsamixer</code>. Сделал:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">...</span></a>
@@ -51,17 +81,17 @@
 <hr />
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="va">vol=$(</span><span class="ex">amixer</span> get Master <span class="kw">|</span> <span class="fu">awk</span> -F<span class="st">&#39;[]%[]&#39;</span> <span class="st">&#39;/%/ {if ($7 == &quot;off&quot;) \</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">	 { print &quot;MM&quot; } else { print $2 }}&#39;</span> <span class="kw">|</span> <span class="fu">head</span> -n 1<span class="va">)</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="va">vol=$(</span><span class="ex">amixer</span> get Master <span class="kw">|</span> <span class="fu">awk</span> -F<span class="st">'[]%[]'</span> <span class="st">'/%/ {if ($7 == &quot;off&quot;) \</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">	 { print &quot;MM&quot; } else { print $2 }}'</span> <span class="kw">|</span> <span class="fu">head</span> -n 1<span class="va">)</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="va">COLOR=</span><span class="st">&quot;#DBA3A2&quot;</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="va">volume=</span><span class="st">&quot;[on]&quot;</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'6!d'</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">         <span class="fu">sed</span> -r <span class="st">'s/^[^B]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^[]+//'</span><span class="kw">`</span><span class="st">&quot;</span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'6!d'</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">         <span class="fu">sed</span> -r <span class="st">'s/^[^B]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^[]+//'</span><span class="kw">`</span><span class="st">&quot;</span></a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(d)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></a>
@@ -118,11 +148,11 @@ commands = [
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="va">volume=</span><span class="st">&quot;[on]&quot;</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'6!d'</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">         <span class="fu">sed</span> -r <span class="st">'s/^[^B]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^[]+//'</span><span class="kw">`</span><span class="st">&quot;</span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">         </a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'6!d'</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">         <span class="fu">sed</span> -r <span class="st">'s/^[^B]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^[]+//'</span><span class="kw">`</span><span class="st">&quot;</span></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
 <a class="sourceLine" id="cb5-12" data-line-number="12">   <span class="ex">amixer</span> sset Headphone mute</a>
@@ -150,91 +180,64 @@ commands = [
 <a class="sourceLine" id="cb6-4" data-line-number="4">         , ((<span class="dv">0</span>   , <span class="bn">0x0</span>), spawn <span class="st">&quot;/путь_до_нашего_скрипта/alsamixer&quot;</span>)</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">         <span class="fu">...</span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">         ]</a></code></pre></div>
-<p>На этом сегодня всё. Вопрос об управлении громкостью и её визуальном контроле в системе без использования каких-либо дополнительных программ снят.</p>]]></description>
-    <pubDate>Sun, 25 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-25-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Погода в xmobar</title>
-    <link>https://chubaduba.github.io//posts/2018-03-15-1.html</link>
-    <description><![CDATA[<h2 id="стандартный-плагин">Стандартный плагин</h2>
-<p>Чтобы отобразить в <code>xmobar</code> информацию о погоде, используя его стандартный плагин, необходимо добавить в файл <code>.xmobarrc</code> следующее:</p>
-<pre><code>...
-commands = [
-         ...
-         Run Weather &quot;XXXX&quot; [&quot;-t&quot;,&quot;&lt;tempC&gt;°C&quot;] 36000,
-         ...
-         ]
-...
-, template = &quot; %StdinReader% }{ ... %weather% ... }
-</code></pre>
-<p>где <code>XXXX</code> - код метеостанции вашего города, согласно спецификации <a href="http://www.noaa.gov/">National Oceanic and Atmospheric Administration (NOAA)</a>. Найти код своего города можно в этом <a href="http://weather.rap.ucar.edu/surface/stations.txt">документе</a>. Нужно сказать, что код вы найдёте при одном условии: в городе, в котором вы живёте должен быть аэропорт.</p>
-<p>Аргументы, которые можно использовать: <code>station</code>, <code>stationState</code>, <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>windCardinal</code>, <code>windAzimuth</code>, <code>windMph</code>, <code>windKnots</code>, <code>windMs</code>, <code>windKmh visibility</code>,<code>skyCondition</code>, <code>tempC</code>, <code>tempF</code>, <code>dewPointC</code>, <code>dewPointF</code>, <code>rh</code>, <code>pressure</code>.</p>
-<h2 id="bash-скрипт-для-вывода-погоды-в-xmobar">Bash скрипт для вывода погоды в xmobar</h2>
-<p>Я живу в Ростове-на-Дону. В конце 2017 года у нас запустили в эксплуатацию новый <a href="http://platov.aero/">аэропорт Платов</a>. Код метеостанции для него я не нашёл, а информация по коду метеостанции старого аэропорта не обновляется с прошлого года. Если посмотреть <code>http://tgftp.nws.noaa.gov/data/observations/metar/decoded/URRR.TXT</code> (URRR - это код метеостанции старого аэропорта в Ростове), то увидим, что информация менялась последний раз 31.12.2017г.:</p>
-<blockquote>
-<p>Rostov-Na-Donu, Russia (URRR) 47-16N 039-49E 75M Dec 31, 2017 - 06:30 PM EST / 2017.12.31 2330 UTC Wind: from the S (180 degrees) at 7 MPH (6 KT):0 Visibility: less than 1 mile:0 Sky conditions: obscured Weather: light drizzle; fog; Cumulonimbus clouds observed Temperature: 42 F (6 C) Dew Point: 42 F (6 C) Relative Humidity: 100% Pressure (altimeter): 29.88 in. Hg (1012 hPa) ob: URRR 312330Z 18003MPS 0100 R04/0450N -DZ FG VV001 06/06 Q1012 R22/290056 TEMPO 0300 -SHRA FG BKN001 BKN020CB RMK QBB040 MAST OBSC QFE752/1003 cycle: 23</p>
-</blockquote>
-<p>Вообще, я не расстроился по этому поводу. Наблюдать в своём xmobar текущее значение температуры? Зачем? У меня есть градусник на кухне за окном, который показывает точную температуру. Зато этот повод послужил толчком к написанию скрипта, который отображал бы необходимую мне информацию о погоде.</p>
-<p>Сразу скажу, что я не сторонник погодных плагинов с прогнозом на несколько дней, с кучей иконок и ненужной мне информацией типа время восхода или захода солнца. От прогноза на завтрашний день мне нужно всего два значения: дневная температура и вероятность осадков.</p>
-<p>Парсить я решил RSS ленту с сайта <a href="http://old.meteoinfo.ru/">Гидрометцентра России</a>. Для начала найдём саму ленту:</p>
-<p><img src="/images/2018-03-15-1.jpg" /></p>
-<p><img src="/images/2018-03-15-2.jpg" /></p>
-<p><img src="/images/2018-03-15-3.jpg" /></p>
-<p>Теперь лента у нас есть. Как видно, в ней присутствует прогноз на три дня. Мне же нужен только завтрашний день. Пишем скрипт, который будет выдавать нам прогноз только на завтрашний день. Обзавём скрипт <code>weather</code>:</p>
-<hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="va">s1=</span><span class="st">&quot;OK&quot;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="va">COLOR=</span><span class="st">&quot;#709180&quot;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="va">CITY_URL=</span><span class="st">&quot;http://old.meteoinfo.ru/rss/forecasts/34630&quot;</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="va">SITE=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">curl</span> -Is <span class="va">$CITY_URL</span> <span class="kw">|</span> <span class="fu">head</span> -1 <span class="kw">|</span> <span class="fu">grep</span> -Eo <span class="st">&#39;.{3}$&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">if [[</span> <span class="va">$SITE</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$s1</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">     <span class="va">TOMORROW_TEMP=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">              <span class="fu">grep</span> -w <span class="st">&#39;Температура&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;2!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">              <span class="fu">sed</span> -r <span class="st">&#39;s/^[^Т]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^д]+//&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">              <span class="fu">sed</span> -r <span class="st">&#39;s/°.+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/днём //&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">     <span class="va">POSSIBILITY_RAIN=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">              <span class="fu">grep</span> -w <span class="st">&#39;Вероятность&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;2!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">              <span class="fu">sed</span> -r <span class="st">&#39;s/^[^ф]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^к]+//&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">              <span class="fu">sed</span> <span class="st">&#39;s/ков //&#39;</span> <span class="kw">|</span> <span class="fu">grep</span> -o <span class="st">&#39;^[^&lt;]*&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">              </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">     </a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">     <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;</span><span class="va">$TOMORROW_TEMP</span><span class="st">°C(</span><span class="va">$POSSIBILITY_RAIN</span><span class="st">)&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">     </a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="kw">else</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">     <span class="bu">echo</span> <span class="st">&quot;n/a&quot;</span></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="kw">fi</span></a></code></pre></div>
-<hr />
-<p>Результатом работы скрипта будет строчка:</p>
-<pre><code>4°C(71%)</code></pre>
-<p>где<br />
-<code>4°C</code> - значение температуры;<br />
-<code>(71%)</code> - вероятность осадков.</p>
-<p>Остаётся добавить вывод скрипта в xmobar. Добавляем в наш <code>.xmobarrc</code> следующие:</p>
-<pre><code>...
-commands = [
-         ...
-         Run Com &quot;/путь_до_нашего_скрипта/weather&quot; [] &quot;weather&quot; 3600,
-         ...
-         ]
-...
-, template = &quot; %StdinReader% }{ ... %weather% ... }
-</code></pre>
-<blockquote>
-<p>Отмечу один момент. Обновление выбранного мною сайта происходит один раз в день около 11:30 по Московскому времени. Поэтому, до обновления в xmobar мы видим текущие показания, а после обновления уже прогноз на завтрашний день.</p>
-</blockquote>]]></description>
-    <pubDate>Thu, 15 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-15-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
+<p>На этом сегодня всё. Вопрос об управлении громкостью и её визуальном контроле в системе без использования каких-либо дополнительных программ снят.</p>
 
-    </channel>
-</rss>
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/15"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
