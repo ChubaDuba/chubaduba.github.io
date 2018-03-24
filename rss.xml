@@ -7,8 +7,155 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Wed, 21 Mar 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 25 Mar 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmonad+xmobar+ALSA.</title>
+    <link>https://chubaduba.github.io//posts/2018-03-25-1.html</link>
+    <description><![CDATA[<p>Сегодня речь пойдёт о настройке в <code>xmonad</code> горячих клавиш для управления громкостью, а также о выводе в <code>xmobar</code> некоторой информации о звуковых настройках в системе.</p>
+<blockquote>
+<p>Всё нижеописанное справедливо для <a href="http://www.alsa-project.org/main/index.php/Main_Page">ALSA</a>.</p>
+</blockquote>
+<p>После того как я отказался от <a href="https://ru.wikipedia.org/wiki/Desktop_environment">DE</a> и стал использовать только <a href="https://ru.wikipedia.org/wiki/X_window_manager">WM</a>, управление громкостью сводилось к открытию <a href="https://en.wikipedia.org/wiki/Alsamixer">alsamixer</a> и последующей регулировке необходимых параметров. Скажем так, стандартный вариант у многих пользователей, которые не используют DE на своём компьютере:</p>
+<p><img src="/images/alsamixer.png" /></p>
+<p>Всё как бы хорошо, но согласитесь, во время просмотра какого-нибудь очередного сериальчика, для того чтобы сделать чуть потише или громче, нужно было делать все эти манипуляции. Про жену вообще молчу! Первое время фраза: “Сделай чуть погромче”, вводила её в лёгкий ступор. Поэтому я решил всё это дело как-то облагородить. Вот, что у меня получилось…</p>
+<p>Первое, что пришло на ум, это назначить в xmonad горячие клавиши для для быстрого запуска <code>alsamixer</code>. Сделал:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Util.EZConfig</span>            (additionalKeys)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">myConfig <span class="fu">=</span> defaultConfig</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">         { modMask <span class="fu">=</span> mod4Mask</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">         , <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">         } <span class="ot">`additionalKeys`</span> myKeys</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">myKeys <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">         , ((mod4Mask <span class="fu">.|.</span> controlMask,    xK_a), spawn <span class="st">&quot;urxvt -e alsamixer&quot;</span>)</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">         ]</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="fu">...</span></a></code></pre></div>
+<p>По прошествии некоторого времени, в интернете было найдено решение как в xmonad назначить горячие клавиши для уменьшения (увеличения) громкости и для включения и выключения режима <code>Mute</code>. На моей<br />
+клавиатуре есть специальные клавиши для громкости и для Mute. Если на вашей их нет, то назначить действия можно на любые, которые вам нравятся. Редактируем конфиг <code>xmonad</code>, добавляем наши клавиши:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">myKeys <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">         , ((<span class="dv">0</span>    , <span class="bn">0x1008ff11</span>), spawn <span class="st">&quot;amixer set Master 2-&quot;</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">         , ((<span class="dv">0</span>    , <span class="bn">0x1008ff13</span>), spawn <span class="st">&quot;amixer set Master 2+&quot;</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">         , ((<span class="dv">0</span>    , <span class="bn">0x1008ff12</span>), spawn <span class="st">&quot;amixer set Master toggle&quot;</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">         ]</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="fu">...</span></a></code></pre></div>
+<blockquote>
+<p>Код нужной клавиши можно определить с помощью утилиты <a href="https://linux.die.net/man/1/xev">xev</a>, набрав в терминале команду <code>xev | grep keycode</code>, и после этого нажать нужную клавишу.</p>
+</blockquote>
+<p>Стало совсем хорошо! И жена уже не в ступоре :)</p>
+<p>Но как говорится, аппетит приходит во время еды. Захотелось реализовать ещё несколько нужных мне фишек. Дело в том, что на данный момент у нас в хозяйстве моноблок <a href="http://static.highspeedbackbone.net/pdf/Lenovo%20C325%20All-In-One%20PC%20Data%20Sheet.pdf">Lenovo C325</a>, у которого есть встроенные динамики. Частенько бывает так, что музыку мы слушаем (а это с женой мы очень любим!) через внешний <a href="http://ldsound.ru/odissej-u-010-stereo-hi-fi/">усилитель</a> и <a href="http://ldsound.ru/75-as-001-kliver/">колонки</a>, подключая моноблок через выход на наушники к усилителю. И не раз было так, что звук идёт и через динамики моноблока, и через внешние колонки. Приходилось открывать <code>alsamixer</code> и выключать звук из динамиков моноблока. Просто, но опять же напряжно, тем более, если дома гости и т.д. Это первое, что хотелось бы сделать. Второе, вывести в <code>xmobar</code> показания уровня громкости.</p>
+<p>Реализовать я это решил с помощью скриптов, а результат их работы вывести в xmobar. Первым делом написал вот такой скрипт и обозвал его <code>vol</code>:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="va">vol=$(</span><span class="ex">amixer</span> get Master <span class="kw">|</span> <span class="fu">awk</span> -F<span class="st">&#39;[]%[]&#39;</span> <span class="st">&#39;/%/ {if ($7 == &quot;off&quot;) \</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">	 { print &quot;MM&quot; } else { print $2 }}&#39;</span> <span class="kw">|</span> <span class="fu">head</span> -n 1<span class="va">)</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="va">COLOR=</span><span class="st">&quot;#DBA3A2&quot;</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="va">volume=</span><span class="st">&quot;[on]&quot;</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(d)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">   <span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(dh)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">   <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">      <span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">         <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(d)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">      <span class="kw">else</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">           <span class="kw">if [[</span> <span class="va">$Volume_h</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">              <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(h)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">           <span class="kw">else</span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">              <span class="bu">echo</span> <span class="st">&quot;&lt;fc=#8CD0D3&gt;MM&lt;/fc&gt;&quot;</span></a>
+<a class="sourceLine" id="cb3-30" data-line-number="30">           <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">      <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb3-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="bu">exit</span> 0</a></code></pre></div>
+<hr />
+<p>Этот скрипт выводит на экран текущий уровень громкости в процентах и показывает какой выходной канал является активным на данный момент. Всего может быть семь вариантов:</p>
+<ul>
+<li><code>(d)80%</code> - звук идёт через динамики;</li>
+<li><code>(h)80%</code> - звук идёт через наушники;</li>
+<li><code>(d)MM%</code> - звук идёт через динамики, режим Mute;</li>
+<li><code>(h)MM%</code> - звук идёт через наушники; режим Mute;</li>
+<li><code>(dh)80%</code> - звук идёт через динамики и наушники;</li>
+<li><code>(dh)MM%</code> - звук идёт через динамики и наушники, режим Mute.</li>
+</ul>
+<blockquote>
+<p>С утра, проснувшись с бодуна<br />
+Mеня трясёт и глючит…<br />
+© Сергей Шнуров</p>
+</blockquote>
+<p>Согласитесь, что в жизни всякое бывает, и такое тоже. И на этот случай я предусмотрел ещё один вариант:</p>
+<ul>
+<li><code>MM</code> - динамики и наушники отключены.</li>
+</ul>
+<p>Выводим результат работы скрипта в xmobar. Вносим изменения в файл конфигурации <code>.xmobarrc</code>:</p>
+<pre><code>...
+commands = [
+           ...
+           Run Com &quot;/путь_до_нашего_скрипта/vol&quot; [] &quot;vol&quot; 10,
+           ...
+           ]
+...
+, template = &quot; %StdinReader% }{ ... %vol% ...}
+</code></pre>
+<p>Теперь в xmobar’е есть информация о текущем уровне громкости и и звуковом канале. И мы можем с помощью горячих клавиш уменьшать или увеличивать громкость, либо выключить её совсем, включив режим Mute.</p>
+<p>Настала очередь для второй хотелки - переключателе между выходами с динамиков на наушники и наоборот. Для этого я написал второй скрипт, обозвав его <code>alsamixer</code>:</p>
+<hr />
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">#! /bin/bash</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="va">volume=</span><span class="st">&quot;[on]&quot;</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">         </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">   <span class="ex">amixer</span> sset Headphone mute</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">   <span class="ex">amixer</span> sset Speaker unmute</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18">   <span class="ex">amixer</span> sset Headphone unmute</a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">   <span class="ex">amixer</span> sset Speaker mute</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">     <span class="kw">if [[</span> <span class="va">$Volume_h</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23">        <span class="ex">amixer</span> sset Headphone mute</a>
+<a class="sourceLine" id="cb5-24" data-line-number="24">        <span class="ex">amixer</span> sset Speaker unmute</a>
+<a class="sourceLine" id="cb5-25" data-line-number="25">     <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="bu">exit</span> 0</a></code></pre></div>
+<hr />
+<p>Тут всё просто. Если включены динамики, то скрипт отрабатывает на их выключение и включение наушников. Также и наоборот, с наушников на динамики. В случае, когда в <code>xmobar</code> будет значение <code>MM</code>, скрипт включит динамики. Осталось определить горячую клавишу, по нажатию которой, будет выполняться скрипт. Редактируем <code>xmonad.hs</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">myKeys <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">         , ((<span class="dv">0</span>   , <span class="bn">0x0</span>), spawn <span class="st">&quot;/путь_до_нашего_скрипта/alsamixer&quot;</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">         ]</a></code></pre></div>
+<p>На этом сегодня всё. Вопрос об управлении громкостью и её визуальном контроле в системе без использования каких-либо дополнительных программ снят.</p>]]></description>
+    <pubDate>Sun, 25 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-03-25-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Мой выбор - Alpine e-mail клиент.</title>
     <link>https://chubaduba.github.io//posts/2018-03-21-1.html</link>
     <description><![CDATA[<p>В своё время, когда в качестве рабочего окружения я использовал <code>Gnome 2</code>, работу почтового клиента выполнял <a href="http://www.claws-mail.org/">Claws Mail</a>. Почтовик, кстати, отличный, всё что от него требовалось, выполнял на 100%. Но после отказа от использования на десктопе рабочих окружений, встал вопрос о его замене на что-то более легковесное, с минимумом зависимостей и консольное. Консольное по той причине, что считаю отправку и получение электронной почты задачей тривиальной, которая должна решаться легко и быстро.</p>
@@ -972,38 +1119,6 @@ ExecStart=-/sbin/agetty --autologin user_name --noclear %I $TERM
 </blockquote>]]></description>
     <pubDate>Sat, 03 Mar 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-03-03-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Прозрачность неактивных окон в xmonad</title>
-    <link>https://chubaduba.github.io//posts/2018-03-01-1.html</link>
-    <description><![CDATA[<p>Сам я этой фишкой не пользуюсь, так как считаю, что тайлинг, он на то и тайлинг, чтобы видеть всё и сразу. Но учитывая то, что фломастеры на вкус у всех разные, опишу как это сделать:</p>
-<p>Установим композитный менеджер окон <a href="https://packages.debian.org/ru/stretch/xcompmgr">xcompmgr</a>:</p>
-<pre><code>sudo apt-get install xcompmgr
-</code></pre>
-<p>Добавим его в автозагрузку. Для этого отредактируем наш файл <code>~/.xinitrc</code>:</p>
-<pre><code>xcompmgr -r0 &amp;
-</code></pre>
-<p>Вносим изменения в <code>xmonad.hs</code>. Добавляем модуль <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-FadeInactive.html">XMonad.Hooks.FadeInactive</a>, удаляем границу у окон и устанавливаем степень непрозрачности:</p>
-<hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Hooks.FadeInactive</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">myConfig <span class="fu">=</span> <span class="fu">....</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">          {<span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">          <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">          , borderWidth <span class="fu">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">          , logHook <span class="fu">=</span> fadeInactiveLogHook <span class="fl">0.8</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">          <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">          }</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">...</span></a></code></pre></div>
-<hr />
-<p>Со значением степени непрозрачности можно поиграться и выбрать оптимальное для себя.</p>
-<figure>
-<img src="/images/2018-03-01-1.jpg" alt="calc - активное окно, writer - неактивное окно." /><figcaption>calc - активное окно, writer - неактивное окно.</figcaption>
-</figure>]]></description>
-    <pubDate>Thu, 01 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-01-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
