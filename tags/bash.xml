@@ -18,7 +18,7 @@
 <p>После того как я отказался от <a href="https://ru.wikipedia.org/wiki/Desktop_environment">DE</a> и стал использовать только <a href="https://ru.wikipedia.org/wiki/X_window_manager">WM</a>, управление громкостью сводилось к открытию <a href="https://en.wikipedia.org/wiki/Alsamixer">alsamixer</a> и последующей регулировке необходимых параметров. Скажем так, стандартный вариант у многих пользователей, которые не используют DE на своём компьютере:</p>
 <p><img src="/images/alsamixer.png" /></p>
 <p>Всё как бы хорошо, но согласитесь, во время просмотра какого-нибудь очередного сериальчика, для того чтобы сделать чуть потише или громче, нужно было делать все эти манипуляции. Про жену вообще молчу! Первое время фраза: “Сделай чуть погромче”, вводила её в лёгкий ступор. Поэтому я решил всё это дело как-то облагородить. Вот, что у меня получилось…</p>
-<p>Первое, что пришло на ум, это назначить в xmonad горячие клавиши для для быстрого запуска <code>alsamixer</code>. Сделал:</p>
+<p>Первое, что пришло на ум, это назначить в xmonad горячие клавиши для быстрого запуска <code>alsamixer</code>. Сделал:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">...</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Util.EZConfig</span>            (additionalKeys)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">...</span></a>
