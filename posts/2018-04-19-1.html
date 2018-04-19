@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
+                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../resume.html" style="font-size: 18px; color: #94BFF2">Резюме</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Cтрока ввода команд в Xmonad.</h1>
+<div class="soft">
+    Настройка XMonad.Prompt и XMonad.Prompt.Shell<br />
+    Posted in: <a href="../tags/xmonad.html">xmonad</a>.
+</div>
+
+<p>Сегодня расскажу об очень удобной, на мой взгляд, фишке, которой я постоянно пользуюсь при использовании xmonad. Речь пойдёт о <font color="#92E0E2"><em>строке ввода команд</em></font>. Реализуется это двумя модулями <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Prompt.html">XMonad.Prompt</a> и <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Prompt-Shell.html">XMonad.Prompt.Shell</a>. Добавляем эти модули в наш <code>xmonad.hs</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Prompt</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Prompt.Shell</span></a></code></pre></div>
+<p>Ну и, конечно, нужно задать комбинацию клавиш, при нажатии которой будет открываться строка ввода. Для себя я выбрал комбинацию <code>mod4Mask+p</code>. Добавляем её в наш конфиг:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1">, ((mod4Mask,   xK_p), shellPrompt defaultXPConfig)</a></code></pre></div>
+<p>После внесения всех этих изменений, при нажатии выбранной комбинации в нижней части экрана будет появляться строка ввода. Закрыть её можно нажав клавишу <code>Esc</code>:</p>
+<p><a href="http://www.imagebam.com/image/b83a7b825534583" target="_blank"><img src="http://thumbs2.imagebam.com/bf/b6/b7/b83a7b825534583.jpg" alt="ImageBam image upload"></a></p>
+<p>Мне не понравилось то, что строка открывается внизу экрана, имеет очень мелкий шрифт, и её цветовое оформление не сочетается с моими настройками. Чтобы всё это изменить, я добавил в <code>xmonad.hs</code> свою конфигурацию окна строки ввода <code>myXPConfig</code>, в которой указал нужные мне параметры:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"> <span class="co">-- Prompt</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">myXPConfig <span class="fu">=</span> defaultXPConfig</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">         { font                <span class="fu">=</span> myFont</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">         , bgColor             <span class="fu">=</span> <span class="st">&quot;#2F2F2F&quot;</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">         , fgColor             <span class="fu">=</span> <span class="st">&quot;#709180&quot;</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">         , bgHLight            <span class="fu">=</span> <span class="st">&quot;#2F2F2F&quot;</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">         , fgHLight            <span class="fu">=</span> <span class="st">&quot;#F0E0AF&quot;</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">         , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">         , position            <span class="fu">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">         , height              <span class="fu">=</span> <span class="dv">20</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">         , historySize         <span class="fu">=</span> <span class="dv">100</span> </a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">         , historyFilter       <span class="fu">=</span> deleteConsecutive</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">         }</a></code></pre></div>
+<p>Соответственно, внёс изменения для комбинации клавиш, заменив <code>defaultXPConfig</code> на <code>myXPConfig</code>. Теперь строчка в конфиге будет иметь вот такой вид:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">, ((mod4Mask,   xK_p), shellPrompt myXPConfig)</a></code></pre></div>
+<p>После этих изменений всё стало так, как нужно мне:</p>
+<p><a href="http://www.imagebam.com/image/fb0f65825574363" target="_blank"><img src="http://thumbs2.imagebam.com/6a/e0/07/fb0f65825574363.jpg" alt="imagebam.com"></a></p>
+<p><a href="http://www.imagebam.com/image/55a8e6825581853" target="_blank"><img src="http://thumbs2.imagebam.com/00/71/42/55a8e6825581853.jpg" alt="imagebam.com"></a></p>
+<p>Чтобы каждый раз не вводить в строку однотипные команды, например, команду <code>urxvt -e</code> для открытия консольного приложения в новом окне терминала, эту команду можно прописать в <code>myXPConfig</code> следующим образом:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1">myXPConfig <span class="fu">=</span> defaultXPConfig</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">         { <span class="fu">...</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">         , defaultText <span class="fu">=</span> <span class="st">&quot;urxvt -e&quot;</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">         }</a></code></pre></div>
+<p>Теперь при запуске строка ввода будет иметь такой вид:</p>
+<p><img src="http://images2.imagebam.com/96/25/02/88856e825632023.png" /></p>
+<p>На этом сегодня всё. О других способах использования строки ввода <code>XMonad.Prompt</code> я обязательно расскажу позднее.</p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/21"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
