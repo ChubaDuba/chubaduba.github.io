@@ -7,8 +7,78 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/xmonad.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Thu, 19 Apr 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 20 Apr 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmonad. Окно, которое всегда под рукой.</title>
+    <link>https://chubaduba.github.io//posts/2018-04-20-1.html</link>
+    <description><![CDATA[<p>При работе иногда бывает удобно иметь под рукой какое-нибудь открытое приложение, например, окно терминала, файловый менеджер или любую другую программу, к которой необходим быстрый доступ. В <code>xmonad</code> есть утилита <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Util-NamedScratchpad.html">XMonad.Util.NamedScratchpad</a>, которая позволяет организовать работу с приложениями таким образом.</p>
+<p>Я покажу как работает эта утилита на примере эмулятора терминала <a href="http://software.schmorp.de/pkg/rxvt-unicode.html">urxvt</a> и файлового менеджера <a href="https://ignorantguru.github.io/spacefm/">SpaceFM</a>.</p>
+<p>Добавляем утилиту в наш конфигурационный файл <code>xmonad.hs</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Util.NamedScratchpad</span></a></code></pre></div>
+<p>В секцию myManageHook добавляем:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1">myManageHook <span class="fu">=</span>  composeAll <span class="fu">$</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">         [ <span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">         , <span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">         , <span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">         ]</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">         </a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">         <span class="fu">++</span> [namedScratchpadManageHook scratchpads]</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="fu">...</span></a></code></pre></div>
+<p>Пишем правила для приложений. В нашем случае для <code>urxvt</code> и s<code>pacefm</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1">scratchpads <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">            </a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">              <span class="dt">NS</span> <span class="st">&quot;terminal&quot;</span> <span class="st">&quot;urxvt -name scratchpad&quot;</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                (wm_name <span class="fu">=?</span> <span class="st">&quot;scratchpad&quot;</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                (customFloating <span class="fu">$</span> <span class="dt">W.RationalRect</span> <span class="dv">0</span> <span class="fl">0.9</span> <span class="dv">1</span> <span class="fl">0.1</span>),</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">              </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">              <span class="dt">NS</span> <span class="st">&quot;spacefm&quot;</span> <span class="st">&quot;spacefm&quot;</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">                (className <span class="fu">=?</span> <span class="st">&quot;Spacefm&quot;</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">                (customFloating <span class="fu">$</span> <span class="dt">W.RationalRect</span> <span class="dv">0</span> <span class="fl">0.6</span> <span class="dv">1</span> <span class="fl">0.4</span>),</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">            </a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">              ]</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">              </a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">              <span class="kw">where</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">                    wm_name <span class="fu">=</span> stringProperty <span class="st">&quot;WM_NAME&quot;</span></a></code></pre></div>
+<p>“Вешаем” на нужные нам клавиши:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">myKeys <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">           <span class="fu">...</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">         , ((<span class="dv">0</span>,        <span class="bn">0xffbe</span>), namedScratchpadAction scratchpads <span class="st">&quot;terminal&quot;</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">         , ((mod4Mask,   xK_f), namedScratchpadAction scratchpads <span class="st">&quot;spacefm&quot;</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">         ]</a></code></pre></div>
+<p>Готово. Открыть, скрыть/показать терминал: <code>F1</code><br />
+Открыть, скрыть/показать файловый менеджер: <code>mod4Mask+f</code><br />
+Чтобы открыть терминал в обычном режиме используем клавиши по умолчанию: <code>mod4Mask+Shift+Enter</code>.</p>
+<figure>
+<img src="http://images2.imagebam.com/e5/45/1c/556917828853913.png" alt="urxvt" /><figcaption>urxvt</figcaption>
+</figure>
+<figure>
+<img src="http://images2.imagebam.com/32/6c/f9/580398828854143.png" alt="SpaceFM" /><figcaption>SpaceFM</figcaption>
+</figure>
+<p>На самом деле окна не скрываются и не закрываются, а переносятся на скрытый рабочий стол с именем <code>NSP</code>, который будет отображаться в <code>xmobar</code>:</p>
+<p><img src="http://images2.imagebam.com/81/03/6c/e6b6c5828931143.png" /></p>
+<p>Таким же способом можно запускать программу в терминале. Например, у меня по <code>F2</code> запускается календарь:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1">scratchpads <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">       </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">         <span class="dt">NS</span> <span class="st">&quot;cal&quot;</span> <span class="st">&quot;urxvt -name cal -hold -e cal -y&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">           (wm_name <span class="fu">=?</span> <span class="st">&quot;cal&quot;</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">           (customFloating <span class="fu">$</span> <span class="dt">W.RationalRect</span> <span class="fl">0.58</span> <span class="fl">0.023</span> <span class="fl">0.42</span> <span class="fl">0.82</span>),</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">         ]</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">myKeys <span class="fu">=</span> [</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">         , ((<span class="dv">0</span>,     <span class="bn">0xffbf</span>), namedScratchpadAction scratchpads <span class="st">&quot;cal&quot;</span>)</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">         <span class="fu">...</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">         ]</a></code></pre></div>
+<p><img src="http://images2.imagebam.com/68/cc/17/9fae33828854383.png" /></p>]]></description>
+    <pubDate>Fri, 20 Apr 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-04-20-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Cтрока ввода команд в Xmonad.</title>
     <link>https://chubaduba.github.io//posts/2018-04-19-1.html</link>
     <description><![CDATA[<p>Сегодня расскажу об очень удобной, на мой взгляд, фишке, которой я постоянно пользуюсь при использовании xmonad. Речь пойдёт о <font color="#92E0E2"><em>строке ввода команд</em></font>. Реализуется это двумя модулями <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Prompt.html">XMonad.Prompt</a> и <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Prompt-Shell.html">XMonad.Prompt.Shell</a>. Добавляем эти модули в наш <code>xmonad.hs</code>:</p>
