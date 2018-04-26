@@ -47,9 +47,7 @@
 <p>Ну и, конечно, нужно задать комбинацию клавиш, при нажатии которой будет открываться строка ввода. Для себя я выбрал комбинацию <code>mod4Mask+p</code>. Добавляем её в наш конфиг:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1">, ((mod4Mask,   xK_p), shellPrompt defaultXPConfig)</a></code></pre></div>
 <p>После внесения всех этих изменений, при нажатии выбранной комбинации в нижней части экрана будет появляться строка ввода. Закрыть её можно нажав клавишу <code>Esc</code>:</p>
-<figure>
-<img src="http://images2.imagebam.com/b9/62/84/b83a7b825534583.png" alt="urxvt" /><figcaption></figcaption>
-</figure>
+<p><a href="http://www.imagebam.com/image/b83a7b825534583"><img src="http://thumbs2.imagebam.com/bf/b6/b7/b83a7b825534583.jpg" alt="ImageBam image upload"></a></p>
 <p>Мне не понравилось то, что строка открывается внизу экрана, имеет очень мелкий шрифт, и её цветовое оформление не сочетается с моими настройками. Чтобы всё это изменить, я добавил в <code>xmonad.hs</code> свою конфигурацию окна строки ввода <code>myXPConfig</code>, в которой указал нужные мне параметры:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"> <span class="co">-- Prompt</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
@@ -68,12 +66,8 @@
 <p>Соответственно, внёс изменения для комбинации клавиш, заменив <code>defaultXPConfig</code> на <code>myXPConfig</code>. Теперь строчка в конфиге будет иметь вот такой вид:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">, ((mod4Mask,   xK_p), shellPrompt myXPConfig)</a></code></pre></div>
 <p>После этих изменений всё стало так, как нужно мне:</p>
-<figure>
-<img src="http://images2.imagebam.com/20/a7/bd/fb0f65825574363.png" alt="urxvt" /><figcaption></figcaption>
-</figure>
-<figure>
-<img src="http://images2.imagebam.com/32/ec/ea/55a8e6825581853.png" alt="urxvt" /><figcaption></figcaption>
-</figure>
+<p><a href="http://www.imagebam.com/image/fb0f65825574363"><img src="http://thumbs2.imagebam.com/6a/e0/07/fb0f65825574363.jpg" alt="ImageBam image upload"></a></p>
+<p><a href="http://www.imagebam.com/image/55a8e6825581853"><img src="http://thumbs2.imagebam.com/00/71/42/55a8e6825581853.jpg" alt="ImageBam image upload"></a></p>
 <p>Чтобы каждый раз не вводить в строку однотипные команды, например, команду <code>urxvt -e</code> для открытия консольного приложения в новом окне терминала, эту команду можно прописать в <code>myXPConfig</code> следующим образом:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1">myXPConfig <span class="fu">=</span> defaultXPConfig</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">         { <span class="fu">...</span></a>
