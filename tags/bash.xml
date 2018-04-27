@@ -37,9 +37,7 @@
 <a class="sourceLine" id="cb1-19" data-line-number="19">       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st"> - </span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="kw">fi</span></a></code></pre></div>
 <hr />
-<figure>
-<img src="http://images2.imagebam.com/56/3e/90/2fea4c832464493.png" alt="MOC плеер" /><figcaption>MOC плеер</figcaption>
-</figure>]]></description>
+<p><a href="http://www.imagebam.com/image/2fea4c832464493"><img src="http://thumbs2.imagebam.com/7e/0c/a9/2fea4c832464493.jpg" alt="ImageBam image upload"></a></p>]]></description>
     <pubDate>Mon, 23 Apr 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-04-23-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>

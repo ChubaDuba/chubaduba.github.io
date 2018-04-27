@@ -35,60 +35,37 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом xmobar</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-27-1.html">Xmobar. Дата.</a>”
-            ‒ <span class="soft">27 Апреля, 2018</span><br />
-            Избавляемся от забугорного формата даты.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-23-1.html">Xmobar. Информация о текущем треке (MOC плеер).</a>”
-            ‒ <span class="soft">23 Апреля, 2018</span><br />
-            Показываем информацию о текущем треке в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-16-1.html">Вывод в xmobar информации о доступных обновлениях.</a>”
-            ‒ <span class="soft">16 Апреля, 2018</span><br />
-            Как показать в xmobar количество доступных обновлений.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-25-1.html">Xmonad+xmobar+ALSA.</a>”
-            ‒ <span class="soft">25 Марта, 2018</span><br />
-            Громкость звука. Настраиваем управление и отображение.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-15-1.html">Погода в xmobar</a>”
-            ‒ <span class="soft">15 Марта, 2018</span><br />
-            Как вывести в xmobar информацию о погоде.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-02-27-1.html">Иконки для рабочих столов xmonad в xmobar</a>”
-            ‒ <span class="soft">27 Февраля, 2018</span><br />
-            Как поменять в xmobar названия рабочих столов на иконки
-        </p>
-    </li>
-    
-</ul>
+    <h1>Xmobar. Дата.</h1>
+<div class="soft">
+    Избавляемся от забугорного формата даты.<br />
+    Posted in: <a href="../tags/xmobar.html">xmobar</a>.
+</div>
 
+<p>Выкидываем из <code>~/.xmobarrc</code> стандартный <code>Run Date</code> и вставляем<br />
+результат работы скрипта <code>time</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="va">DATA=</span><span class="kw">`</span><span class="fu">date</span> <span class="st">&quot;+%d.%m&quot;</span><span class="kw">`</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="va">DAY=</span><span class="kw">`</span><span class="fu">date</span> <span class="st">&quot;+%a&quot;</span><span class="kw">`</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="va">TIME=</span><span class="kw">`</span><span class="fu">date</span> <span class="st">&quot;+%H:%M&quot;</span><span class="kw">`</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">if [[</span> <span class="va">$DAY</span> <span class="ot">=</span> <span class="st">&quot;Сб&quot;</span><span class="kw"> ]]</span>; <span class="kw">then</span> <span class="bu">echo</span> <span class="st">'&lt;fc=#DBA3A2&gt;'</span><span class="va">$DAY</span><span class="st">'&lt;/fc&gt;'</span> \</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$DATA</span><span class="st">'&lt;/fc&gt;'</span>  <span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$TIME</span><span class="st">'&lt;/fc&gt;'</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">elif [[</span> <span class="va">$DAY</span> <span class="ot">=</span> <span class="st">&quot;Вс&quot;</span><span class="kw"> ]]</span>; <span class="kw">then</span> <span class="bu">echo</span> <span class="st">'&lt;fc=#DBA3A2&gt;'</span><span class="va">$DAY</span><span class="st">'&lt;/fc&gt;'</span> \</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$DATA</span><span class="st">'&lt;/fc&gt;'</span>  <span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$TIME</span><span class="st">'&lt;/fc&gt;'</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">else</span> <span class="bu">echo</span> <span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$DAY</span><span class="st">'&lt;/fc&gt;'</span> <span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$DATA</span><span class="st">'&lt;/fc&gt;'</span>  \</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="st">'&lt;fc=#84AAD9&gt;'</span><span class="va">$TIME</span><span class="st">'&lt;/fc&gt;'</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="bu">exit</span> 0</a></code></pre></div>
+<p>Вносим изменения в <code>~/.xmobarrc</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="dt">Run</span> <span class="dt">Com</span> <span class="st">&quot;/путь_до_скрипта/time&quot;</span> [] <span class="st">&quot;time&quot;</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">, template <span class="fu">=</span> <span class="st">&quot; %StdinReader% }{ ...%time%... }</span></a></code></pre></div>
+<p><img src="http://images2.imagebam.com/e8/22/9f/2f0e1b837743753.png" /></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/24"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
