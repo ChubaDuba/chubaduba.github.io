@@ -7,8 +7,41 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/xmonad.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 15 May 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Mon, 04 Jun 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmonad. Загоняем калькулятор в Prompt.</title>
+    <link>https://chubaduba.github.io//posts/2018-06-04-1.html</link>
+    <description><![CDATA[<p>Давно хотелось сделать работу с калькулятором в xmonad удобной. Чтобы он был всегда под рукой, и чтобы не делать лишних телодвижений с окном программы.</p>
+<p>В своей системе я пользуюсь консольным калькулятором <a href="http://www.isthe.com/chongo/tech/comp/calc/calc-mirror.html">Calc</a>. Было найдено оригинальное решение, которое позволяет расположить калькулятор в строке ввода команд <code>Prompt</code>. Что такое <code>Prompt</code> и как это работает, я уже <a href="https://chubaduba.github.io/posts/2018-04-19-1.html">писал раньше</a>.</p>
+<p>Все изменения будем делать в файле конфигурации xmonad <code>xmonad.hs</code>. Первое, что я сделал - сконфигурировал саму строку ввода, в которой будет открываться калькулятор:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">-- Calc Prompt</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">myCalcConfig <span class="fu">=</span> def</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#DBA3A2&quot;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">        }</a></code></pre></div>
+<p>Тут всё просто. Задал шрифт, цвет фона и цвет шрифта, а также месторасположение строки. В моём случае окно калькулятора будет распологаться вверху экрана, перекрывая <code>xmobar</code>.</p>
+<p>Вторым шагом добавляем саму функцию, которая будет открывать калькулятор:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Calculator</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ot">calcPrompt ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> () </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">calcPrompt c ans <span class="fu">=</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    inputPrompt c (trim ans) <span class="fu">?+</span> \input <span class="ot">-&gt;</span> </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        liftIO(runProcessWithInput <span class="st">&quot;calc&quot;</span> [input] <span class="st">&quot;&quot;</span>) <span class="fu">&gt;&gt;=</span> calcPrompt c </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">        trim  <span class="fu">=</span> f <span class="fu">.</span> f</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">            <span class="kw">where</span> f <span class="fu">=</span> reverse <span class="fu">.</span> dropWhile isSpace</a></code></pre></div>
+<p>И последнее, что нужно сделать, это добавить в конфигурационный файл комбинацию клавиш, при нажатии которой будет открываться калькулятор:</p>
+<p>```haskell , ((mod4Mask, xK_c), calcPrompt myCalcConfig “calc”)</p>
+<p>```,</p>
+<p>Теперь при нажатии клавиш <code>mod4 + c</code> на месте <code>xmobar</code> открывается окно калькулятора. Закрыть его можно, нажав кнопку <code>Esc</code>.</p>
+<p><img src="http://images2.imagebam.com/b9/e6/76/20f91e885153304.png" /></p>]]></description>
+    <pubDate>Mon, 04 Jun 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-06-04-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Xmonad. Middle Column Layout</title>
     <link>https://chubaduba.github.io//posts/2018-05-15-1.html</link>
     <description><![CDATA[<p><code>Middle Column Layout</code> - компоновка окон для xmonad, которая подойдёт владельцам широких экранов.</p>

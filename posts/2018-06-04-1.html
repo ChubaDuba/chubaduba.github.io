@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
+                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../resume.html" style="font-size: 18px; color: #94BFF2">Резюме</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Xmonad. Загоняем калькулятор в Prompt.</h1>
+<div class="soft">
+    Удобное использование калькулятора в xmonad.<br />
+    Posted in: <a href="../tags/xmonad.html">xmonad</a>.
+</div>
+
+<p>Давно хотелось сделать работу с калькулятором в xmonad удобной. Чтобы он был всегда под рукой, и чтобы не делать лишних телодвижений с окном программы.</p>
+<p>В своей системе я пользуюсь консольным калькулятором <a href="http://www.isthe.com/chongo/tech/comp/calc/calc-mirror.html">Calc</a>. Было найдено оригинальное решение, которое позволяет расположить калькулятор в строке ввода команд <code>Prompt</code>. Что такое <code>Prompt</code> и как это работает, я уже <a href="https://chubaduba.github.io/posts/2018-04-19-1.html">писал раньше</a>.</p>
+<p>Все изменения будем делать в файле конфигурации xmonad <code>xmonad.hs</code>. Первое, что я сделал - сконфигурировал саму строку ввода, в которой будет открываться калькулятор:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">-- Calc Prompt</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">myCalcConfig <span class="fu">=</span> def</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#DBA3A2&quot;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">        }</a></code></pre></div>
+<p>Тут всё просто. Задал шрифт, цвет фона и цвет шрифта, а также месторасположение строки. В моём случае окно калькулятора будет распологаться вверху экрана, перекрывая <code>xmobar</code>.</p>
+<p>Вторым шагом добавляем саму функцию, которая будет открывать калькулятор:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Calculator</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ot">calcPrompt ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> () </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">calcPrompt c ans <span class="fu">=</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    inputPrompt c (trim ans) <span class="fu">?+</span> \input <span class="ot">-&gt;</span> </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        liftIO(runProcessWithInput <span class="st">&quot;calc&quot;</span> [input] <span class="st">&quot;&quot;</span>) <span class="fu">&gt;&gt;=</span> calcPrompt c </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">        trim  <span class="fu">=</span> f <span class="fu">.</span> f</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">            <span class="kw">where</span> f <span class="fu">=</span> reverse <span class="fu">.</span> dropWhile isSpace</a></code></pre></div>
+<p>И последнее, что нужно сделать, это добавить в конфигурационный файл комбинацию клавиш, при нажатии которой будет открываться калькулятор:</p>
+<p>```haskell , ((mod4Mask, xK_c), calcPrompt myCalcConfig “calc”)</p>
+<p>```,</p>
+<p>Теперь при нажатии клавиш <code>mod4 + c</code> на месте <code>xmobar</code> открывается окно калькулятора. Закрыть его можно, нажав кнопку <code>Esc</code>.</p>
+<p><img src="http://images2.imagebam.com/b9/e6/76/20f91e885153304.png" /></p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/28"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>

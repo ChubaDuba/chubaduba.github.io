@@ -7,8 +7,41 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 28 May 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Mon, 04 Jun 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmonad. Загоняем калькулятор в Prompt.</title>
+    <link>https://chubaduba.github.io//posts/2018-06-04-1.html</link>
+    <description><![CDATA[<p>Давно хотелось сделать работу с калькулятором в xmonad удобной. Чтобы он был всегда под рукой, и чтобы не делать лишних телодвижений с окном программы.</p>
+<p>В своей системе я пользуюсь консольным калькулятором <a href="http://www.isthe.com/chongo/tech/comp/calc/calc-mirror.html">Calc</a>. Было найдено оригинальное решение, которое позволяет расположить калькулятор в строке ввода команд <code>Prompt</code>. Что такое <code>Prompt</code> и как это работает, я уже <a href="https://chubaduba.github.io/posts/2018-04-19-1.html">писал раньше</a>.</p>
+<p>Все изменения будем делать в файле конфигурации xmonad <code>xmonad.hs</code>. Первое, что я сделал - сконфигурировал саму строку ввода, в которой будет открываться калькулятор:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">-- Calc Prompt</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">myCalcConfig <span class="fu">=</span> def</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#DBA3A2&quot;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">        }</a></code></pre></div>
+<p>Тут всё просто. Задал шрифт, цвет фона и цвет шрифта, а также месторасположение строки. В моём случае окно калькулятора будет распологаться вверху экрана, перекрывая <code>xmobar</code>.</p>
+<p>Вторым шагом добавляем саму функцию, которая будет открывать калькулятор:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Calculator</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ot">calcPrompt ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> () </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">calcPrompt c ans <span class="fu">=</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    inputPrompt c (trim ans) <span class="fu">?+</span> \input <span class="ot">-&gt;</span> </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        liftIO(runProcessWithInput <span class="st">&quot;calc&quot;</span> [input] <span class="st">&quot;&quot;</span>) <span class="fu">&gt;&gt;=</span> calcPrompt c </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">        trim  <span class="fu">=</span> f <span class="fu">.</span> f</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">            <span class="kw">where</span> f <span class="fu">=</span> reverse <span class="fu">.</span> dropWhile isSpace</a></code></pre></div>
+<p>И последнее, что нужно сделать, это добавить в конфигурационный файл комбинацию клавиш, при нажатии которой будет открываться калькулятор:</p>
+<p>```haskell , ((mod4Mask, xK_c), calcPrompt myCalcConfig “calc”)</p>
+<p>```,</p>
+<p>Теперь при нажатии клавиш <code>mod4 + c</code> на месте <code>xmobar</code> открывается окно калькулятора. Закрыть его можно, нажав кнопку <code>Esc</code>.</p>
+<p><img src="http://images2.imagebam.com/b9/e6/76/20f91e885153304.png" /></p>]]></description>
+    <pubDate>Mon, 04 Jun 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-06-04-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Использование сервиса pastebin.</title>
     <link>https://chubaduba.github.io//posts/2018-05-28-1.html</link>
     <description><![CDATA[<p>Очень часто, при решении каких-то вопросов, связанных с использованием Linux, люди, пытающиеся вам помочь, просят, чтобы вы показали им какой-либо файл с логами или результат работы (выхлоп) команды, введённой в терминале. Первое, что придёт вам на ум в этой ситуации - это сделать скриншот своего экрана или вообще взять и сфотографировать свой монитор. Согласистесь, очень часто на форумах, на которых пользователи Linux ищут ответы на свои вопросы можно увидеть вот такие фотографии:</p>
@@ -286,160 +319,6 @@ Installed, configured and forgotten…</p>
 <p><a href="http://www.imagebam.com/image/259f32836633383"><img src="http://thumbs2.imagebam.com/f3/91/35/259f32836633383.jpg" alt="ImageBam image upload"></a></p>]]></description>
     <pubDate>Fri, 13 Apr 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-04-13-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Systemd. Запуск задач по расписанию.</title>
-    <link>https://chubaduba.github.io//posts/2018-04-08-1.html</link>
-    <description><![CDATA[<p>Чтобы systemd запускал нужный нам сервис по таймеру, у сервиса должен быть соответствующий unit-файл (файл конфигурации службы для systemd), он должен иметь расширение <code>.service</code>, а также специальный одноименный unit-файл, но с расширением <code>.timer</code>, описывающий, когда указанный сервис должен быть запущен. Освоив <code>systemd.timer</code>, вполне можно отказаться от использования <code>Cron</code>.</p>
-<p>Для примера автоматизируем такую задачу, как обновление списка пакетов из источников, перечисленных в нашем файле <code>sources.list</code>. Ни для кого не секрет, что в Debian для обновления списка пакетов используется следующая команда:</p>
-<pre><code># apt-get update
-</code></pre>
-<p>Первое, что мы сделаем - это завернём данную команду в скрипт:</p>
-<hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="ex">apt-get</span> update</a></code></pre></div>
-<hr />
-<p>Скрипт так и назовём <code>update</code> и сохраним его в <code>/opt</code>. Обязательно нужно сделать скрипт исполняемым:</p>
-<pre><code># chmod +x /opt/update
-</code></pre>
-<p>Вторым шагом нужно создать unit-файл, описывающий наш сервис, и сохранить его в <code>/lib/systemd/system</code>:</p>
-<p><code>xmobar_update.service</code>:</p>
-<hr />
-<pre><code>[Unit]
-Description=Update script for xmobar
- 
-[Service]
-ExecStart=/opt/update
-</code></pre>
-<hr />
-<p>где<br />
-<code>Description=</code> - произвольное описание;<br />
-<code>ExecStart=</code> - директива, которая описывает, что будет запускаться.</p>
-<p>Описание должно быть таким, чтобы спустя какое-то время понимать для каких целей вы создавали данный unit-файл. С директивой <code>ExecStart=</code>, думаю, всё понятно. В данном случае запускается ранее созданный нами скрипт.</p>
-<p>Наконец, осталось создать unit-файл типа <code>timer</code> и положить туда же с тем же названием, сменив только расширение с <code>.service</code> на <code>.timer</code>:</p>
-<p><code>xmobar_update.timer</code>:</p>
-<hr />
-<pre><code>[Unit]
-Description=timer for xmobar update script
- 
-[Timer]
-OnStartupSec=60
- 
-[Install]
-WantedBy=timers.target
-</code></pre>
-<hr />
-<p>Здесь стоит обратить внимание на директиву <code>OnStartupSec=</code>, которая показывает, что запускать сервис надо после первого запуска systemd и, поскольку, ничего иного не указано, с задержкой в 60 секунд. Ничего - не значит ничего. На самом деле systemd просто остальные переменные сам заменит на <code>*</code>, означающую <font color="#91E2E6">всегда</font> - точно так же, как и в Cron’e. Иными словами всегда, после первого запуска systemd, а это происходит каждый раз при запуске компьютера, с задержкой в 60 секунд будет выполняться наш сервис.</p>
-<blockquote>
-<p>Существуют разные директивы, о которых можно прочитать <a href="https://www.freedesktop.org/software/systemd/man/systemd.timer">в документации к systemd</a>.</p>
-</blockquote>
-<p>Приведу несколько примеров для директивы <code>OnCalendar=</code>, которая запускает сервис по календарю:</p>
-<table>
-<colgroup>
-<col style="width: 66%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Событие</th>
-<th style="text-align: left;">Синтаксис</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Пн-Вт,СБ и ВС в 00:00:00</td>
-<td style="text-align: left;"><code>Sat,Thu,Mon-Wed,Sat-Sun</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Все Пн и Вс в 2018-ом в 01:23 и в 02:23</td>
-<td style="text-align: left;"><code>Mon,Sun 18-*-* 2,1:23</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1-ого числа каждого месяца, но только если это среда в 00:00:00</td>
-<td style="text-align: left;"><code>Wed *-1</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">То же самое</td>
-<td style="text-align: left;"><code>Wed-Wed,Wed *-1</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">По средам 17:48:00</td>
-<td style="text-align: left;"><code>Wed, 17:48</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">15-ого октября 2018-ого в 01:02:03, но только, если это Вт, Ср, Чт, Пт, Сб</td>
-<td style="text-align: left;"><code>Wed-Sat,Tue 12-10-18 1:2:3</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">7-ого числа каждого месяца в 00:00</td>
-<td style="text-align: left;"><code>*-*-7 0:0:0</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Каждый год 15-ого октября в 00:00</td>
-<td style="text-align: left;"><code>*-10-15 00:00:00</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Каждой 5-ое марта в 08:05:40</td>
-<td style="text-align: left;"><code>03-05 08:05:40</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ежедневно в 08:05:40</td>
-<td style="text-align: left;"><code>08:05:40</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ежедневно в 5:40</td>
-<td style="text-align: left;"><code>*-*-* 05:40:00</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">В 2018-ом 3-его мая в 00:00</td>
-<td style="text-align: left;"><code>2018-03-05</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ежегодно 3-его мая в 00:00</td>
-<td style="text-align: left;"><code>03-05</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ежечастно в 0 минут</td>
-<td style="text-align: left;"><code>hourly</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ежедневно в 00:00</td>
-<td style="text-align: left;"><code>daily</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ежемесяно 1-ого числа в 00:00</td>
-<td style="text-align: left;"><code>monthly</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Еженедельно в понедельник в 00:00</td>
-<td style="text-align: left;"><code>weekly</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ежегодно 1-ого января в 00:00</td>
-<td style="text-align: left;"><code>yearly</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Тоже самое</td>
-<td style="text-align: left;"><code>annually</code></td>
-</tr>
-</tbody>
-</table>
-<p>Директиву <code>OnCalendar=</code> можно комбинировать с другими типами таймеров, что даёт возможность настроить практически любую вариацию.</p>
-<p>Директива <code>WantedBy=timers.target</code> никак не влияет на работу, она нужна для того, чтобы при следующей перезагрузке наш таймер заработал автоматически.</p>
-<p>Теперь всё готово для запуска сервиса по таймеру. Обновляем конфигурацию systemd командой:</p>
-<pre><code># systemctl daemon-reload
-</code></pre>
-<p>Ставим таймер в автозагрузку:</p>
-<pre><code># systemctl enable xmobar_update.timer
-</code></pre>
-<p>И наконец, перезагружаемся или включаем таймер командой:</p>
-<pre><code># systemctl start xmobar_update.timer
-</code></pre>
-<p>Всё! <code>xmobar_update.timer</code> будет отслеживать заданное событие и, по наступлению нужного момента, запустит <code>xmobar_update.service</code>.</p>]]></description>
-    <pubDate>Sun, 08 Apr 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-04-08-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
