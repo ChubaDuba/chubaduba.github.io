@@ -63,8 +63,7 @@
 <a class="sourceLine" id="cb2-7" data-line-number="7">        trim  <span class="fu">=</span> f <span class="fu">.</span> f</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">            <span class="kw">where</span> f <span class="fu">=</span> reverse <span class="fu">.</span> dropWhile isSpace</a></code></pre></div>
 <p>И последнее, что нужно сделать, это добавить в конфигурационный файл комбинацию клавиш, при нажатии которой будет открываться калькулятор:</p>
-<p>```haskell , ((mod4Mask, xK_c), calcPrompt myCalcConfig “calc”)</p>
-<p>```,</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1">, ((mod4Mask,     xK_c), calcPrompt myCalcConfig <span class="st">&quot;calc&quot;</span>)</a></code></pre></div>
 <p>Теперь при нажатии клавиш <code>mod4 + c</code> на месте <code>xmobar</code> открывается окно калькулятора. Закрыть его можно, нажав кнопку <code>Esc</code>.</p>
 <p><img src="http://images2.imagebam.com/b9/e6/76/20f91e885153304.png" /></p>
 
