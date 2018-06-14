@@ -52,18 +52,19 @@ $ sudo apt-get install xclip
 <pre><code>$ pastebinit -l
 </code></pre>
 <p><img src="http://images2.imagebam.com/c5/d4/44/88c0c8851554954.png" /></p>
-<p>Стоит отметить, что на самом деле, не со всеми сервисами из этого списка <code>pastebinit</code> работает. Причины этому две: либо сам сервис не работает (недоступен), либо у сервиса поменялся API и <code>pastebinit</code> перестал корректно с ним работать. Какой сервис выбрать для себя дело сугубо ваших предпочтений. Я до недавнего времени использовал сервис <code>lpaste.net</code>, но по каким-то причинам он стал недоступным, поэтому стал использовать <code>paste.openstack.org</code>.</p>
+<p>Стоит отметить, что на самом деле, не со всеми сервисами из этого списка <code>pastebinit</code> работает. Причины этому две: либо сам сервис не работает (недоступен), либо у сервиса поменялся API и <code>pastebinit</code> перестал корректно с ним работать. Какой сервис выбрать для себя дело сугубо ваших предпочтений. Я пользуюсь сервисом по умолчанию <code>paste.debian.net</code>.</p>
 <blockquote>
-<p>По умолчанию <code>pastebinit</code> использует сервис <code>paste.debian.net</code> с которым не работает!!! Связано это с изменениями API у <code>paste.debian.net</code>. Сам сервис работает, но <code>pastebinit</code> взаимодействовать с ним не хочет. Будем надеяться, что разработчики <code>pastebinit</code> когда-нибудь исправят этот глюк.</p>
+<p>В Debian 9 Stratch <code>pastebinit</code> имеет ошибки, которые не позволяют ему корректно работать с сервисом <code>paste.debian.net</code>. Поэтому рекомендую поставить более свежую версию пакета из Debian testing или Debian sid.</p>
 </blockquote>
 <p>Чтобы каждый раз не вводить в терминале длинные команды, создадим <code>alias</code>, обзовём его <code>paste</code>, который будем использовать когда нужно будет что-то скопировать. Добавляем в наш файл <code>~/.bashrc</code> строчку :</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">alias</span> paste=<span class="st">'pastebinit -b http://lpaste.net | xclip -selection &quot;clipboard&quot; '</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">alias</span> paste=<span class="st">'pastebinit -b paste.debian.net -a ChubaDuba | xclip -selection &quot;clipboard&quot; '</span></a></code></pre></div>
+<p>параметр <code>-a</code> задаёт имя автора. Параметр не обязательный, если вы его не будите прописывать, то автоматически вам будет присвоено имя <code>anonymous</code>.</p>
 <p>Теперь всё готово для работы. Посмотрим на практике как это работает.<br />
 Например, нам нужно показать вывод команды <code>lspci</code>. Открываем терминал и вводим следующую команду:</p>
 <pre><code>$ lspci | paste
 </code></pre>
 <p>После её выполнения в буфере обмена у нас будет ссылка, перейдя по которой можно увидеть результат работы введённой нами команды. В нашем примере <code>lspci</code>. Остаётся поделиться этой ссылкой, нажав клавиши <code>Ctrl + v</code> там, где нам нужно: на форуме, чате или отправить её по e-mail. Если перейти по этой ссылке, откроется страничка выбранного нами ресурса, на которой в удобной для просмотра форме будет показан результат работы вводимой нами команды:</p>
-<p><a href="http://www.imagebam.com/image/e7bf52878731184" target="_blank"><img src="http://thumbs2.imagebam.com/bb/94/4d/e7bf52878731184.jpg" alt="imagebam.com"></a></p>
+<p><a href="http://www.imagebam.com/image/dffeb7895532484" target="_blank"><img src="http://thumbs2.imagebam.com/e1/fe/50/dffeb7895532484.jpg" alt="imagebam.com"></a></p>
 
 <div id="comment">
 <a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/27"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
