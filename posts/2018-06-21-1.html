@@ -35,68 +35,34 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом xmobar</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-06-21-1.html">Xmobar с поддержкой иконок в формате xpm.</a>”
-            ‒ <span class="soft">21 Июня, 2018</span><br />
-            Новые возможности в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-27-1.html">Xmobar. Дата.</a>”
-            ‒ <span class="soft">27 Апреля, 2018</span><br />
-            Избавляемся от забугорного формата даты.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-23-1.html">Xmobar. Информация о текущем треке (MOC плеер).</a>”
-            ‒ <span class="soft">23 Апреля, 2018</span><br />
-            Показываем информацию о текущем треке в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-16-1.html">Вывод в xmobar информации о доступных обновлениях.</a>”
-            ‒ <span class="soft">16 Апреля, 2018</span><br />
-            Как показать в xmobar количество доступных обновлений.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-25-1.html">Xmonad+xmobar+ALSA.</a>”
-            ‒ <span class="soft">25 Марта, 2018</span><br />
-            Громкость звука. Настраиваем управление и отображение.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-15-1.html">Погода в xmobar</a>”
-            ‒ <span class="soft">15 Марта, 2018</span><br />
-            Как вывести в xmobar информацию о погоде.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-02-27-1.html">Иконки для рабочих столов xmonad в xmobar</a>”
-            ‒ <span class="soft">27 Февраля, 2018</span><br />
-            Как поменять в xmobar названия рабочих столов на иконки
-        </p>
-    </li>
-    
-</ul>
+    <h1>Xmobar с поддержкой иконок в формате xpm.</h1>
+<div class="soft">
+    Новые возможности в xmobar.<br />
+    Posted in: <a href="../tags/xmobar.html">xmobar</a>.
+</div>
 
+<p>Сравнительно недавно в <code>xmobar</code> появилась возможность использовать иконки в формате <code>xpm</code>. Чтобы воспользоваться этим новшеством, нужно при сборке <code>xmobar</code> установить флаг <code>with_xpm</code>. Например, если устанавливать <code>xmobar</code> из <code>cabal</code>, то команда будет иметь такой вид:</p>
+<pre><code>$ cabal install xmobar --flags=&quot;with_xpm&quot;
+</code></pre>
+<p>также для сборки потребуется установить библиотеку <code>libxpm-dev</code>:</p>
+<pre><code>$ sudo apt-get install libxpm-dev
+</code></pre>
+<p>Для конвертации изображений в формат <code>XPM</code> можно воспользоваться <a href="https://www.online-utility.org/image/convert/to/XPM">онлайн конвертером</a>.</p>
+<p>В конфигурационном файле <code>.xmobarrc</code> необходимо указать местонахождение иконок, добавив в секцию <code>Config</code> строчку:</p>
+<pre><code>iconRoot = &quot;путь_до_директории_с иконками&quot;
+</code></pre>
+<blockquote>
+<p>Также можно задать действие, которое будет выполняться по клику на иконке!</p>
+</blockquote>
+<p>И теперь осталось определиться с местом, где будет распологаться иконка, и, если необходимо, действие по клику. Я подготовил <a href="https://mega.nz/#!4c9kCSqa!mVtLEVM9bMsKfpMBQfmTiXCjgOyi0rDwUucD8LX5pg8">иконку</a> с логотипом <code>Debian</code> и решил расположить её в левом углу <code>xmobar</code>, а по клику на иконке будет запускаться <a href="https://chubaduba.github.io/posts/2018-02-25-1.html">myGtkMenu</a>. Редактируем <code>template</code>:</p>
+<pre><code>, template = &quot;&lt;action=`ваше_действие`&gt;&lt;icon=debian_logo.xpm/&gt;&lt;/action&gt;%StdinReader% } ... 
+</code></pre>
+<p>Остаётся перезагрузить <code>xmobar</code> и увидеть изменения:</p>
+<p><a href="http://www.imagebam.com/image/c4f5ba900960824"><img src="http://thumbs2.imagebam.com/57/78/bc/c4f5ba900960824.jpg" alt="imagebam.com"></a></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/30"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
