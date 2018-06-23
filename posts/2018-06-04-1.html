@@ -52,7 +52,7 @@
 <a class="sourceLine" id="cb1-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">        }</a></code></pre></div>
-<p>Тут всё просто. Задал шрифт, цвет фона и цвет шрифта, а также месторасположение строки. В моём случае окно калькулятора будет распологаться вверху экрана, перекрывая <code>xmobar</code>.</p>
+<p>Тут всё просто. Задал шрифт, цвет фона и цвет шрифта, а также месторасположение строки. В моём случае окно калькулятора будет располагаться вверху экрана, перекрывая <code>xmobar</code>.</p>
 <p>Вторым шагом добавляем саму функцию, которая будет открывать калькулятор:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Calculator</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ot">calcPrompt ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> () </a>
