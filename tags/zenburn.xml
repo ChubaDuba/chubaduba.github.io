@@ -7,8 +7,448 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/zenburn.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 19 Mar 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 06 Jul 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Zenburn GTK2 color theme</title>
+    <link>https://chubaduba.github.io//posts/2018-07-06-1.html</link>
+    <description><![CDATA[<p>Очень давно использую у себя перекрашенную в цвета <code>zenburn</code> тему <code>Clearlooks</code>:</p>
+<p><a href="http://www.imagebam.com/image/f60449912122864"><img src="http://thumbs2.imagebam.com/f3/f1/7b/f60449912122864.jpg" alt="imagebam.com"></a></p>
+<details>
+<p><summary><code>gtkrc</code></summary></p>
+<hr />
+<pre><code># gtkrc Clearlooks Zenburn colors.
+
+gtk-color-scheme = &quot;base_color:#3F3F3F\nfg_color:#DCDCCC\ntooltip_fg_color:#000000\nselected_bg_color:#1E2320\nselected_fg_color:#F0E0AF\ntext_color:#DCDCCC\nbg_color:#4F4F4F\ntooltip_bg_color:#F5F5B5&quot;
+
+style &quot;default&quot; {
+	xthickness = 1
+	ythickness = 1
+
+	#######################
+	# Style Properties
+	#######################
+	GtkButton::child-displacement-x = 1
+	GtkButton::child-displacement-y = 1
+	GtkButton::default-border = { 0, 0, 0, 0 }
+	GtkButton::image-spacing = 4
+	GtkToolButton::icon-spacing = 4
+
+	GtkCheckButton::indicator-size = 14
+
+	GtkPaned::handle-size = 6
+
+	GtkRange::trough-border = 0
+	GtkRange::slider-width = 15
+	GtkRange::stepper-size = 15
+
+	GtkScale::slider-length = 23
+	GtkScale::trough-side-details = 1
+
+	GtkScrollbar::min-slider-length = 30
+	GtkMenuBar::internal-padding = 0
+	GtkExpander::expander-size = 16
+	GtkToolbar::internal-padding = 1
+	GtkTreeView::expander-size = 14
+	GtkTreeView::vertical-separator = 0
+
+	GtkMenu::horizontal-padding = 0
+	GtkMenu::vertical-padding = 0
+
+	WnckTasklist::fade-overlay-rect = 0
+	# The following line hints to gecko (and possibly other appliations)
+	# that the entry should be drawn transparently on the canvas.
+	# Without this, gecko will fill in the background of the entry.
+	GtkEntry::honors-transparent-bg-hint = 1
+
+	GtkEntry::progress-border = { 2, 2, 2, 2 }
+
+	####################
+	# Color Definitions
+	####################
+	bg[NORMAL]        = @bg_color
+	bg[PRELIGHT]      = shade (1.02, @bg_color)
+	bg[SELECTED]      = @selected_bg_color
+	bg[INSENSITIVE]   = @bg_color
+	bg[ACTIVE]        = shade (0.9, @bg_color)
+
+	fg[NORMAL]        = @fg_color
+	fg[PRELIGHT]      = @fg_color
+	fg[SELECTED]      = @selected_fg_color
+	fg[INSENSITIVE]   = darker (@bg_color)
+	fg[ACTIVE]        = @fg_color
+
+	text[NORMAL]      = @text_color
+	text[PRELIGHT]    = @text_color
+	text[SELECTED]    = @selected_fg_color
+	text[INSENSITIVE] = darker (@bg_color)
+	text[ACTIVE]      = @selected_fg_color
+
+	base[NORMAL]      = @base_color
+	base[PRELIGHT]    = shade (0.95, @bg_color)
+	base[SELECTED]    = @selected_bg_color
+	base[INSENSITIVE] = @bg_color
+	base[ACTIVE]      = shade (0.9, @selected_bg_color)
+
+	engine &quot;clearlooks&quot; {
+		colorize_scrollbar = FALSE
+		reliefstyle = 1
+		menubarstyle = 2
+		toolbarstyle = 1
+		animation = FALSE
+		radius = 3.0
+		style = GUMMY
+
+		# Set a hint to disable backward compatibility fallbacks.
+		hint = &quot;use-hints&quot;
+	}
+}
+
+style &quot;wide&quot; {
+	xthickness = 2
+	ythickness = 2
+}
+
+style &quot;wider&quot; {
+	xthickness = 3
+	ythickness = 3
+}
+
+style &quot;entry&quot; {
+	xthickness = 3
+	ythickness = 3
+
+	bg[SELECTED] = mix (0.4, @selected_bg_color, @base_color)
+	fg[SELECTED] = @text_color
+
+	engine &quot;clearlooks&quot; {
+		focus_color = shade (0.65, @selected_bg_color)
+	}
+}
+
+style &quot;spinbutton&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;spinbutton&quot;
+	}
+}
+
+style &quot;scale&quot; {
+	xthickness = 2
+	ythickness = 2
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;scale&quot;
+	}
+}
+
+style &quot;vscale&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;vscale&quot;
+	}
+}
+
+style &quot;hscale&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;hscale&quot;
+	}
+}
+
+style &quot;scrollbar&quot; {
+	xthickness = 2
+	ythickness = 2
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;scrollbar&quot;
+	}
+}
+
+style &quot;hscrollbar&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;hscrollbar&quot;
+	}
+}
+
+style &quot;vscrollbar&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;vscrollbar&quot;
+	}
+}
+
+style &quot;notebook_bg&quot; {
+
+	bg[NORMAL]        = shade (1.02, @bg_color)
+}
+
+style &quot;button&quot; {
+	xthickness = 3
+	ythickness = 3
+
+	bg[NORMAL]        = shade (1.04, @bg_color)
+	bg[PRELIGHT]      = shade (1.06, @bg_color)
+	bg[ACTIVE]        = shade (0.85, @bg_color)
+}
+
+# The color is changed by the notebook_bg style, this style
+# changes the x/ythickness
+style &quot;notebook&quot; {
+	xthickness = 3
+	ythickness = 3
+}
+
+style &quot;statusbar&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;statusbar&quot;
+	}
+}
+
+style &quot;comboboxentry&quot; {
+
+	engine &quot;clearlooks&quot; {
+		# Note:
+		# If you set the appears-as-list option on comboboxes in the theme,
+		# then you should set this hint on the combobox instead.
+		hint = &quot;comboboxentry&quot;
+	}
+}
+
+style &quot;menubar&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;menubar&quot;
+	}
+}
+
+style &quot;menu&quot; {
+	xthickness = 0
+	ythickness = 0
+
+	bg[NORMAL]        = shade (1.08, @bg_color)
+
+	engine &quot;clearlooks&quot; {
+		radius = 0.0
+	}
+}
+
+style &quot;menu_item&quot; {
+	xthickness = 2
+	ythickness = 3
+
+	fg[PRELIGHT]      = @selected_fg_color
+}
+
+# This style is there to modify the separator menu items. The goals are:
+# 1. Get a specific height.
+# 2. The line should go to the edges (ie. no border at the left/right)
+style &quot;separator_menu_item&quot; {
+	xthickness = 1
+	ythickness = 0
+
+	GtkSeparatorMenuItem::horizontal-padding = 0
+	GtkWidget::wide-separators = 1
+	GtkWidget::separator-width = 1
+	GtkWidget::separator-height = 7
+}
+
+style &quot;frame_title&quot; {
+
+	fg[NORMAL]        = lighter (@fg_color)
+}
+
+style &quot;treeview&quot; {
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;treeview&quot;
+	}
+}
+
+# The almost useless progress bar style
+style &quot;progressbar&quot; {
+	xthickness = 1
+	ythickness = 1
+
+	fg[PRELIGHT]      = @selected_fg_color
+
+	engine &quot;clearlooks&quot; {
+		# Explicitly set the radius for the progress bars inside menu items.
+		radius = 3.0
+
+		hint = &quot;progressbar&quot;
+	}
+}
+
+# This style is based on the default style, so that the colors from the button
+# style are overriden again.
+style &quot;treeview_header&quot; = &quot;default&quot; {
+	xthickness = 2
+	ythickness = 1
+
+	engine &quot;clearlooks&quot; {
+		hint = &quot;treeview-header&quot;
+	}
+}
+
+style &quot;tooltips&quot; {
+	xthickness = 4
+	ythickness = 4
+
+	bg[NORMAL]        = @tooltip_bg_color
+	fg[NORMAL]        = @tooltip_fg_color
+}
+
+style &quot;nautilus_location&quot; {
+
+	bg[NORMAL]        = mix (0.60, shade (1.05, @bg_color), @selected_bg_color)
+}
+
+# Wrokaroudn style for places where the text color is used instead of the fg color.
+style &quot;text_is_fg_color_workaround&quot; {
+
+	text[NORMAL]      = @fg_color
+	text[PRELIGHT]    = @fg_color
+	text[SELECTED]    = @selected_fg_color
+	text[ACTIVE]      = @fg_color
+	text[INSENSITIVE] = darker (@bg_color)
+}
+
+# Workaround style for menus where the text color is used instead of the fg color.
+style &quot;menuitem_text_is_fg_color_workaround&quot; {
+
+	text[NORMAL]      = @fg_color
+	text[PRELIGHT]    = @selected_fg_color
+	text[SELECTED]    = @selected_fg_color
+	text[ACTIVE]      = @fg_color
+	text[INSENSITIVE] = darker (@bg_color)
+}
+
+# Workaround style for places where the fg color is used instead of the text color.
+style &quot;fg_is_text_color_workaround&quot; {
+
+	fg[NORMAL]        = @text_color
+	fg[PRELIGHT]      = @text_color
+	fg[SELECTED]      = @selected_fg_color
+	fg[ACTIVE]        = @selected_fg_color
+	fg[INSENSITIVE]   = darker (@bg_color)
+}
+
+# Style to set the toolbar to use a flat style. This is because the &quot;New&quot; button in
+# Evolution is not drawn transparent. So if there is a gradient in the background it will
+# look really wrong.
+# See http://bugzilla.gnome.org/show_bug.cgi?id=446953.
+style &quot;evo_new_button_workaround&quot; {
+
+	engine &quot;clearlooks&quot; {
+		toolbarstyle = 0
+	}
+}
+
+
+###############################################################################
+# The following part of the gtkrc applies the different styles to the widgets.
+###############################################################################
+
+# The default style is applied to every widget
+class &quot;GtkWidget&quot; style &quot;default&quot;
+
+class &quot;GtkSeparator&quot; style &quot;wide&quot;
+class &quot;GtkFrame&quot; style &quot;wide&quot;
+class &quot;GtkCalendar&quot; style &quot;wide&quot;
+class &quot;GtkEntry&quot; style &quot;entry&quot;
+
+class &quot;GtkSpinButton&quot; style &quot;spinbutton&quot;
+class &quot;GtkScale&quot; style &quot;scale&quot;
+class &quot;GtkVScale&quot; style &quot;vscale&quot;
+class &quot;GtkHScale&quot; style &quot;hscale&quot;
+class &quot;GtkScrollbar&quot; style &quot;scrollbar&quot;
+class &quot;GtkHScrollbar&quot; style &quot;hscrollbar&quot;
+class &quot;GtkVScrollbar&quot; style &quot;vscrollbar&quot;
+
+# General matching follows. The order is choosen so that the right styles override
+# each other. EG. progressbar needs to be more important than the menu match.
+widget_class &quot;*&lt;GtkNotebook&gt;&quot; style &quot;notebook_bg&quot;
+# This is not perfect, it could be done better.
+# (That is modify *every* widget in the notebook, and change those back that
+# we really don&#39;t want changed)
+widget_class &quot;*&lt;GtkNotebook&gt;*&lt;GtkEventBox&gt;&quot; style &quot;notebook_bg&quot;
+widget_class &quot;*&lt;GtkNotebook&gt;*&lt;GtkDrawingArea&gt;&quot; style &quot;notebook_bg&quot;
+widget_class &quot;*&lt;GtkNotebook&gt;*&lt;GtkLayout&gt;&quot; style &quot;notebook_bg&quot;
+widget_class &quot;*&lt;GtkNotebook&gt;*&lt;GtkViewport&gt;&quot; style &quot;notebook_bg&quot;
+widget_class &quot;*&lt;GtkNotebook&gt;*&lt;GtkScrolledWindow&gt;&quot; style &quot;notebook_bg&quot;
+
+widget_class &quot;*&lt;GtkButton&gt;&quot; style &quot;button&quot;
+widget_class &quot;*&lt;GtkNotebook&gt;&quot; style &quot;notebook&quot;
+widget_class &quot;*&lt;GtkStatusbar&gt;*&quot; style &quot;statusbar&quot;
+
+widget_class &quot;*&lt;GtkComboBoxEntry&gt;*&quot; style &quot;comboboxentry&quot;
+widget_class &quot;*&lt;GtkCombo&gt;*&quot; style &quot;comboboxentry&quot;
+
+widget_class &quot;*&lt;GtkMenuBar&gt;*&quot; style &quot;menubar&quot;
+widget_class &quot;*&lt;GtkMenu&gt;*&quot; style &quot;menu&quot;
+widget_class &quot;*&lt;GtkMenuItem&gt;*&quot; style &quot;menu_item&quot;
+widget_class &quot;*&lt;GtkSeparatorMenuItem&gt;*&quot; style &quot;separator_menu_item&quot;
+
+widget_class &quot;*.&lt;GtkFrame&gt;.&lt;GtkLabel&gt;&quot; style &quot;frame_title&quot;
+widget_class &quot;*.&lt;GtkTreeView&gt;*&quot; style &quot;treeview&quot;
+
+widget_class &quot;*&lt;GtkProgress&gt;&quot; style &quot;progressbar&quot;
+
+# Treeview headers (and similar stock GTK+ widgets)
+widget_class &quot;*.&lt;GtkTreeView&gt;.&lt;GtkButton&gt;&quot; style &quot;treeview_header&quot;
+widget_class &quot;*.&lt;GtkCTree&gt;.&lt;GtkButton&gt;&quot; style &quot;treeview_header&quot;
+widget_class &quot;*.&lt;GtkList&gt;.&lt;GtkButton&gt;&quot; style &quot;treeview_header&quot;
+widget_class &quot;*.&lt;GtkCList&gt;.&lt;GtkButton&gt;&quot; style &quot;treeview_header&quot;
+
+# The window of the tooltip is called &quot;gtk-tooltip&quot;
+##################################################################
+# FIXME:
+# This will not work if one embeds eg. a button into the tooltip.
+# As far as I can tell right now we will need to rework the theme
+# quite a bit to get this working correctly.
+# (It will involve setting different priorities, etc.)
+##################################################################
+widget &quot;gtk-tooltip*&quot; style &quot;tooltips&quot;
+
+##########################################################################
+# Following are special cases and workarounds for issues in applications.
+##########################################################################
+
+# Workaround for the evolution ETable (bug #527532)
+widget_class &quot;*.&lt;ETable&gt;.&lt;ECanvas&gt;&quot; style &quot;treeview_header&quot;
+# Workaround for the evolution ETree
+widget_class &quot;*.&lt;ETree&gt;.&lt;ECanvas&gt;&quot; style &quot;treeview_header&quot;
+
+# Special case the nautilus-extra-view-widget
+# ToDo: A more generic approach for all applications that have a widget like this.
+widget &quot;*.nautilus-extra-view-widget&quot; style : highest &quot;nautilus_location&quot;
+
+# Work around for http://bugzilla.gnome.org/show_bug.cgi?id=382646
+# Note that this work around assumes that the combobox is _not_ in appears-as-list mode.
+widget_class &quot;*.&lt;GtkComboBox&gt;.&lt;GtkCellView&gt;&quot; style &quot;text_is_fg_color_workaround&quot;
+# This is the part of the workaround that fixes the menus
+widget &quot;*.gtk-combobox-popup-menu.*&quot; style &quot;menuitem_text_is_fg_color_workaround&quot;
+
+# Work around the usage of GtkLabel inside GtkListItems to display text.
+# This breaks because the label is shown on a background that is based on the base color.
+widget_class &quot;*&lt;GtkListItem&gt;*&quot; style &quot;fg_is_text_color_workaround&quot;
+# GtkCList also uses the fg color to draw text on top of the base colors.
+widget_class &quot;*&lt;GtkCList&gt;&quot; style &quot;fg_is_text_color_workaround&quot;
+# Nautilus when renaming files, and maybe other places.
+widget_class &quot;*&lt;EelEditableLabel&gt;&quot; style &quot;fg_is_text_color_workaround&quot;
+
+# See the documentation of the style.
+widget_class &quot;EShellWindow.GtkVBox.BonoboDock.BonoboDockBand.BonoboDockItem*&quot; style &quot;evo_new_button_workaround&quot;
+</code></pre>
+<hr />
+</details>]]></description>
+    <pubDate>Fri, 06 Jul 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-07-06-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Тема Zenburn для Sublime Text 2</title>
     <link>https://chubaduba.github.io//posts/2018-03-19-1.html</link>
     <description><![CDATA[<p>Файл с темой нужно положить в <em>~/.config/sublime-text-2/Packages/Color Scheme - Default/</em>.</p>
