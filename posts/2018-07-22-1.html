@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn, zenburn color" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>ncdc – консольный клиент DC++</h1>
+<div class="soft">
+    Настройка и использование.<br />
+    Posted in: <a href="../tags/soft.html">soft</a>.
+</div>
+
+<p>Многие скажут, что <a href="https://ru.wikipedia.org/wiki/Direct_Connect">Direct Connect</a> давно умер, но как не странно, лично я переодически этим пользуюсь. Тем более, под Linux сущетвует лёгковесный, шустрый и надёжный консольный клиент <a href="https://dev.yorhel.nl/ncdc">ncdc</a>. Сегодня речь пойдёт о его настройке и использовании в Debian GNU/Linux.</p>
+<p>Первое, что нужно сделать - это подготовить порты, которые будет использовать <code>ncdc</code>. У каждого эта настройка будет зависеть от того, как ваш компьютер подключён к интернету. Я опишу свой вариант: имеется динамический IP адрес, интернет раздаёт Wi-Fi роутер. Т.е. другими словами нахожусь я за NAT.</p>
+<p>Настраиваем роутер…<br />
+Сделаем так, чтобы наш компьютер всегда получал один и тот же внутренний IP адрес. Для этого из диапазона IP адресов, которые выдаёт<code>DHCP Server</code> зададим произвольный IP адрес и привяжем его к MAC адресу сетевой карты нашего компьютера. В разных роутерах интерфейс выглядит по разному. В моём случае это выглядит вот так:</p>
+<p><a href="http://www.imagebam.com/image/88f0e1905072814"><img src="http://thumbs2.imagebam.com/23/65/f3/88f0e1905072814.jpg" alt="imagebam.com"></a></p>
+<p>Узнать MAC адрес сетевой карты можно выполнив в терминале команду:</p>
+<pre><code>$ ip a
+</code></pre>
+<p>Теперь наш компьютер при подключении будет иметь постоянный внутренний IP адрес. В моём примере 192.168.1.100. Следующим шагом нужно пробросить порты, с которыми будет работать <code>ncdc</code>. Я для себя выбрал 20000 порт tcp и 21000 порт udp. Заходим в настройки <code>NAT Setting - Virtual Server</code> и вносим изменения:</p>
+<p><a href="http://www.imagebam.com/image/284a9c905079134"><img src="http://thumbs2.imagebam.com/2d/23/4e/284a9c905079134.jpg" alt="imagebam.com"></a></p>
+<p>На этом настройка роутера закончена. Теперь необходимо открыть порты. Опять же сделать это можно по разному в зависимости от того, чем вы пользуетесь в вашей системе. У меня установлен фаервол <code>ufw</code> поэтому открою я порты следующими командами:</p>
+<pre><code>$ sudo ufw allow 20000
+$ sudo ufw allow 21000
+</code></pre>
+<p>Всё, с портами мы закончили, можно переходить к клиенту <code>ncdc</code>. В репозиториях Debian его нет. Как его установить можно прочитать на <a href="https://dev.yorhel.nl/ncdc/install">сайте</a> разработчика. Чтобы при запуске <code>ncdc</code> не ругался на отсутствие <code>GeoIP</code> установим в систему пакет <code>geoip-database</code>:</p>
+<pre><code>$ sudo apt-get install geoip-database
+</code></pre>
+<p>После первого запуска увидим вот такое окно:</p>
+<p><a href="http://www.imagebam.com/image/0153df905086114"><img src="http://thumbs2.imagebam.com/85/d0/f6/0153df905086114.jpg" alt="imagebam.com"></a></p>
+<p>Пропишем наши подготовленные порты:</p>
+<pre><code>/set active_port 20000
+/set active_udp_port 21000
+/set active true 
+</code></pre>
+<p>Установим количество соединений:</p>
+<pre><code>/set connection 10
+</code></pre>
+<p>Задаём свой ник по умолчанию:</p>
+<pre><code> /set nick ваш_nickname
+ </code></pre>
+<p>Установим русскую кодировку по умолчанию:</p>
+<pre><code>/set encoding CP1251
+</code></pre>
+<p>Теперь можно подключиться к какому-нибудь хабу.</p>
+<blockquote>
+<p>Список доступных хабов можно посмотреть по этой <a href="https://dchublist.ru/">ссылке</a>.</p>
+</blockquote>
+<p>Например, подключимся к хабу с названием <code>*Новосибирск - Forever*</code>. Обзовём его <code>novosibirsk</code>. Подключаемся:</p>
+<pre><code>/open novosibirsk
+/connect dchub://novosibirsk-forever.ru
+</code></pre>
+<p><a href="http://www.imagebam.com/image/318143905095054"><img src="http://thumbs2.imagebam.com/c4/f7/47/318143905095054.jpg" alt="imagebam.com"></a></p>
+<p>Для того чтобы открыть окно со списком пользователей, нужно нажать комбинацию клавиш <code>Alt + u</code>:</p>
+<p><a href="http://www.imagebam.com/image/ccf778905096814"><img src="http://thumbs2.imagebam.com/a5/7a/4f/ccf778905096814.jpg" alt="imagebam.com"></a></p>
+<p>Переход между окнами осуществляется нажатием клавиши <code>Alt</code> и цифры, соответствующей номеру окна. Писать о всех возможных командах и доступных горячих клавишах смысла не вижу, так как всё это подробно описано в <a href="https://dev.yorhel.nl/ncdc/man">мануале</a> на сайте разработчика программы.</p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/32"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
