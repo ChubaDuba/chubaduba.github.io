@@ -7,8 +7,19 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 22 Jul 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Wed, 25 Jul 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Minimalistic wallpaper</title>
+    <link>https://chubaduba.github.io//posts/2018-07-25-1.html</link>
+    <description><![CDATA[<blockquote>
+<p>Идею взял <a href="https://stmed.net/wallpaper-25966">отюда</a></p>
+</blockquote>
+<p><a href="http://www.imagebam.com/image/5113f1928355524" target="_blank"><img src="http://thumbs2.imagebam.com/23/40/9c/5113f1928355524.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Wed, 25 Jul 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-07-25-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>ncdc – консольный клиент DC++</title>
     <link>https://chubaduba.github.io//posts/2018-07-22-1.html</link>
     <description><![CDATA[<p>Многие скажут, что <a href="https://ru.wikipedia.org/wiki/Direct_Connect">Direct Connect</a> давно умер, но как не странно, лично я переодически этим пользуюсь. Тем более, под Linux сущетвует лёгковесный, шустрый и надёжный консольный клиент <a href="https://dev.yorhel.nl/ncdc">ncdc</a>. Сегодня речь пойдёт о его настройке и использовании в Debian GNU/Linux.</p>
@@ -668,40 +679,6 @@ Installed, configured and forgotten…</p>
 <p><img src="http://images2.imagebam.com/e8/22/9f/2f0e1b837743753.png" /> <img src="http://images2.imagebam.com/4b/0c/9e/76ea8b838064443.png" /></p>]]></description>
     <pubDate>Fri, 27 Apr 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-04-27-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Xmobar. Информация о текущем треке (MOC плеер).</title>
-    <link>https://chubaduba.github.io//posts/2018-04-23-1.html</link>
-    <description><![CDATA[<p>Иногда бывает нужно посмотреть имя исполнителя и название трека, который в данный момент воспроизводит ваш аудиоплеер. Ниже приведён скрипт, результатом работы которого является строка, содержащая имя исполнителя и название композиции.</p>
-<blockquote>
-<p>Скрипт работает только в том случае, если в качестве аудиоплеера вы используете <a href="http://moc.daper.net">MOC</a>.</p>
-</blockquote>
-<hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#! /bin/bash</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="va">TCOL=</span><span class="st">&quot;#8C8C8C&quot;</span>    </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="va">ACOL=</span><span class="st">&quot;#E0AF8F&quot;</span>    </a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="va">DCOL=</span><span class="st">&quot;#637482&quot;</span>    </a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="va">PCOL=</span><span class="st">&quot;#4F4F4F&quot;</span>    </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="va">MOCSTATE=$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +8<span class="va">)</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$MOCSTATE</span> <span class="ot">==</span> <span class="st">&quot;PLAY&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="co"># MOC на воспроизведении</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$ACOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +4 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st">&lt;/fc&gt; &lt;fc=</span><span class="va">$DCOL</span><span class="st">&gt;-&lt;/fc&gt; &lt;fc=</span><span class="va">$TCOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">       <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw">elif</span><span class="bu"> [</span> <span class="va">$MOCSTATE</span> <span class="ot">==</span> <span class="st">&quot;PAUSE&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="co"># MOC на паузе</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$PCOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +4 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st"> - </span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="kw">fi</span></a></code></pre></div>
-<hr />
-<p><a href="http://www.imagebam.com/image/2fea4c832464493"><img src="http://thumbs2.imagebam.com/7e/0c/a9/2fea4c832464493.jpg" alt="ImageBam image upload"></a></p>]]></description>
-    <pubDate>Mon, 23 Apr 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-04-23-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
