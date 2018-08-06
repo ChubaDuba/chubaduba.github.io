@@ -33,76 +33,36 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом debian</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-08-06-1.html">Делаем десятичную точку вместо запятой.</a>”
-            ‒ <span class="soft"> 6 Августа, 2018</span><br />
-            Как изменить в системе десятичный разделитель запятую на точку.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-06-15-1.html">Русская консоль (tty) в Debian 9 Stratch i386</a>”
-            ‒ <span class="soft">15 Июня, 2018</span><br />
-            Решение проблемы с отображением русских букв в консоли Debian 9 Stratch i386
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-05-28-1.html">Использование сервиса pastebin.</a>”
-            ‒ <span class="soft">28 Мая, 2018</span><br />
-            Как поделиться логами и другой информацией
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-20-1.html">Старые версии Debian</a>”
-            ‒ <span class="soft">20 Марта, 2018</span><br />
-            Откуда можно скачать старые версии Debian
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-10-1.html">Откуда скачивать Debian?</a>”
-            ‒ <span class="soft">10 Марта, 2018</span><br />
-            Какой образ скачивать и почему.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-07-1.html">Debian Butterfly wallpaper</a>”
-            ‒ <span class="soft"> 7 Марта, 2018</span><br />
-            Debian wallpaper (1600x900)
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-06-1.html">Автологин и "startx" без дисплейного менеджера - Debian 9 Stretch</a>”
-            ‒ <span class="soft"> 6 Марта, 2018</span><br />
-            Как настроить автологин и запуск графической оболочки без использования дисплейного менеджера
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-02-24-1.html">Boeing Debian Edition</a>”
-            ‒ <span class="soft">24 Февраля, 2018</span><br />
-            Debian wallpaper (1600x900)
-        </p>
-    </li>
-    
-</ul>
+    <h1>Делаем десятичную точку вместо запятой.</h1>
+<div class="soft">
+    Как изменить в системе десятичный разделитель запятую на точку.<br />
+    Posted in: <a href="../tags/debian.html">debian</a>.
+</div>
 
+<p>Раньше я уже <a href="https://chubaduba.github.io/posts/2018-06-04-1.html">упоминал</a> о том, что на своём компьютере использую калькулятор <code>calc</code>. В этом калькуляторе десятичным разделителем является точка. В тоже время, например, в <code>OpenOffice Calc</code> в качестве разделителя целой и дробной части выступает запятая. Чтобы привести всё к единому знаменателю и сделать во всей системе точку разделителем целой и дробной части, нужно внести следующие изменения:</p>
+<p>Делаем точку разделителем целой и дробной части во всей системе.<br />
+Редактируем файл <code>/usr/share/i18n/locales/ru_RU</code>. Находим строчку:</p>
+<pre><code>decimal_point &quot;&lt;U002C&gt;&quot;
+</code></pre>
+<p>меняем на строчку:</p>
+<pre><code>decimal_point &quot;&lt;U002E&gt;&quot;
+</code></pre>
+<p>После сохранения изменений в файле, необходимо переконфигурировать локаль, выполнив следующую команду в терминале:</p>
+<pre><code># dpkg-reconfigure locales
+</code></pre>
+<p>Меняем запятую на точку на цифровой клавиатуре.<br />
+Открываем на редактирование файл <code>/usr/share/X11/xkb/symbols/ru</code>. Находим строчку:</p>
+<pre><code>include &quot;kpdl(comma)&quot;
+</code></pre>
+<p>Eё нужно закомментировать следующим образом:</p>
+<pre><code>//include &quot;kpdl(comma)&quot;
+</code></pre>
+<p>Остаётся заменить запятую на точку в OpenOffice. Для этого я поменял параметр в настройках языка в “Локальные настройки” на “Английский (США)”:</p>
+<p><a href="http://www.imagebam.com/image/c2844d938023714"><img src="http://thumbs2.imagebam.com/f0/3d/df/c2844d938023714.jpg" alt="imagebam.com"></a></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/34"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
