@@ -7,8 +7,35 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 06 Aug 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 07 Sep 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Debian 9 Stretch. Атомонтическое монтирование USB флешек, карточек SD и дисков CD.</title>
+    <link>https://chubaduba.github.io//posts/2018-09-07-1.html</link>
+    <description><![CDATA[<p>Если вы как и я не используете в своей системе окружение рабочего стола, а пользуетесь каким-либо оконным менеджером, то рано или поздно столкнётесь с таким вопросом как организовать автоматическое монтирование USB флешек, карточек SD и дисков СD.</p>
+<p>Существует много способов реализовать это. В сети можно найти кучу информации по этому вопросу. Сегодня я расскажу как решил эту задачу у себя в системе.</p>
+<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написаный на языке Python.</p>
+<blockquote>
+<p>Страничку разработчика udiskie можно посмотреть <a href="https://github.com/coldfix/udiskie">тут</a>.</p>
+</blockquote>
+<p>Устанавливаем все эти три пакета. Чтобы не тащить в систему ненужные пакеты, пропишем, что ставить будем без рекомендованных зависимостей:</p>
+<pre><code>$ sudo apt-get install udisks2 policykit-1 udiskie --no-install-recommends
+</code></pre>
+<p>По умолчанию <code>udisks2</code> будет монтировать устройства в директорию <code>/media/$USER/</code>. Я посчитал это лишним и решил монтировать в директорию <code>/media</code>. Для этого создал правило <code>/etc/udev/rules.d/99-udisks2.rules</code>:</p>
+<pre><code># UDISKS_FILESYSTEM_SHARED
+# ==1: mount filesystem to a shared directory (/media/VolumeName)
+# ==0: mount filesystem to a private directory (/run/media/$USER/VolumeName)
+# See udisks(8)
+ENV{ID_FS_USAGE}==&quot;filesystem|other|crypto&quot;, ENV{UDISKS_FILESYSTEM_SHARED}=&quot;1&quot;
+</code></pre>
+<p>Осталось сделать последний шаг, настроить запуск <code>udiskie</code> при старте нашего оконного менеджера. Для этого в файл <code>~/.xinitrc</code> я добавил следующую строчку:</p>
+<pre><code>udiskie --use-udisks2 &amp;
+</code></pre>
+<p>На этом настройку монтирования можно считать законченной.</p>]]></description>
+    <pubDate>Fri, 07 Sep 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-09-07-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Делаем десятичную точку вместо запятой.</title>
     <link>https://chubaduba.github.io//posts/2018-08-06-1.html</link>
     <description><![CDATA[<p>Раньше я уже <a href="https://chubaduba.github.io/posts/2018-06-04-1.html">упоминал</a> о том, что на своём компьютере использую калькулятор <code>calc</code>. В этом калькуляторе десятичным разделителем является точка. В тоже время, например, в <code>OpenOffice Calc</code> в качестве разделителя целой и дробной части выступает запятая. Чтобы привести всё к единому знаменателю и сделать во всей системе точку разделителем целой и дробной части, нужно внести следующие изменения:</p>
@@ -666,18 +693,6 @@ $ sudo apt-get install xclip
 <p>Демо ролик: <iframe width=100% height="240" src="https://www.youtube.com/embed/e5GTCpzL3OY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>]]></description>
     <pubDate>Tue, 15 May 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-05-15-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>"Debian stable" wallpaper</title>
-    <link>https://chubaduba.github.io//posts/2018-05-13-1.html</link>
-    <description><![CDATA[<blockquote>
-<p>Debian stable<br />
-Installed, configured and forgotten…</p>
-</blockquote>
-<p><a href="http://www.imagebam.com/image/3b56bd857637814" target="_blank"><img src="http://thumbs2.imagebam.com/9d/a9/fe/3b56bd857637814.jpg" alt="ImageBam image upload"></a></p>]]></description>
-    <pubDate>Sun, 13 May 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-05-13-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

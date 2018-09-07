@@ -33,43 +33,36 @@
         </div>
 
         <div id="content">
-    <h1>Фотоб&lambda;ог</h1>
-<div class="photoblog">
-    <p>
-        Фотография - это моё хобби. Увлекаюсь ей очень давно. Конечно,
-        постоянно с собой фотоаппарат не таскаю, но в отпуск, и когда знаю,
-        что будет что-то интересное, беру практически всегда. 
-    </p>
-    <p>
-        Здесь некоторые фотографии из моего аккаунта 
-        <a href="https://www.flickr.com/photos/chubaduba/albums">Flickr</a>.
-    </p>
-
-    <h1></h1>
-    
-    <f1></f1>
-    <img src="https://farm5.staticflickr.com/4790/25870022667_c484d8dac7_o.jpg" alt />
-    
-    <f1></f1>
-    <img src="https://farm5.staticflickr.com/4798/39845921995_e285295c8b_o.jpg" alt />
-    
-    <f1></f1>
-    <img src="https://farm5.staticflickr.com/4802/40723037171_d8becd1785_o.jpg" alt />
-    
-
-    <div class="pagination">
-        
-            <a href="../photos/8.html"><=</a>
-        
-        &mdash;
-        страница 9 из 16
-        &mdash;
-        
-            <a href="../photos/10.html">=></a>
-        
-    </div>
+    <h1>Debian 9 Stretch. Атомонтическое монтирование USB флешек, карточек SD и дисков CD.</h1>
+<div class="soft">
+    Как настроить автомонтическое монтирование в Debian 9 Stretch.<br />
+    Posted in: <a href="../tags/debian.html">debian</a>.
 </div>
 
+<p>Если вы как и я не используете в своей системе окружение рабочего стола, а пользуетесь каким-либо оконным менеджером, то рано или поздно столкнётесь с таким вопросом как организовать автоматическое монтирование USB флешек, карточек SD и дисков СD.</p>
+<p>Существует много способов реализовать это. В сети можно найти кучу информации по этому вопросу. Сегодня я расскажу как решил эту задачу у себя в системе.</p>
+<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написаный на языке Python.</p>
+<blockquote>
+<p>Страничку разработчика udiskie можно посмотреть <a href="https://github.com/coldfix/udiskie">тут</a>.</p>
+</blockquote>
+<p>Устанавливаем все эти три пакета. Чтобы не тащить в систему ненужные пакеты, пропишем, что ставить будем без рекомендованных зависимостей:</p>
+<pre><code>$ sudo apt-get install udisks2 policykit-1 udiskie --no-install-recommends
+</code></pre>
+<p>По умолчанию <code>udisks2</code> будет монтировать устройства в директорию <code>/media/$USER/</code>. Я посчитал это лишним и решил монтировать в директорию <code>/media</code>. Для этого создал правило <code>/etc/udev/rules.d/99-udisks2.rules</code>:</p>
+<pre><code># UDISKS_FILESYSTEM_SHARED
+# ==1: mount filesystem to a shared directory (/media/VolumeName)
+# ==0: mount filesystem to a private directory (/run/media/$USER/VolumeName)
+# See udisks(8)
+ENV{ID_FS_USAGE}==&quot;filesystem|other|crypto&quot;, ENV{UDISKS_FILESYSTEM_SHARED}=&quot;1&quot;
+</code></pre>
+<p>Осталось сделать последний шаг, настроить запуск <code>udiskie</code> при старте нашего оконного менеджера. Для этого в файл <code>~/.xinitrc</code> я добавил следующую строчку:</p>
+<pre><code>udiskie --use-udisks2 &amp;
+</code></pre>
+<p>На этом настройку монтирования можно считать законченной.</p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/35"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
