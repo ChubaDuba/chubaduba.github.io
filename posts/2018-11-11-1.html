@@ -1,17 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <channel>
-        <title>ChubaDuba - Посты с тегом debian</title>
-        <link>https://chubaduba.github.io/</link>
-        <description><![CDATA[Блог ChubaDuba]]></description>
-        <atom:link href="https://chubaduba.github.io//tags/debian.xml" rel="self"
-                   type="application/rss+xml" />
-        <lastBuildDate>Sun, 11 Nov 2018 00:00:00 UT</lastBuildDate>
-        <item>
-    <title>Rtorrent color patch.</title>
-    <link>https://chubaduba.github.io//posts/2018-11-11-1.html</link>
-    <description><![CDATA[<p>Патч, который будет описан ниже позволяет rtorrent’у отображать раздачи разными цветами, в зависимости от их статуса.</p>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Rtorrent color patch.</h1>
+<div class="soft">
+    Как в Debian 9 Stretch сделать rtorrent цветным.<br />
+    Posted in: <a href="../tags/debian.html">debian</a>, <a href="../tags/rtorrent.html">rtorrent</a>.
+</div>
+
+<p>Патч, который будет описан ниже позволяет rtorrent’у отображать раздачи разными цветами, в зависимости от их статуса.</p>
 <blockquote>
 <p>Патч старый как г..но мамонта. Почему разработчики rtorrent’а не сделают это фишкой по умолчанию, остаётся загадкой.</p>
 </blockquote>
@@ -92,9 +120,9 @@
 <a class="sourceLine" id="cb1-71" data-line-number="71"><span class="co">+    */</span></a>
 <a class="sourceLine" id="cb1-72" data-line-number="72">+</a>
 <a class="sourceLine" id="cb1-73" data-line-number="73">     print_download_title<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></a>
-<a class="sourceLine" id="cb1-74" data-line-number="74">-    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-74" data-line-number="74">-    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">'*'</span> <span class="ot">:</span> <span class="st">' '</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
 <a class="sourceLine" id="cb1-75" data-line-number="75">-    </a>
-<a class="sourceLine" id="cb1-76" data-line-number="76">+    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-76" data-line-number="76">+    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">'*'</span> <span class="ot">:</span> <span class="st">' '</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
 <a class="sourceLine" id="cb1-77" data-line-number="77">+    <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_done<span class="ot">()</span> <span class="ot">)</span> {</a>
 <a class="sourceLine" id="cb1-78" data-line-number="78">+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</a>
 <a class="sourceLine" id="cb1-79" data-line-number="79">+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>       <span class="co">// Finished and uploading</span></a>
@@ -121,10 +149,10 @@
 <a class="sourceLine" id="cb1-100" data-line-number="100">+    <span class="fu">pos</span>++<span class="ot">;</span></a>
 <a class="sourceLine" id="cb1-101" data-line-number="101">+</a>
 <a class="sourceLine" id="cb1-102" data-line-number="102">     print_download_info<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></a>
-<a class="sourceLine" id="cb1-103" data-line-number="103">     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-103" data-line-number="103">     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">'*'</span> <span class="ot">:</span> <span class="st">' '</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
 <a class="sourceLine" id="cb1-104" data-line-number="104"> </a>
 <a class="sourceLine" id="cb1-105" data-line-number="105"><span class="er">@@</span> <span class="dv">-114</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">147</span><span class="ot">,</span><span class="dv">83</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</a>
-<a class="sourceLine" id="cb1-106" data-line-number="106">     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-106" data-line-number="106">     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">'*'</span> <span class="ot">:</span> <span class="st">' '</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
 <a class="sourceLine" id="cb1-107" data-line-number="107"> </a>
 <a class="sourceLine" id="cb1-108" data-line-number="108">     ++<span class="fu">range</span>.first<span class="ot">;</span></a>
 <a class="sourceLine" id="cb1-109" data-line-number="109">-  }    </a>
@@ -477,7 +505,7 @@
 <hr />
 <pre><code>$ cd rtorrent-0.9.6
 $ patch -uNp1 -i rtorrent-0.9.6_color.patch
-$ sed &#39;/AM_PATH_CPPUNIT/d&#39; -i configure.ac
+$ sed '/AM_PATH_CPPUNIT/d' -i configure.ac
 $ ./autogen.sh
 $ ./configure --prefix=/usr/local --with-xmlrpc-c
 </code></pre>
@@ -503,207 +531,64 @@ $ ./configure --prefix=/usr/local --with-xmlrpc-c
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="ex">color_finished_bg</span> = 0</a></code></pre></div>
 <hr />
 <p>Запускаем rtorrent и смотрим результат:</p>
-<p><img src="http://images2.imagebam.com/b9/6f/81/8fbe551008897814.png" /></p>]]></description>
-    <pubDate>Sun, 11 Nov 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-11-11-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Debian 9 Stretch. Автомонтирование USB флешек, карточек SD и дисков CD.</title>
-    <link>https://chubaduba.github.io//posts/2018-09-07-1.html</link>
-    <description><![CDATA[<p>Если вы как и я не используете в своей системе окружение рабочего стола, а пользуетесь каким-либо оконным менеджером, то рано или поздно столкнётесь с таким вопросом как организовать автоматическое монтирование USB флешек, карточек SD и дисков СD.</p>
-<p>Существует много способов реализовать это. В сети можно найти кучу информации по этому вопросу. Сегодня я расскажу как решил эту задачу у себя в системе.</p>
-<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написаный на языке Python.</p>
-<blockquote>
-<p>Страничку разработчика udiskie можно посмотреть <a href="https://github.com/coldfix/udiskie">тут</a>.</p>
-</blockquote>
-<p>Устанавливаем все эти три пакета. Чтобы не тащить в систему ненужные пакеты, пропишем, что ставить будем без рекомендованных зависимостей:</p>
-<pre><code>$ sudo apt-get install udisks2 policykit-1 udiskie --no-install-recommends
-</code></pre>
-<p>По умолчанию <code>udisks2</code> будет монтировать устройства в директорию <code>/media/$USER/</code>. Я посчитал это лишним и решил монтировать в директорию <code>/media</code>. Для этого создал правило <code>/etc/udev/rules.d/99-udisks2.rules</code>:</p>
-<pre><code># UDISKS_FILESYSTEM_SHARED
-# ==1: mount filesystem to a shared directory (/media/VolumeName)
-# ==0: mount filesystem to a private directory (/run/media/$USER/VolumeName)
-# See udisks(8)
-ENV{ID_FS_USAGE}==&quot;filesystem|other|crypto&quot;, ENV{UDISKS_FILESYSTEM_SHARED}=&quot;1&quot;
-</code></pre>
-<p>Осталось сделать последний шаг, настроить запуск <code>udiskie</code> при старте нашего оконного менеджера. Для этого в файл <code>~/.xinitrc</code> я добавил следующую строчку:</p>
-<pre><code>udiskie --use-udisks2 &amp;
-</code></pre>
-<p>На этом настройку монтирования можно считать законченной.</p>]]></description>
-    <pubDate>Fri, 07 Sep 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-09-07-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Делаем десятичную точку вместо запятой.</title>
-    <link>https://chubaduba.github.io//posts/2018-08-06-1.html</link>
-    <description><![CDATA[<p>Раньше я уже <a href="https://chubaduba.github.io/posts/2018-06-04-1.html">упоминал</a> о том, что на своём компьютере использую калькулятор <code>calc</code>. В этом калькуляторе десятичным разделителем является точка. В тоже время, например, в <code>OpenOffice Calc</code> в качестве разделителя целой и дробной части выступает запятая. Чтобы привести всё к единому знаменателю и сделать во всей системе точку разделителем целой и дробной части, нужно внести следующие изменения:</p>
-<p>Делаем точку разделителем целой и дробной части во всей системе.<br />
-Редактируем файл <code>/usr/share/i18n/locales/ru_RU</code>. Находим строчку:</p>
-<pre><code>decimal_point &quot;&lt;U002C&gt;&quot;
-</code></pre>
-<p>меняем на строчку:</p>
-<pre><code>decimal_point &quot;&lt;U002E&gt;&quot;
-</code></pre>
-<p>После сохранения изменений в файле, необходимо переконфигурировать локаль, выполнив следующую команду в терминале:</p>
-<pre><code># dpkg-reconfigure locales
-</code></pre>
-<p>Меняем запятую на точку на цифровой клавиатуре.<br />
-Открываем на редактирование файл <code>/usr/share/X11/xkb/symbols/ru</code>. Находим строчку:</p>
-<pre><code>include &quot;kpdl(comma)&quot;
-</code></pre>
-<p>Eё нужно закомментировать следующим образом:</p>
-<pre><code>//include &quot;kpdl(comma)&quot;
-</code></pre>
-<p>Остаётся заменить запятую на точку в OpenOffice. Для этого я поменял параметр в настройках языка в “Локальные настройки” на “Английский (США)”:</p>
-<p><a href="http://www.imagebam.com/image/c2844d938023714"><img src="http://thumbs2.imagebam.com/f0/3d/df/c2844d938023714.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Mon, 06 Aug 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-08-06-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Русская консоль (tty) в Debian 9 Stratch i386</title>
-    <link>https://chubaduba.github.io//posts/2018-06-15-1.html</link>
-    <description><![CDATA[<p>Сразу отмечу, что баг был замечен при неоднократных установках Debian. Во всех случаях использовался образ диска <code>netinstall</code>, устанавливалась минимальная конфигурация без графического интерфейса. Проявляется баг только на дистрибутиве <code>Debian 9 Stratch i386</code>, на 64-х битной версии он отсутствует. Заключается он в некорректном отображении кириллицы (вместо букв квадраты) при правильно сконфигурированной русской локали.</p>
-<p>Проблема решилась после изменения юнита <code>systemd</code> под названием <code>console-setup.service</code>. Расположен он в <code>/etc/systemd/system/multi-user.target.wants/</code>. Вот его содержимое по умолчанию:</p>
-<pre><code>[Unit]
-Description=Set console font and keymap
-DefaultDependencies=no
-After=console-screen.service kbd.service local-fs.target
-RequiresMountsFor=/usr
-ConditionPathExists=/bin/setupcon
+<p><img src="http://images2.imagebam.com/b9/6f/81/8fbe551008897814.png" /></p>
 
-[Service]
-Type=oneshot
-ExecStart=/lib/console-setup/console-setup.sh
-RemainAfterExit=yes
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/36"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
 
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<p>Нужно изменить одну строчку:</p>
-<pre><code>ExecStart=/lib/console-setup/console-setup.sh
-</code></pre>
-<p>на</p>
-<pre><code>ExecStart=/bin/setupcon
-</code></pre>
-<p>После перезапуска юнита всё встаёт на свои места, и в консоли теперь русские буквы отображаются корректно.</p>]]></description>
-    <pubDate>Fri, 15 Jun 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-06-15-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Использование сервиса pastebin.</title>
-    <link>https://chubaduba.github.io//posts/2018-05-28-1.html</link>
-    <description><![CDATA[<p>Очень часто, при решении каких-то вопросов, связанных с использованием Linux, люди, пытающиеся вам помочь, просят, чтобы вы показали им какой-либо файл с логами или результат работы (выхлоп) команды, введённой в терминале. Первое, что придёт вам на ум в этой ситуации - это сделать скриншот своего экрана или вообще взять и сфотографировать свой монитор. Согласистесь, очень часто на форумах, на которых пользователи Linux ищут ответы на свои вопросы можно увидеть вот такие фотографии:</p>
-<p><img src="http://images2.imagebam.com/1f/95/29/9c2c63827428223.JPG" /></p>
-<p>Хорошо, если фотография хорошего качества, вся информация полностью умещается на мониторе и удобно читаемая. Но такое бывает далеко не всегда. Сегодня речь пойдёт о работе с сервисом <code>pasebin</code>, который позволяет загружать отрывки текста, фрагменты исходного кода и т.д. для возможности просмотра окружающими.</p>
-<p>Для работы с сервисом установим в нашу систему два пакета <a href="https://packages.debian.org/stretch/pastebinit">pastebinit</a> и <a href="https://packages.debian.org/stretch/xclip">xclip</a>. <code>pastebinit</code> - это инструмент командной строки для отправки данных на сайт, который позволяет пользователям размещать отрывки текста для публичного просмотра, а <code>xclip</code> — это утилита, предоставляющая интерфейс к буферу обмена из командной строки:</p>
-<pre><code>$ sudo apt-get install pastebinit
-$ sudo apt-get install xclip
-</code></pre>
-<p>Чтобы посмотреть с какими сервисами работает <code>pastebinit</code>, нужно в терминале ввести команду:</p>
-<pre><code>$ pastebinit -l
-</code></pre>
-<p><img src="http://images2.imagebam.com/c5/d4/44/88c0c8851554954.png" /></p>
-<p>Стоит отметить, что на самом деле, не со всеми сервисами из этого списка <code>pastebinit</code> работает. Причины этому две: либо сам сервис не работает (недоступен), либо у сервиса поменялся API и <code>pastebinit</code> перестал корректно с ним работать. Какой сервис выбрать для себя дело сугубо ваших предпочтений. Я пользуюсь сервисом по умолчанию <code>paste.debian.net</code>.</p>
-<blockquote>
-<p>В Debian 9 Stratch <code>pastebinit</code> имеет ошибки, которые не позволяют ему корректно работать с сервисом <code>paste.debian.net</code>. Поэтому рекомендую поставить более свежую версию пакета из Debian testing или Debian sid.</p>
-</blockquote>
-<p>Чтобы каждый раз не вводить в терминале длинные команды, создадим <code>alias</code>, обзовём его <code>paste</code>, который будем использовать когда нужно будет что-то скопировать. Добавляем в наш файл <code>~/.bashrc</code> строчку :</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">alias</span> paste=<span class="st">&#39;pastebinit -b paste.debian.net -a ChubaDuba | xclip -selection &quot;clipboard&quot; &#39;</span></a></code></pre></div>
-<p>параметр <code>-a</code> задаёт имя автора. Параметр не обязательный, если вы его не будите прописывать, то автоматически вам будет присвоено имя <code>anonymous</code>.</p>
-<p>Теперь всё готово для работы. Посмотрим на практике как это работает.<br />
-Например, нам нужно показать вывод команды <code>lspci</code>. Открываем терминал и вводим следующую команду:</p>
-<pre><code>$ lspci | paste
-</code></pre>
-<p>После её выполнения в буфере обмена у нас будет ссылка, перейдя по которой можно увидеть результат работы введённой нами команды. В нашем примере <code>lspci</code>. Остаётся поделиться этой ссылкой, нажав клавиши <code>Ctrl + v</code> там, где нам нужно: на форуме, чате или отправить её по e-mail. Если перейти по этой ссылке, откроется страничка выбранного нами ресурса, на которой в удобной для просмотра форме будет показан результат работы вводимой нами команды:</p>
-<p><a href="http://www.imagebam.com/image/dffeb7895532484" target="_blank"><img src="http://thumbs2.imagebam.com/e1/fe/50/dffeb7895532484.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Mon, 28 May 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-05-28-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Старые версии Debian</title>
-    <link>https://chubaduba.github.io//posts/2018-03-20-1.html</link>
-    <description><![CDATA[<p>У Debian все старые версии культурно сложены и доступны для скачивания со страницы <a href="http://cdimage.debian.org/cdimage/archive/">Debian CDs/DVDs archive</a>:</p>
-<p><img src="/images/old_debian.png" /></p>]]></description>
-    <pubDate>Tue, 20 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-20-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Откуда скачивать Debian?</title>
-    <link>https://chubaduba.github.io//posts/2018-03-10-1.html</link>
-    <description><![CDATA[<p>В Debian существуют набор критериев <a href="https://www.debian.org/social_contract#guidelines">Debian Free Software Guidelines (DFSG)</a>, по которым определяется, является ли программное обеспечение свободным.</p>
-<p>Если программное обеспечение свободное, то оно входит в официальную поставку Debian и является частью дистрибутива. Всё свободное программное обеспечение расположено в разделе <code>main</code>.</p>
-<p>Существует свободное программное обеспечение, для работы которого необходимы несвободные библиотеки или программы. Это программное обеспечение считается частью дистрибутива, и размещается в разделе <code>contrib</code>.</p>
-<p>Также есть несвободное программное обеспечение, без которого невозможно полноценное использование дистрибутива. Например, драйвер какой-нибудь карточки Wi-Fi. Такое программное обеспечение <em>не может входить в официальную поставку Debian и не является частью дистрибутива</em>. Всё такое программное обеспечение расположено в разделе <code>non-free</code>.</p>
-<p>Это всё конечно хорошо, но на практике совсем всё по-другому. Например, решили вы установить Debian на свой ноутбук. Зашли на <a href="https://www.debian.org/">официальный сайт</a>, перешли по ссылке <a href="https://www.debian.org/distrib/">где взять Debian</a>, выбрали нужный вам вариант, скачали, установили. Загрузились, и первое с чем сталкиваетесь, не работает Wi-Fi. “Почему?! На другом дистрибутиве Linux у меня Wi-Fi работал из коробки! Что за хрень этот Debian?!” - скажете вы.</p>
-<p>Вот поэтому, чтобы не делать себе голову беременной при первом знакомстве с Debian, скачивайте нужный вам образ из <a href="https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/">Unofficial non-free images including firmware packages</a>:</p>
-<p><img src="/images/2018-03-10-1.jpg" /></p>
-<p>Это избавит вас от лишних телодвижений во время установки и после. Отличие от официальных образов заключается в том, что в этих образах присутствует программное обеспечение из раздела <code>non-free</code>. Вам не нужно будет перед установкой самостоятельно готовить ещё один носитель с нужными микропрограммами для вашего оборудования, а после установки не придётся сразу редактировать <a href="https://wiki.debian.org/ru/SourcesList">sources.list</a> для того, чтобы добавить тотже раздел <code>non-free</code>.</p>]]></description>
-    <pubDate>Sat, 10 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-10-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Debian Butterfly wallpaper</title>
-    <link>https://chubaduba.github.io//posts/2018-03-07-1.html</link>
-    <description><![CDATA[<blockquote>
-<p>Дело было вечером, делать было нечего…</p>
-</blockquote>
-<p>Для пользователей Debian, которые обожают кошек и котов.</p>
-<figure>
-<img src="/images/Debian_butterfly.jpg" alt="1600x900" /><figcaption>1600x900</figcaption>
-</figure>]]></description>
-    <pubDate>Wed, 07 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-07-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Автологин и "startx" без дисплейного менеджера - Debian 9 Stretch</title>
-    <link>https://chubaduba.github.io//posts/2018-03-06-1.html</link>
-    <description><![CDATA[<p>Этот пост предназначен для пользователей, которые хотят автоматически войти в свою систему Debian 9 Stretch и запустить Xserver без необходимости вводить <code>startx</code> в командной строке.</p>
-<blockquote>
-<p>Естественно, в качестве системы инициализации выступает <code>systemd</code> - изкоробочный вариант в Debian 9 Stretch.</p>
-</blockquote>
-<p>Для автологина создаём файл <code>/etc/systemd/system/getty@tty1.service.d/override.conf</code> (от имени root) со следующим содержимым:</p>
-<pre><code>[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin user_name --noclear %I $TERM
-</code></pre>
-<p>Здесь нужно заменить <code>user_name</code> на ваше имя пользователя.</p>
-<p>Для автозапуска <code>startx</code> добавляем строчку в конец нашего файла <code>~/.profile</code>:</p>
-<pre><code>[ &quot;$(tty)&quot; = &quot;/dev/tty1&quot; ] &amp;&amp; exec startx
-</code></pre>
-<p>В заключении нужно установить правильный параметр <code>default.target</code>, чтобы система загружалась на консоль (TTY), а не в диспетчер дисплея:</p>
-<pre><code># systemctl set-default multi-user.target
-</code></pre>
-<p>Если вы всё сделали правильно, и при условии того, что у вас всё работало в ручном режиме, т.е. вы могли залогинится после старта системы и потом запустить <code>startx</code>, то после перезагрузки вы автоматически загрузитесь под своим именем в свой оконный менеджер.</p>
-<p>Отменить изменение значения <code>default.target</code> можно с помощью команды:</p>
-<pre><code># systemctl set-default graphical.target
-</code></pre>]]></description>
-    <pubDate>Tue, 06 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-06-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Boeing Debian Edition</title>
-    <link>https://chubaduba.github.io//posts/2018-02-24-1.html</link>
-    <description><![CDATA[<blockquote>
-<p>Пассажиры загружаются в два самолета - Linux и Windows,<br />
-только в первый каждый несёт свою запчасть и знает,<br />
-что долетит, а во второй все садятся и думают: “долетят, не долетят?”…</p>
-</blockquote>
-<figure>
-<img src="/images/boeing_debian.jpg" alt="1600x900" /><figcaption>1600x900</figcaption>
-</figure>]]></description>
-    <pubDate>Sat, 24 Feb 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-02-24-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
 
-    </channel>
-</rss>
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
