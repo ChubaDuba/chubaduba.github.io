@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>XMonad.Layout.Spacing</h1>
+<div class="soft">
+    Добавляем пространство вокруг окон.<br />
+    Posted in: <a href="../tags/xmonad.html">xmonad</a>.
+</div>
+
+<p>Очередная заметка по настройке <code>xmonad</code>. <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-Spacing.html">XMonad.Layout.Spacing</a> позволяет добавить отступы вокруг открытых окон. Наличие отступов даёт лучшую визуализацию на<br />
+экране компьютера при работе с несколькими отрытыми окнами.</p>
+<blockquote>
+<p>Чтобы добавить отступы ко всем окнам, за исключением случаев, когда окно является единственным видимым окном в текущей рабочей области, нужно использовать функцию <code>smartSpacing</code>. Если использовать функцию <code>spacing</code>, то заданное свободное простраство вокруг окон будет добавляться в любом случае.</p>
+</blockquote>
+<p>Добавляем в наш <code>xmonad.hs</code> данный модуль:</p>
+<pre class="haskel"><code>import XMonad.Layout.Spacing
+</code></pre>
+<p>После чего модифицируем секцию <code>Layouts</code>. В моём случае это выглядит так:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Layouts</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">myLayouts <span class="fu">=</span> minimize (avoidStruts tiled</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">           <span class="fu">|||</span> threecolmid</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">           <span class="fu">|||</span> onebig</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">           <span class="fu">|||</span> imTkabber</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">           <span class="fu">|||</span> full)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    tiled   <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    nmaster <span class="fu">=</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    ratio   <span class="fu">=</span> <span class="dv">1</span><span class="fu">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    delta   <span class="fu">=</span> <span class="dv">3</span><span class="fu">/</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">-- basic layouts</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">full        <span class="fu">=</span> noBorders <span class="dt">Full</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">onebig      <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">threecolmid <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">imTkabber   <span class="fu">=</span> withIM (<span class="dv">1</span><span class="fu">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
+<p>Если в какой-то компановке вам не нужны отступы, то просто не прописывайте их. Например, я в компановке окон <code>imTkabber</code> отступы не использую.</p>
+<p>Остаётся сохранить <code>xmonad.hs</code> и перекомпилировать наш <code>xmonad</code>.</p>
+<blockquote>
+<p>Чтобы изменения вступили в силу необходимо перезайти в систему!</p>
+</blockquote>
+<p><a href="http://www.imagebam.com/image/117ff11059555284"><img src="http://thumbs2.imagebam.com/3b/1a/0f/117ff11059555284.jpg" alt="imagebam.com"></a></p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/37"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>

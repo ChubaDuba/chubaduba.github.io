@@ -7,8 +7,47 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/xmonad.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 04 Jun 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 11 Jan 2019 00:00:00 UT</lastBuildDate>
         <item>
+    <title>XMonad.Layout.Spacing</title>
+    <link>https://chubaduba.github.io//posts/2019-01-11-1.html</link>
+    <description><![CDATA[<p>Очередная заметка по настройке <code>xmonad</code>. <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-Spacing.html">XMonad.Layout.Spacing</a> позволяет добавить отступы вокруг открытых окон. Наличие отступов даёт лучшую визуализацию на<br />
+экране компьютера при работе с несколькими отрытыми окнами.</p>
+<blockquote>
+<p>Чтобы добавить отступы ко всем окнам, за исключением случаев, когда окно является единственным видимым окном в текущей рабочей области, нужно использовать функцию <code>smartSpacing</code>. Если использовать функцию <code>spacing</code>, то заданное свободное простраство вокруг окон будет добавляться в любом случае.</p>
+</blockquote>
+<p>Добавляем в наш <code>xmonad.hs</code> данный модуль:</p>
+<pre class="haskel"><code>import XMonad.Layout.Spacing
+</code></pre>
+<p>После чего модифицируем секцию <code>Layouts</code>. В моём случае это выглядит так:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Layouts</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">myLayouts <span class="fu">=</span> minimize (avoidStruts tiled</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">           <span class="fu">|||</span> threecolmid</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">           <span class="fu">|||</span> onebig</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">           <span class="fu">|||</span> imTkabber</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">           <span class="fu">|||</span> full)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    tiled   <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    nmaster <span class="fu">=</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    ratio   <span class="fu">=</span> <span class="dv">1</span><span class="fu">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    delta   <span class="fu">=</span> <span class="dv">3</span><span class="fu">/</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">-- basic layouts</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">full        <span class="fu">=</span> noBorders <span class="dt">Full</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">onebig      <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">threecolmid <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">imTkabber   <span class="fu">=</span> withIM (<span class="dv">1</span><span class="fu">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
+<p>Если в какой-то компановке вам не нужны отступы, то просто не прописывайте их. Например, я в компановке окон <code>imTkabber</code> отступы не использую.</p>
+<p>Остаётся сохранить <code>xmonad.hs</code> и перекомпилировать наш <code>xmonad</code>.</p>
+<blockquote>
+<p>Чтобы изменения вступили в силу необходимо перезайти в систему!</p>
+</blockquote>
+<p><a href="http://www.imagebam.com/image/117ff11059555284"><img src="http://thumbs2.imagebam.com/3b/1a/0f/117ff11059555284.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Fri, 11 Jan 2019 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2019-01-11-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Xmonad. Загоняем калькулятор в Prompt.</title>
     <link>https://chubaduba.github.io//posts/2018-06-04-1.html</link>
     <description><![CDATA[<p>Давно хотелось сделать работу с калькулятором в xmonad удобной. Чтобы он был всегда под рукой, и чтобы не делать лишних телодвижений с окном программы.</p>
@@ -426,17 +465,6 @@ commands = [
 <p><img src="/images/2018-02-27-2.png" /></p>]]></description>
     <pubDate>Tue, 27 Feb 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-02-27-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Меню программ для xmonad</title>
-    <link>https://chubaduba.github.io//posts/2018-02-25-1.html</link>
-    <description><![CDATA[<p>Такого плана программ существует много. Мне импонирует простое в использовании решение <a href="https://sites.google.com/site/jvinla/mygtkmenu">myCtkMenu</a></p>
-<figure>
-<img src="/images/myGtkMenu.jpg" alt="myGtkMenu" /><figcaption>myGtkMenu</figcaption>
-</figure>]]></description>
-    <pubDate>Sun, 25 Feb 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-02-25-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

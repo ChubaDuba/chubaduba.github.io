@@ -7,8 +7,47 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 11 Nov 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 11 Jan 2019 00:00:00 UT</lastBuildDate>
         <item>
+    <title>XMonad.Layout.Spacing</title>
+    <link>https://chubaduba.github.io//posts/2019-01-11-1.html</link>
+    <description><![CDATA[<p>Очередная заметка по настройке <code>xmonad</code>. <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-Spacing.html">XMonad.Layout.Spacing</a> позволяет добавить отступы вокруг открытых окон. Наличие отступов даёт лучшую визуализацию на<br />
+экране компьютера при работе с несколькими отрытыми окнами.</p>
+<blockquote>
+<p>Чтобы добавить отступы ко всем окнам, за исключением случаев, когда окно является единственным видимым окном в текущей рабочей области, нужно использовать функцию <code>smartSpacing</code>. Если использовать функцию <code>spacing</code>, то заданное свободное простраство вокруг окон будет добавляться в любом случае.</p>
+</blockquote>
+<p>Добавляем в наш <code>xmonad.hs</code> данный модуль:</p>
+<pre class="haskel"><code>import XMonad.Layout.Spacing
+</code></pre>
+<p>После чего модифицируем секцию <code>Layouts</code>. В моём случае это выглядит так:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Layouts</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">myLayouts <span class="fu">=</span> minimize (avoidStruts tiled</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">           <span class="fu">|||</span> threecolmid</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">           <span class="fu">|||</span> onebig</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">           <span class="fu">|||</span> imTkabber</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">           <span class="fu">|||</span> full)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    tiled   <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    nmaster <span class="fu">=</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    ratio   <span class="fu">=</span> <span class="dv">1</span><span class="fu">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    delta   <span class="fu">=</span> <span class="dv">3</span><span class="fu">/</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">-- basic layouts</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">full        <span class="fu">=</span> noBorders <span class="dt">Full</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">onebig      <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">threecolmid <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">imTkabber   <span class="fu">=</span> withIM (<span class="dv">1</span><span class="fu">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
+<p>Если в какой-то компановке вам не нужны отступы, то просто не прописывайте их. Например, я в компановке окон <code>imTkabber</code> отступы не использую.</p>
+<p>Остаётся сохранить <code>xmonad.hs</code> и перекомпилировать наш <code>xmonad</code>.</p>
+<blockquote>
+<p>Чтобы изменения вступили в силу необходимо перезайти в систему!</p>
+</blockquote>
+<p><a href="http://www.imagebam.com/image/117ff11059555284"><img src="http://thumbs2.imagebam.com/3b/1a/0f/117ff11059555284.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Fri, 11 Jan 2019 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2019-01-11-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Rtorrent color patch.</title>
     <link>https://chubaduba.github.io//posts/2018-11-11-1.html</link>
     <description><![CDATA[<p>Патч, который будет описан ниже позволяет rtorrent’у отображать раздачи разными цветами, в зависимости от их статуса.</p>
@@ -1151,37 +1190,6 @@ WantedBy=multi-user.target
 <p><img src="http://images2.imagebam.com/b9/e6/76/20f91e885153304.png" /></p>]]></description>
     <pubDate>Mon, 04 Jun 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-06-04-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Использование сервиса pastebin.</title>
-    <link>https://chubaduba.github.io//posts/2018-05-28-1.html</link>
-    <description><![CDATA[<p>Очень часто, при решении каких-то вопросов, связанных с использованием Linux, люди, пытающиеся вам помочь, просят, чтобы вы показали им какой-либо файл с логами или результат работы (выхлоп) команды, введённой в терминале. Первое, что придёт вам на ум в этой ситуации - это сделать скриншот своего экрана или вообще взять и сфотографировать свой монитор. Согласистесь, очень часто на форумах, на которых пользователи Linux ищут ответы на свои вопросы можно увидеть вот такие фотографии:</p>
-<p><img src="http://images2.imagebam.com/1f/95/29/9c2c63827428223.JPG" /></p>
-<p>Хорошо, если фотография хорошего качества, вся информация полностью умещается на мониторе и удобно читаемая. Но такое бывает далеко не всегда. Сегодня речь пойдёт о работе с сервисом <code>pasebin</code>, который позволяет загружать отрывки текста, фрагменты исходного кода и т.д. для возможности просмотра окружающими.</p>
-<p>Для работы с сервисом установим в нашу систему два пакета <a href="https://packages.debian.org/stretch/pastebinit">pastebinit</a> и <a href="https://packages.debian.org/stretch/xclip">xclip</a>. <code>pastebinit</code> - это инструмент командной строки для отправки данных на сайт, который позволяет пользователям размещать отрывки текста для публичного просмотра, а <code>xclip</code> — это утилита, предоставляющая интерфейс к буферу обмена из командной строки:</p>
-<pre><code>$ sudo apt-get install pastebinit
-$ sudo apt-get install xclip
-</code></pre>
-<p>Чтобы посмотреть с какими сервисами работает <code>pastebinit</code>, нужно в терминале ввести команду:</p>
-<pre><code>$ pastebinit -l
-</code></pre>
-<p><img src="http://images2.imagebam.com/c5/d4/44/88c0c8851554954.png" /></p>
-<p>Стоит отметить, что на самом деле, не со всеми сервисами из этого списка <code>pastebinit</code> работает. Причины этому две: либо сам сервис не работает (недоступен), либо у сервиса поменялся API и <code>pastebinit</code> перестал корректно с ним работать. Какой сервис выбрать для себя дело сугубо ваших предпочтений. Я пользуюсь сервисом по умолчанию <code>paste.debian.net</code>.</p>
-<blockquote>
-<p>В Debian 9 Stratch <code>pastebinit</code> имеет ошибки, которые не позволяют ему корректно работать с сервисом <code>paste.debian.net</code>. Поэтому рекомендую поставить более свежую версию пакета из Debian testing или Debian sid.</p>
-</blockquote>
-<p>Чтобы каждый раз не вводить в терминале длинные команды, создадим <code>alias</code>, обзовём его <code>paste</code>, который будем использовать когда нужно будет что-то скопировать. Добавляем в наш файл <code>~/.bashrc</code> строчку :</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">alias</span> paste=<span class="st">&#39;pastebinit -b paste.debian.net -a ChubaDuba | xclip -selection &quot;clipboard&quot; &#39;</span></a></code></pre></div>
-<p>параметр <code>-a</code> задаёт имя автора. Параметр не обязательный, если вы его не будите прописывать, то автоматически вам будет присвоено имя <code>anonymous</code>.</p>
-<p>Теперь всё готово для работы. Посмотрим на практике как это работает.<br />
-Например, нам нужно показать вывод команды <code>lspci</code>. Открываем терминал и вводим следующую команду:</p>
-<pre><code>$ lspci | paste
-</code></pre>
-<p>После её выполнения в буфере обмена у нас будет ссылка, перейдя по которой можно увидеть результат работы введённой нами команды. В нашем примере <code>lspci</code>. Остаётся поделиться этой ссылкой, нажав клавиши <code>Ctrl + v</code> там, где нам нужно: на форуме, чате или отправить её по e-mail. Если перейти по этой ссылке, откроется страничка выбранного нами ресурса, на которой в удобной для просмотра форме будет показан результат работы вводимой нами команды:</p>
-<p><a href="http://www.imagebam.com/image/dffeb7895532484" target="_blank"><img src="http://thumbs2.imagebam.com/e1/fe/50/dffeb7895532484.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Mon, 28 May 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-05-28-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
