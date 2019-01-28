@@ -7,8 +7,83 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Fri, 11 Jan 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Tue, 29 Jan 2019 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Тема Zenburn для WeeСhat.</title>
+    <link>https://chubaduba.github.io//posts/2019-01-29-1.html</link>
+    <description><![CDATA[<p><code>~/.weechat/weechat.conf</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1">[color]</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">bar_more = lightmagenta</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">chat = default</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">chat_bg = default</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">chat_buffer = white</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">chat_channel = white</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">chat_day_change = cyan</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">chat_delimiters = green</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">chat_highlight = red</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">chat_highlight_bg = default</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">chat_host = cyan</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">chat_inactive_buffer = default</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">chat_inactive_window = default</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">chat_nick = lightcyan</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">chat_nick_colors = &quot;lighblue,cyan,default,lightblue&quot;</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">chat_nick_offline = default</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">chat_nick_offline_highlight = default</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">chat_nick_offline_highlight_bg = blue</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">chat_nick_other = cyan</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">chat_nick_prefix = green</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">chat_nick_self = white</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">chat_nick_suffix = green</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">chat_prefix_action = white</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">chat_prefix_buffer = brown</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">chat_prefix_buffer_inactive_buffer = default</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">chat_prefix_error = yellow</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">chat_prefix_join = lightgreen</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">chat_prefix_more = lightmagenta</a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">chat_prefix_network = magenta</a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">chat_prefix_quit = lightred</a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">chat_prefix_suffix = green</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">chat_read_marker = magenta</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">chat_read_marker_bg = default</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">chat_server = brown</a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">chat_tags = red</a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">chat_text_found = cyan</a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">chat_text_found_bg = lightmagenta</a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">chat_time = default</a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">chat_time_delimiters = brown</a>
+<a class="sourceLine" id="cb1-40" data-line-number="40">chat_value = cyan</a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">chat_value_null = blue</a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">emphasized = yellow</a>
+<a class="sourceLine" id="cb1-43" data-line-number="43">emphasized_bg = magenta</a>
+<a class="sourceLine" id="cb1-44" data-line-number="44">input_actions = lightgreen</a>
+<a class="sourceLine" id="cb1-45" data-line-number="45">input_text_not_found = red</a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">item_away = yellow</a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">nicklist_away = cyan</a>
+<a class="sourceLine" id="cb1-48" data-line-number="48">nicklist_group = green</a>
+<a class="sourceLine" id="cb1-49" data-line-number="49">separator = blue</a>
+<a class="sourceLine" id="cb1-50" data-line-number="50">status_count_highlight = magenta</a>
+<a class="sourceLine" id="cb1-51" data-line-number="51">status_count_msg = brown</a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">status_count_other = default</a>
+<a class="sourceLine" id="cb1-53" data-line-number="53">status_count_private = green</a>
+<a class="sourceLine" id="cb1-54" data-line-number="54">status_data_highlight = lightmagenta</a>
+<a class="sourceLine" id="cb1-55" data-line-number="55">status_data_msg = yellow</a>
+<a class="sourceLine" id="cb1-56" data-line-number="56">status_data_other = default</a>
+<a class="sourceLine" id="cb1-57" data-line-number="57">status_data_private = lightgreen</a>
+<a class="sourceLine" id="cb1-58" data-line-number="58">status_filter = green</a>
+<a class="sourceLine" id="cb1-59" data-line-number="59">status_more = yellow</a>
+<a class="sourceLine" id="cb1-60" data-line-number="60">status_mouse = green</a>
+<a class="sourceLine" id="cb1-61" data-line-number="61">status_name = white</a>
+<a class="sourceLine" id="cb1-62" data-line-number="62">status_name_ssl = lightgreen</a>
+<a class="sourceLine" id="cb1-63" data-line-number="63">status_nicklist_count = default</a>
+<a class="sourceLine" id="cb1-64" data-line-number="64">status_number = yellow</a>
+<a class="sourceLine" id="cb1-65" data-line-number="65">status_time = default</a></code></pre></div>
+<p>О настройках цветовой схемы <code>Zenburn</code> в терминале можно прочитать <a href="https://chubaduba.github.io/posts/2018-02-23-1.html">тут</a>.</p>
+<p><a href="http://www.imagebam.com/image/6a8fca1106277554"><img src="http://thumbs2.imagebam.com/9d/a8/c3/6a8fca1106277554.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Tue, 29 Jan 2019 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2019-01-29-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>XMonad.Layout.Spacing</title>
     <link>https://chubaduba.github.io//posts/2019-01-11-1.html</link>
     <description><![CDATA[<p>Очередная заметка по настройке <code>xmonad</code>. <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-Spacing.html">XMonad.Layout.Spacing</a> позволяет добавить отступы вокруг открытых окон. Наличие отступов даёт лучшую визуализацию на<br />
@@ -1158,38 +1233,6 @@ WantedBy=multi-user.target
 <p>После перезапуска юнита всё встаёт на свои места, и в консоли теперь русские буквы отображаются корректно.</p>]]></description>
     <pubDate>Fri, 15 Jun 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-06-15-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Xmonad. Загоняем калькулятор в Prompt.</title>
-    <link>https://chubaduba.github.io//posts/2018-06-04-1.html</link>
-    <description><![CDATA[<p>Давно хотелось сделать работу с калькулятором в xmonad удобной. Чтобы он был всегда под рукой, и чтобы не делать лишних телодвижений с окном программы.</p>
-<p>В своей системе я пользуюсь консольным калькулятором <a href="http://www.isthe.com/chongo/tech/comp/calc/calc-mirror.html">Calc</a>. Было найдено оригинальное решение, которое позволяет расположить калькулятор в строке ввода команд <code>Prompt</code>. Что такое <code>Prompt</code> и как это работает, я уже <a href="https://chubaduba.github.io/posts/2018-04-19-1.html">писал раньше</a>.</p>
-<p>Все изменения будем делать в файле конфигурации xmonad <code>xmonad.hs</code>. Первое, что я сделал - сконфигурировал саму строку ввода, в которой будет открываться калькулятор:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">-- Calc Prompt</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">myCalcConfig <span class="fu">=</span> def</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#DBA3A2&quot;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        }</a></code></pre></div>
-<p>Тут всё просто. Задал шрифт, цвет фона и цвет шрифта, а также месторасположение строки. В моём случае окно калькулятора будет распологаться вверху экрана, перекрывая <code>xmobar</code>.</p>
-<p>Вторым шагом добавляем саму функцию, которая будет открывать калькулятор:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Calculator</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ot">calcPrompt ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> () </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">calcPrompt c ans <span class="fu">=</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">    inputPrompt c (trim ans) <span class="fu">?+</span> \input <span class="ot">-&gt;</span> </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        liftIO(runProcessWithInput <span class="st">&quot;calc&quot;</span> [input] <span class="st">&quot;&quot;</span>) <span class="fu">&gt;&gt;=</span> calcPrompt c </a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">where</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">        trim  <span class="fu">=</span> f <span class="fu">.</span> f</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">            <span class="kw">where</span> f <span class="fu">=</span> reverse <span class="fu">.</span> dropWhile isSpace</a></code></pre></div>
-<p>И последнее, что нужно сделать, это добавить в конфигурационный файл комбинацию клавиш, при нажатии которой будет открываться калькулятор:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1">, ((mod4Mask,     xK_c), calcPrompt myCalcConfig <span class="st">&quot;calc&quot;</span>)</a></code></pre></div>
-<p>Теперь при нажатии клавиш <code>mod4 + c</code> на месте <code>xmobar</code> открывается окно калькулятора. Закрыть его можно, нажав кнопку <code>Esc</code>.</p>
-<p><img src="http://images2.imagebam.com/b9/e6/76/20f91e885153304.png" /></p>]]></description>
-    <pubDate>Mon, 04 Jun 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-06-04-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
