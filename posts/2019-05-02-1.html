@@ -33,76 +33,33 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом xmobar</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2019-05-02-1.html">Xmobar. Индикатор раскладки клавиатуры.</a>”
-            ‒ <span class="soft"> 2 Мая, 2019</span><br />
-            Настройка индикатора раскладки клавиатуры в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-06-21-1.html">Xmobar с поддержкой иконок в формате xpm.</a>”
-            ‒ <span class="soft">21 Июня, 2018</span><br />
-            Новые возможности в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-27-1.html">Xmobar. Дата.</a>”
-            ‒ <span class="soft">27 Апреля, 2018</span><br />
-            Избавляемся от забугорного формата даты.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-23-1.html">Xmobar. Информация о текущем треке (MOC плеер).</a>”
-            ‒ <span class="soft">23 Апреля, 2018</span><br />
-            Показываем информацию о текущем треке в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-16-1.html">Вывод в xmobar информации о доступных обновлениях.</a>”
-            ‒ <span class="soft">16 Апреля, 2018</span><br />
-            Как показать в xmobar количество доступных обновлений.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-25-1.html">Xmonad+xmobar+ALSA.</a>”
-            ‒ <span class="soft">25 Марта, 2018</span><br />
-            Громкость звука. Настраиваем управление и отображение.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-15-1.html">Погода в xmobar</a>”
-            ‒ <span class="soft">15 Марта, 2018</span><br />
-            Как вывести в xmobar информацию о погоде.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-02-27-1.html">Иконки для рабочих столов xmonad в xmobar</a>”
-            ‒ <span class="soft">27 Февраля, 2018</span><br />
-            Как поменять в xmobar названия рабочих столов на иконки
-        </p>
-    </li>
-    
-</ul>
+    <h1>Xmobar. Индикатор раскладки клавиатуры.</h1>
+<div class="soft">
+    Настройка индикатора раскладки клавиатуры в xmobar.<br />
+    Posted in: <a href="../tags/xmobar.html">xmobar</a>.
+</div>
 
+<p>По умолчанию <code>xmobar</code> не показывает индикатор раскладки клавиатуры, но это легко исправить, проведя несложные настройки.</p>
+<p>Для начала зададим комбинацию клавиш, при нажатии которой будет переключаться язык на клавиатуре. Я по привычке использую левый <code>Alt+Shift</code>. Изменим в файле <code>/etc/default/keyboard</code> параметр <code>XKBOPTIONS</code> на то, что нам нужно:</p>
+<pre><code>XKBOPTIONS=&quot;grp:alt_shift_toggle,grp_led:scroll&quot;
+</code></pre>
+<blockquote>
+<p>Чтобы изменения вступили в силу, нужно перезагрузить систему.</p>
+</blockquote>
+<p>Ещё нам потребуется установить в систему пакет <a href="https://packages.debian.org/stretch/kbdd">kbdd</a>:</p>
+<pre><code>$ sudo apt-get install kbdd
+</code></pre>
+<p>Ну и теперь остаётся настроить сам <code>xmobar</code>. Для этого открываем файл конфигурации <code>.xmobarrc</code> и добавляем в секцию <code>commands</code> строчку:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="dt">Run</span> <span class="dt">Kbd</span> [(<span class="st">&quot;us&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;usa&lt;/fc&gt;&quot;</span>), (<span class="st">&quot;ru&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;rus&lt;/fc&gt;&quot;</span>)]</a></code></pre></div>
+<p>Здесь я указал каким цветом будет отображать индикатор при разных раскладках. Если вам это не нужно, параметр <code>&lt;fc&gt;&lt;/fc&gt;</code> можно не использовать.</p>
+<p>В <code>template</code>, в нужном нам месте, добавляем вывод индикатора на экран:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">, template <span class="fu">=</span> <span class="fu">...</span> <span class="fu">%</span>kbd<span class="fu">%</span> <span class="fu">...</span></a></code></pre></div>
+<p>Сохраняем файл <code>.xmobarrc</code> и перезагружаем <code>xmobar</code>. Теперь у нас есть индикатор раскладки:</p>
+<p><a href="http://www.imagebam.com/image/7cee4e1211317614"><img src="http://thumbs2.imagebam.com/ce/2a/36/7cee4e1211317614.jpg" alt="imagebam.com"></a> <a href="http://www.imagebam.com/image/4f5c911211317634"><img src="http://thumbs2.imagebam.com/0b/dd/cd/4f5c911211317634.jpg" alt="imagebam.com"></a></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/41"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
