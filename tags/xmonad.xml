@@ -7,8 +7,62 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/xmonad.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Wed, 13 Feb 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 30 Jun 2019 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmonad. XMonad.Actions.Search</title>
+    <link>https://chubaduba.github.io//posts/2019-06-30-1.html</link>
+    <description><![CDATA[<p><a href="http://hackage.haskell.org/package/xmonad-contrib-0.15/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a> - удобный инструмент для быстрого поиска информации в internet. Как видно из описания, модуль поддерживает большое количество поисковых движков. Я сравнительно часто пользуюсь тремя:</p>
+<p><code>deb</code> - Debian package search;<br />
+<code>duckduckgo</code> - DuckDuckGo search engine;<br />
+<code>youtube</code> - Youtube video search.</p>
+<p>поэтому и добавил функционал только для них.</p>
+<p>Чтобы всё это у нас заработало, первым делом добавим модуль <code>XMonad.Actions.Search</code> в наш файл конфигурации <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></a></code></pre></div>
+<hr />
+<p>Второе, что необходимо сделать - это сконфигурировать окно, в которое мы будем вводить поисковый запрос. Добавляем в <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Search Prompt</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">mySearchConfig <span class="fu">=</span> def</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#E0AF8F&quot;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">        , historySize         <span class="fu">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        , historyFilter       <span class="fu">=</span> deleteConsecutive</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        }</a></code></pre></div>
+<hr />
+<p>Здесь ничего объяснять, думаю, не нужно. Все параметры задаются в зависимости от личных предпочтений пользователя.</p>
+<p>И последнее, что нужно сделать - это добавить в конфигурационный файл сочетания горячих клавиш для каждого поискового движка.<br />
+Я выбрал следующие сочетания:</p>
+<p><code>deb</code> - mod4 + Shift + d;<br />
+<code>duckduckgo</code> - mod4 + Shift + s;<br />
+<code>youtube</code> - mod4 + Shift + y.</p>
+<p>Соответственно добавляем в конфиг:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">-- Search prompt</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</a></code></pre></div>
+<hr />
+<p>где</p>
+<p><code>mySearchConfig</code> - имя нашего окна, которое мы сконфигурировали ранее; <code>myBrowser</code> - браузер используемый по умолчанию.</p>
+<p>Я пользуюсь браузером <code>Chromium</code> поэтому в <code>hmonad.hs</code> прописал константу:</p>
+<hr />
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">myBrowser <span class="fu">=</span> <span class="st">&quot;chromium&quot;</span></a></code></pre></div>
+<hr />
+<blockquote>
+<p>Если вы используете несколько браузеров, то вместо <code>myBrowser</code> можно прописать имя конкретного браузера. Тогда результаты поискового запроса для каждого движка будут открываться в разных браузерах, согласно тому, что вы указали.</p>
+</blockquote>
+<p>Остаётся перекомпилировать и перезагрузить <code>xmonad</code>, чтобы все изменения вступили в силу.</p>
+<p>А вот как это выглядит, например, при нажатии сочетания клавиш <code>mod4 + Shift + s</code>:</p>
+<p><a href="http://www.imagebam.com/image/6c72731264837784"><img src="http://thumbs2.imagebam.com/69/d0/d0/6c72731264837784.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Sun, 30 Jun 2019 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2019-06-30-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>XMonad.Layout.IM - отличный layout для Tkabber.</title>
     <link>https://chubaduba.github.io//posts/2019-02-13-1.html</link>
     <description><![CDATA[<p>Если вы активно используете клиент мгновенного обмена сообщениями Tkabber, то непременно оцените удобство использования <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-IM.html">Xmonad.Layout.IM</a>.</p>
@@ -434,38 +488,6 @@ commands = [
 </blockquote>]]></description>
     <pubDate>Sat, 03 Mar 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-03-03-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Прозрачность неактивных окон в xmonad</title>
-    <link>https://chubaduba.github.io//posts/2018-03-01-1.html</link>
-    <description><![CDATA[<p>Сам я этой фишкой не пользуюсь, так как считаю, что тайлинг, он на то и тайлинг, чтобы видеть всё и сразу. Но учитывая то, что фломастеры на вкус у всех разные, опишу как это сделать:</p>
-<p>Установим композитный менеджер окон <a href="https://packages.debian.org/ru/stretch/xcompmgr">xcompmgr</a>:</p>
-<pre><code>sudo apt-get install xcompmgr
-</code></pre>
-<p>Добавим его в автозагрузку. Для этого отредактируем наш файл <code>~/.xinitrc</code>:</p>
-<pre><code>xcompmgr -r0 &amp;
-</code></pre>
-<p>Вносим изменения в <code>xmonad.hs</code>. Добавляем модуль <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-FadeInactive.html">XMonad.Hooks.FadeInactive</a>, удаляем границу у окон и устанавливаем степень непрозрачности:</p>
-<hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Hooks.FadeInactive</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">myConfig <span class="fu">=</span> <span class="fu">....</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">          {<span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">          <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">          , borderWidth <span class="fu">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">          , logHook <span class="fu">=</span> fadeInactiveLogHook <span class="fl">0.8</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">          <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">          }</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">...</span></a></code></pre></div>
-<hr />
-<p>Со значением степени непрозрачности можно поиграться и выбрать оптимальное для себя.</p>
-<figure>
-<img src="/images/2018-03-01-1.jpg" alt="calc - активное окно, writer - неактивное окно." /><figcaption>calc - активное окно, writer - неактивное окно.</figcaption>
-</figure>]]></description>
-    <pubDate>Thu, 01 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-01-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

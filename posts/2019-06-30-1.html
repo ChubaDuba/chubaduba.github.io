@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Xmonad. XMonad.Actions.Search</h1>
+<div class="soft">
+    Удобный инструмент для быстрого поиска информации в internet<br />
+    Posted in: <a href="../tags/xmonad.html">xmonad</a>.
+</div>
+
+<p><a href="http://hackage.haskell.org/package/xmonad-contrib-0.15/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a> - удобный инструмент для быстрого поиска информации в internet. Как видно из описания, модуль поддерживает большое количество поисковых движков. Я сравнительно часто пользуюсь тремя:</p>
+<p><code>deb</code> - Debian package search;<br />
+<code>duckduckgo</code> - DuckDuckGo search engine;<br />
+<code>youtube</code> - Youtube video search.</p>
+<p>поэтому и добавил функционал только для них.</p>
+<p>Чтобы всё это у нас заработало, первым делом добавим модуль <code>XMonad.Actions.Search</code> в наш файл конфигурации <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></a></code></pre></div>
+<hr />
+<p>Второе, что необходимо сделать - это сконфигурировать окно, в которое мы будем вводить поисковый запрос. Добавляем в <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Search Prompt</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">mySearchConfig <span class="fu">=</span> def</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#E0AF8F&quot;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">        , historySize         <span class="fu">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        , historyFilter       <span class="fu">=</span> deleteConsecutive</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        }</a></code></pre></div>
+<hr />
+<p>Здесь ничего объяснять, думаю, не нужно. Все параметры задаются в зависимости от личных предпочтений пользователя.</p>
+<p>И последнее, что нужно сделать - это добавить в конфигурационный файл сочетания горячих клавиш для каждого поискового движка.<br />
+Я выбрал следующие сочетания:</p>
+<p><code>deb</code> - mod4 + Shift + d;<br />
+<code>duckduckgo</code> - mod4 + Shift + s;<br />
+<code>youtube</code> - mod4 + Shift + y.</p>
+<p>Соответственно добавляем в конфиг:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">-- Search prompt</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</a></code></pre></div>
+<hr />
+<p>где</p>
+<p><code>mySearchConfig</code> - имя нашего окна, которое мы сконфигурировали ранее; <code>myBrowser</code> - браузер используемый по умолчанию.</p>
+<p>Я пользуюсь браузером <code>Chromium</code> поэтому в <code>hmonad.hs</code> прописал константу:</p>
+<hr />
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">myBrowser <span class="fu">=</span> <span class="st">&quot;chromium&quot;</span></a></code></pre></div>
+<hr />
+<blockquote>
+<p>Если вы используете несколько браузеров, то вместо <code>myBrowser</code> можно прописать имя конкретного браузера. Тогда результаты поискового запроса для каждого движка будут открываться в разных браузерах, согласно тому, что вы указали.</p>
+</blockquote>
+<p>Остаётся перекомпилировать и перезагрузить <code>xmonad</code>, чтобы все изменения вступили в силу.</p>
+<p>А вот как это выглядит, например, при нажатии сочетания клавиш <code>mod4 + Shift + s</code>:</p>
+<p><a href="http://www.imagebam.com/image/6c72731264837784"><img src="http://thumbs2.imagebam.com/69/d0/d0/6c72731264837784.jpg" alt="imagebam.com"></a></p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/42"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
