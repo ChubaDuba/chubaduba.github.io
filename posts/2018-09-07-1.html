@@ -41,7 +41,8 @@
 
 <p>Если вы как и я не используете в своей системе окружение рабочего стола, а пользуетесь каким-либо оконным менеджером, то рано или поздно столкнётесь с таким вопросом как организовать автоматическое монтирование USB флешек, карточек SD и дисков СD.</p>
 <p>Существует много способов реализовать это. В сети можно найти кучу информации по этому вопросу. Сегодня я расскажу как решил эту задачу у себя в системе.</p>
-<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написаный на языке Python.</p>
+<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на 
+чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написанный на языке Python.</p>
 <blockquote>
 <p>Страничку разработчика udiskie можно посмотреть <a href="https://github.com/coldfix/udiskie">тут</a>.</p>
 </blockquote>
