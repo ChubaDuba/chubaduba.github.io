@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Запуск браузера Lynx через Tor.</h1>
+<div class="soft">
+    Как пустить весь трафик Lynx через Tor.<br />
+    Posted in: <a href="../tags/debian.html">debian</a>, <a href="../tags/xmonad.html">xmonad</a>.
+</div>
+
+<p>Если у вас в системе не установлент <code>Tor</code>, то его нужно сначала установить…</p>
+<blockquote>
+<p>Все последующие действия по установке <code>Tor</code> справедливы для <code>Debian 9 Stretch</code>.</p>
+</blockquote>
+<p>Добавим репозиторий для <code>Tor</code>. Для этого создадим в <code>/etc/apt/sources.list.d</code> файл <code>tor.list</code> со следующим содержимым:</p>
+<hr />
+<pre><code># Tor
+# deb http://deb.torproject.org/torproject.org stretch main
+deb-src http://deb.torproject.org/torproject.org stretch main
+</code></pre>
+<hr />
+<p>После этого нужно обновить список пакетов и установить сам <code>Tor</code>:</p>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install tor
+</code></pre>
+<p>После того как всё установилось, на всякий пожарный проверим что <code>Tor</code> у нас заработал:</p>
+<p><a href="http://www.imagebam.com/image/13f6ca1314793291"><img src="https://thumbs2.imagebam.com/9e/3c/59/13f6ca1314793291.jpg" alt="imagebam.com"></a></p>
+<p>Из выхлопа видно, что <code>Tor</code> у нас работает. Теперь осталось настроить работу браузера <code>Lynx</code> через <code>Tor</code>…</p>
+<p>Пишем скрипт, я обозвал его <code>lynxtor</code>:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="va">PATH=$PATH</span>:/etc/torsocks.conf</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="bu">export</span> <span class="va">PATH</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">torsocks</span> lynx -noreferer <span class="op">2&gt;</span> /dev/null</span></code></pre></div>
+<hr />
+<p>И последнее, что остаётся сделать - назначить в <code>xmonad</code> горячую клавишу для запуска этого скрипта. У себя в <code>xmonad.hs</code> я добавил:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">-- Keybindings</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>myKeys <span class="ot">=</span> [ <span class="op">...</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>         , ((mod4Mask <span class="op">.|.</span> controlMask, xK_i), spawn <span class="st">&quot;urxvt -e /home/chubaduba/scripts/lynxtor&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>         <span class="op">...</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>         ]</span></code></pre></div>
+<p>Остаётся перекомпилировать и перезагрузить <code>xmonad</code>, чтобы все изменения вступили в силу. Теперь при нажатии комбинации клавиш <code>mod4Mask + Ctrl + i</code> у нас будет запускаться браузер <code>Lynx</code> трафик которого будет идти через <code>Tor</code>.</p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/43"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
