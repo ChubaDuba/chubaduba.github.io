@@ -27,7 +27,7 @@ $ sudo apt-get install xclip
 <p>В Debian 9 Stratch <code>pastebinit</code> имеет ошибки, которые не позволяют ему корректно работать с сервисом <code>paste.debian.net</code>. Поэтому рекомендую поставить более свежую версию пакета из Debian testing или Debian sid.</p>
 </blockquote>
 <p>Чтобы каждый раз не вводить в терминале длинные команды, создадим <code>alias</code>, обзовём его <code>paste</code>, который будем использовать когда нужно будет что-то скопировать. Добавляем в наш файл <code>~/.bashrc</code> строчку :</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">alias</span> paste=<span class="st">&#39;pastebinit -b paste.debian.net -a ChubaDuba | xclip -selection &quot;clipboard&quot; &#39;</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="bu">alias</span> paste=<span class="st">&#39;pastebinit -b paste.debian.net -a ChubaDuba | xclip -selection &quot;clipboard&quot; &#39;</span></a></code></pre></div>
 <p>параметр <code>-a</code> задаёт имя автора. Параметр не обязательный, если вы его не будите прописывать, то автоматически вам будет присвоено имя <code>anonymous</code>.</p>
 <p>Теперь всё готово для работы. Посмотрим на практике как это работает.<br />
 Например, нам нужно показать вывод команды <code>lspci</code>. Открываем терминал и вводим следующую команду:</p>

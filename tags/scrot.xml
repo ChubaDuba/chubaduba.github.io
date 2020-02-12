@@ -23,12 +23,12 @@
 </blockquote>
 <p>Вот такой скрипт я использую:</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="va">name=</span><span class="kw">`</span><span class="fu">date</span> +%x-%X-%N.png<span class="kw">`</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="ex">scrot</span> ~/Изображения/ScreenShots/<span class="va">$name</span> -q 100 -d 10</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="ex">mpv</span> ~/путь_до_звукового_файла/photosound.mp3</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="va">name=</span><span class="kw">`</span><span class="fu">date</span> +%x-%X-%N.png<span class="kw">`</span></a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="ex">scrot</span> ~/Изображения/ScreenShots/<span class="va">$name</span> -q 100 -d 10</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="ex">mpv</span> ~/путь_до_звукового_файла/photosound.mp3</a></code></pre></div>
 <hr />
 <p>где<br />
 <code>name</code> - формат имени создаваемого файла;<br />
@@ -37,11 +37,11 @@
 <p>Иногда бывают ситуации, когда в нужный момент нажать клавишу для создания скриншота не получится. Например, когда открыто какое-нибудь окно, которое блокирует нажатие любых клавиш. Ну а чтобы понимать создался ли у вас скриншот, я добавил звуковое оповещение. Звуковой файл проигрывает консольный плеер <a href="https://mpv.io/">mpv</a>. У вас это может быть любое приложение или утилита, способная издавать звуки. Сам звуковой файл тоже может быть любым. Я для себя выбрал <a href="https://mega.nz/#!5VFhCTQK!uH3bBX4etq8496Zmd4asDHbWbHVksLgTFWsWW0Ydchw">звук затвора фотоаппарата</a>.</p>
 <p>Осталось назначить клавишу, по нажатию на которую будет запускаться наш скрипт. Я выбрал клавишу <code>PrtSc</code>. Определяем код клавиши с помошью утилиты <code>xev</code> и редактируем наш файл <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1">myKeys <span class="fu">=</span> [</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">         , ((<span class="dv">0</span>    , <span class="bn">0xff61</span>), spawn <span class="st">&quot;путь_до_нашего_скрипта&quot;</span>)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">         ]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1">myKeys <span class="ot">=</span> [</a>
+<a class="sourceLine" id="cb3-2" title="2">         <span class="op">...</span></a>
+<a class="sourceLine" id="cb3-3" title="3">         , ((<span class="dv">0</span>    , <span class="bn">0xff61</span>), spawn <span class="st">&quot;путь_до_нашего_скрипта&quot;</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">         <span class="op">...</span></a>
+<a class="sourceLine" id="cb3-5" title="5">         ]</a></code></pre></div>
 <hr />
 <blockquote>
 <p>Я обычно делаю скриншот целого экрана. Всё равно, практически всегда, открываю созданный скриншот в редакторе <code>Gimp</code> и делаю нужные мне изменения. Если у вас есть необходимость постоянно делать скриншот выделенной области экрана, то работу scrot в таком режиме можно настроить, используя параметр <code>-s</code>.</p>

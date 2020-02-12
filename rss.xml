@@ -7,8 +7,31 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sat, 21 Sep 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Wed, 12 Feb 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Walk with Canon Magic Drainpipe.</title>
+    <link>https://chubaduba.github.io//posts/2020-02-12-1.html</link>
+    <description><![CDATA[<p>Last week we had a lot of snow, which is a rarity lately. Therefore, my wife and I decided to take a walk in the grove and at the same time take a walk with our old man - <code>Canon Magic Drainpipe</code> (<a href="https://global.canon/en/c-museum/product/ef285.html">Canon EF 80-200mm f/2.8L</a>). All photos below were shot on a <a href="https://global.canon/en/c-museum/product/dslr785.html">Canon 1D Mark II</a>. Shooting modes are indicated for each photograph.</p>
+<figure>
+<img src="https://live.staticflickr.com/65535/49519560918_15191d7793_o.jpg" alt="ISO 100, f/8, 80mm, 1/400sec" /><figcaption>ISO 100, f/8, 80mm, 1/400sec</figcaption>
+</figure>
+<figure>
+<img src="https://live.staticflickr.com/65535/49520296057_8f14e10641_o.jpg" alt="ISO 100, f/8, 85mm, 1/500sec" /><figcaption>ISO 100, f/8, 85mm, 1/500sec</figcaption>
+</figure>
+<figure>
+<img src="https://live.staticflickr.com/65535/49519559058_fa36fc4821_o.jpg" alt="ISO 100, f/3.2, 110mm, 1/2000sec" /><figcaption>ISO 100, f/3.2, 110mm, 1/2000sec</figcaption>
+</figure>
+<figure>
+<img src="https://live.staticflickr.com/65535/49519559983_7c6e1022da_o.jpg" alt="ISO 100, f/3.2, 200mm, 1/1250sec" /><figcaption>ISO 100, f/3.2, 200mm, 1/1250sec</figcaption>
+</figure>
+<figure>
+<img src="https://live.staticflickr.com/65535/49520298812_17231b27d1_o.jpg" alt="ISO 100, f/3.2, 200mm, 1/2000sec" /><figcaption>ISO 100, f/3.2, 200mm, 1/2000sec</figcaption>
+</figure>]]></description>
+    <pubDate>Wed, 12 Feb 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-02-12-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Запуск браузера Lynx через Tor.</title>
     <link>https://chubaduba.github.io//posts/2019-09-21-1.html</link>
     <description><![CDATA[<p>Если у вас в системе не установлент <code>Tor</code>, то его нужно сначала установить…</p>
@@ -31,18 +54,18 @@ $ sudo apt-get install tor
 <p>Из выхлопа видно, что <code>Tor</code> у нас работает. Теперь осталось настроить работу браузера <code>Lynx</code> через <code>Tor</code>…</p>
 <p>Пишем скрипт, я обозвал его <code>lynxtor</code>:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="va">PATH=$PATH</span>:/etc/torsocks.conf</span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="bu">export</span> <span class="va">PATH</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">torsocks</span> lynx -noreferer <span class="op">2&gt;</span> /dev/null</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="va">PATH=$PATH</span>:/etc/torsocks.conf</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="bu">export</span> <span class="va">PATH</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="ex">torsocks</span> lynx -noreferer <span class="op">2&gt;</span> /dev/null</a></code></pre></div>
 <hr />
 <p>И последнее, что остаётся сделать - назначить в <code>xmonad</code> горячую клавишу для запуска этого скрипта. У себя в <code>xmonad.hs</code> я добавил:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">-- Keybindings</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>myKeys <span class="ot">=</span> [ <span class="op">...</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>         , ((mod4Mask <span class="op">.|.</span> controlMask, xK_i), spawn <span class="st">&quot;urxvt -e /home/chubaduba/scripts/lynxtor&quot;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>         <span class="op">...</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>         ]</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="co">-- Keybindings</span></a>
+<a class="sourceLine" id="cb4-2" title="2">myKeys <span class="ot">=</span> [ <span class="op">...</span></a>
+<a class="sourceLine" id="cb4-3" title="3">         , ((mod4Mask <span class="op">.|.</span> controlMask, xK_i), spawn <span class="st">&quot;urxvt -e /home/chubaduba/scripts/lynxtor&quot;</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4">         <span class="op">...</span></a>
+<a class="sourceLine" id="cb4-5" title="5">         ]</a></code></pre></div>
 <p>Остаётся перекомпилировать и перезагрузить <code>xmonad</code>, чтобы все изменения вступили в силу. Теперь при нажатии комбинации клавиш <code>mod4Mask + Ctrl + i</code> у нас будет запускаться браузер <code>Lynx</code> трафик которого будет идти через <code>Tor</code>.</p>]]></description>
     <pubDate>Sat, 21 Sep 2019 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2019-09-21-1.html</guid>
@@ -58,20 +81,20 @@ $ sudo apt-get install tor
 <p>поэтому и добавил функционал только для них.</p>
 <p>Чтобы всё это у нас заработало, первым делом добавим модуль <code>XMonad.Actions.Search</code> в наш файл конфигурации <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></a></code></pre></div>
 <hr />
 <p>Второе, что необходимо сделать - это сконфигурировать окно, в которое мы будем вводить поисковый запрос. Добавляем в <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">-- Search Prompt</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>mySearchConfig <span class="ot">=</span> def</span>
-<span id="cb2-3"><a href="#cb2-3"></a>        { font                <span class="ot">=</span> myFont</span>
-<span id="cb2-4"><a href="#cb2-4"></a>        , bgColor             <span class="ot">=</span> <span class="st">&quot;#1E2320&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>        , fgColor             <span class="ot">=</span> <span class="st">&quot;#E0AF8F&quot;</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>        , promptBorderWidth   <span class="ot">=</span> <span class="dv">0</span> </span>
-<span id="cb2-7"><a href="#cb2-7"></a>        , position            <span class="ot">=</span> <span class="dt">Top</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>        , historySize         <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>        , historyFilter       <span class="ot">=</span> deleteConsecutive</span>
-<span id="cb2-10"><a href="#cb2-10"></a>        }</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="co">-- Search Prompt</span></a>
+<a class="sourceLine" id="cb2-2" title="2">mySearchConfig <span class="ot">=</span> def</a>
+<a class="sourceLine" id="cb2-3" title="3">        { font                <span class="ot">=</span> myFont</a>
+<a class="sourceLine" id="cb2-4" title="4">        , bgColor             <span class="ot">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">        , fgColor             <span class="ot">=</span> <span class="st">&quot;#E0AF8F&quot;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">        , promptBorderWidth   <span class="ot">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb2-7" title="7">        , position            <span class="ot">=</span> <span class="dt">Top</span></a>
+<a class="sourceLine" id="cb2-8" title="8">        , historySize         <span class="ot">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb2-9" title="9">        , historyFilter       <span class="ot">=</span> deleteConsecutive</a>
+<a class="sourceLine" id="cb2-10" title="10">        }</a></code></pre></div>
 <hr />
 <p>Здесь ничего объяснять, думаю, не нужно. Все параметры задаются в зависимости от личных предпочтений пользователя.</p>
 <p>И последнее, что нужно сделать - это добавить в конфигурационный файл сочетания горячих клавиш для каждого поискового движка.<br />
@@ -81,16 +104,16 @@ $ sudo apt-get install tor
 <code>youtube</code> - mod4 + Shift + y.</p>
 <p>Соответственно добавляем в конфиг:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">-- Search prompt</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="co">-- Search prompt</span></a>
+<a class="sourceLine" id="cb3-2" title="2">, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</a>
+<a class="sourceLine" id="cb3-3" title="3">, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</a>
+<a class="sourceLine" id="cb3-4" title="4">, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</a></code></pre></div>
 <hr />
 <p>где</p>
 <p><code>mySearchConfig</code> - имя нашего окна, которое мы сконфигурировали ранее; <code>myBrowser</code> - браузер используемый по умолчанию.</p>
 <p>Я пользуюсь браузером <code>Chromium</code> поэтому в <code>hmonad.hs</code> прописал константу:</p>
 <hr />
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>myBrowser <span class="ot">=</span> <span class="st">&quot;chromium&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1">myBrowser <span class="ot">=</span> <span class="st">&quot;chromium&quot;</span></a></code></pre></div>
 <hr />
 <blockquote>
 <p>Если вы используете несколько браузеров, то вместо <code>myBrowser</code> можно прописать имя конкретного браузера. Тогда результаты поискового запроса для каждого движка будут открываться в разных браузерах, согласно тому, что вы указали.</p>
@@ -116,10 +139,10 @@ $ sudo apt-get install tor
 <pre><code>$ sudo apt-get install kbdd
 </code></pre>
 <p>Ну и теперь остаётся настроить сам <code>xmobar</code>. Для этого открываем файл конфигурации <code>.xmobarrc</code> и добавляем в секцию <code>commands</code> строчку:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">Run</span> <span class="dt">Kbd</span> [(<span class="st">&quot;us&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;usa&lt;/fc&gt;&quot;</span>), (<span class="st">&quot;ru&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;rus&lt;/fc&gt;&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="dt">Run</span> <span class="dt">Kbd</span> [(<span class="st">&quot;us&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;usa&lt;/fc&gt;&quot;</span>), (<span class="st">&quot;ru&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;rus&lt;/fc&gt;&quot;</span>)]</a></code></pre></div>
 <p>Здесь я указал каким цветом будет отображать индикатор при разных раскладках. Если вам это не нужно, параметр <code>&lt;fc&gt;&lt;/fc&gt;</code> можно не использовать.</p>
 <p>В <code>template</code>, в нужном нам месте, добавляем вывод индикатора на экран:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>, template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>kbd<span class="op">%</span> <span class="op">...</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1">, template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>kbd<span class="op">%</span> <span class="op">...</span></a></code></pre></div>
 <p>Сохраняем файл <code>.xmobarrc</code> и перезагружаем <code>xmobar</code>. Теперь у нас есть индикатор раскладки:</p>
 <p><a href="http://www.imagebam.com/image/7cee4e1211317614"><img src="http://thumbs2.imagebam.com/ce/2a/36/7cee4e1211317614.jpg" alt="imagebam.com"></a> <a href="http://www.imagebam.com/image/4f5c911211317634"><img src="http://thumbs2.imagebam.com/0b/dd/cd/4f5c911211317634.jpg" alt="imagebam.com"></a></p>]]></description>
     <pubDate>Thu, 02 May 2019 00:00:00 UT</pubDate>
@@ -134,10 +157,10 @@ $ sudo apt-get install tor
 <p>С некоторыми изменениями данный layout можно использовать в связке с такими клиентами как Gajim и Psi+</p>
 </blockquote>
 <p>Добавляем в наш <code>~/.xmonad/xmonad.hs</code> следующие модули:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Layout.IM</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">import</span> <span class="dt">Data.Ratio</span> ((%))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">import</span> <span class="dt">XMonad.Layout.IM</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">import</span> <span class="dt">Data.Ratio</span> ((%))</a></code></pre></div>
 <p>И теперь в секции где мы перечисляем все наши layout’ы непосредственно добавляем сам layout:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a>myLayouts <span class="ot">=</span> <span class="op">...|||...|||</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1">myLayouts <span class="ot">=</span> <span class="op">...|||...|||</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
 <blockquote>
 <p>В настройках Tkabber нужно снять галочку с “Использовать интерфес с закладками”.</p>
 </blockquote>
@@ -167,71 +190,71 @@ APT::Install-Suggests &quot;0&quot;;
     <title>Тема Zenburn для WeeСhat.</title>
     <link>https://chubaduba.github.io//posts/2019-01-29-1.html</link>
     <description><![CDATA[<p><code>~/.weechat/weechat.conf</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a>[color]</span>
-<span id="cb1-2"><a href="#cb1-2"></a>bar_more = lightmagenta</span>
-<span id="cb1-3"><a href="#cb1-3"></a>chat = default</span>
-<span id="cb1-4"><a href="#cb1-4"></a>chat_bg = default</span>
-<span id="cb1-5"><a href="#cb1-5"></a>chat_buffer = white</span>
-<span id="cb1-6"><a href="#cb1-6"></a>chat_channel = white</span>
-<span id="cb1-7"><a href="#cb1-7"></a>chat_day_change = cyan</span>
-<span id="cb1-8"><a href="#cb1-8"></a>chat_delimiters = green</span>
-<span id="cb1-9"><a href="#cb1-9"></a>chat_highlight = red</span>
-<span id="cb1-10"><a href="#cb1-10"></a>chat_highlight_bg = default</span>
-<span id="cb1-11"><a href="#cb1-11"></a>chat_host = cyan</span>
-<span id="cb1-12"><a href="#cb1-12"></a>chat_inactive_buffer = default</span>
-<span id="cb1-13"><a href="#cb1-13"></a>chat_inactive_window = default</span>
-<span id="cb1-14"><a href="#cb1-14"></a>chat_nick = lightcyan</span>
-<span id="cb1-15"><a href="#cb1-15"></a>chat_nick_colors = &quot;lighblue,cyan,default,lightblue&quot;</span>
-<span id="cb1-16"><a href="#cb1-16"></a>chat_nick_offline = default</span>
-<span id="cb1-17"><a href="#cb1-17"></a>chat_nick_offline_highlight = default</span>
-<span id="cb1-18"><a href="#cb1-18"></a>chat_nick_offline_highlight_bg = blue</span>
-<span id="cb1-19"><a href="#cb1-19"></a>chat_nick_other = cyan</span>
-<span id="cb1-20"><a href="#cb1-20"></a>chat_nick_prefix = green</span>
-<span id="cb1-21"><a href="#cb1-21"></a>chat_nick_self = white</span>
-<span id="cb1-22"><a href="#cb1-22"></a>chat_nick_suffix = green</span>
-<span id="cb1-23"><a href="#cb1-23"></a>chat_prefix_action = white</span>
-<span id="cb1-24"><a href="#cb1-24"></a>chat_prefix_buffer = brown</span>
-<span id="cb1-25"><a href="#cb1-25"></a>chat_prefix_buffer_inactive_buffer = default</span>
-<span id="cb1-26"><a href="#cb1-26"></a>chat_prefix_error = yellow</span>
-<span id="cb1-27"><a href="#cb1-27"></a>chat_prefix_join = lightgreen</span>
-<span id="cb1-28"><a href="#cb1-28"></a>chat_prefix_more = lightmagenta</span>
-<span id="cb1-29"><a href="#cb1-29"></a>chat_prefix_network = magenta</span>
-<span id="cb1-30"><a href="#cb1-30"></a>chat_prefix_quit = lightred</span>
-<span id="cb1-31"><a href="#cb1-31"></a>chat_prefix_suffix = green</span>
-<span id="cb1-32"><a href="#cb1-32"></a>chat_read_marker = magenta</span>
-<span id="cb1-33"><a href="#cb1-33"></a>chat_read_marker_bg = default</span>
-<span id="cb1-34"><a href="#cb1-34"></a>chat_server = brown</span>
-<span id="cb1-35"><a href="#cb1-35"></a>chat_tags = red</span>
-<span id="cb1-36"><a href="#cb1-36"></a>chat_text_found = cyan</span>
-<span id="cb1-37"><a href="#cb1-37"></a>chat_text_found_bg = lightmagenta</span>
-<span id="cb1-38"><a href="#cb1-38"></a>chat_time = default</span>
-<span id="cb1-39"><a href="#cb1-39"></a>chat_time_delimiters = brown</span>
-<span id="cb1-40"><a href="#cb1-40"></a>chat_value = cyan</span>
-<span id="cb1-41"><a href="#cb1-41"></a>chat_value_null = blue</span>
-<span id="cb1-42"><a href="#cb1-42"></a>emphasized = yellow</span>
-<span id="cb1-43"><a href="#cb1-43"></a>emphasized_bg = magenta</span>
-<span id="cb1-44"><a href="#cb1-44"></a>input_actions = lightgreen</span>
-<span id="cb1-45"><a href="#cb1-45"></a>input_text_not_found = red</span>
-<span id="cb1-46"><a href="#cb1-46"></a>item_away = yellow</span>
-<span id="cb1-47"><a href="#cb1-47"></a>nicklist_away = cyan</span>
-<span id="cb1-48"><a href="#cb1-48"></a>nicklist_group = green</span>
-<span id="cb1-49"><a href="#cb1-49"></a>separator = blue</span>
-<span id="cb1-50"><a href="#cb1-50"></a>status_count_highlight = magenta</span>
-<span id="cb1-51"><a href="#cb1-51"></a>status_count_msg = brown</span>
-<span id="cb1-52"><a href="#cb1-52"></a>status_count_other = default</span>
-<span id="cb1-53"><a href="#cb1-53"></a>status_count_private = green</span>
-<span id="cb1-54"><a href="#cb1-54"></a>status_data_highlight = lightmagenta</span>
-<span id="cb1-55"><a href="#cb1-55"></a>status_data_msg = yellow</span>
-<span id="cb1-56"><a href="#cb1-56"></a>status_data_other = default</span>
-<span id="cb1-57"><a href="#cb1-57"></a>status_data_private = lightgreen</span>
-<span id="cb1-58"><a href="#cb1-58"></a>status_filter = green</span>
-<span id="cb1-59"><a href="#cb1-59"></a>status_more = yellow</span>
-<span id="cb1-60"><a href="#cb1-60"></a>status_mouse = green</span>
-<span id="cb1-61"><a href="#cb1-61"></a>status_name = white</span>
-<span id="cb1-62"><a href="#cb1-62"></a>status_name_ssl = lightgreen</span>
-<span id="cb1-63"><a href="#cb1-63"></a>status_nicklist_count = default</span>
-<span id="cb1-64"><a href="#cb1-64"></a>status_number = yellow</span>
-<span id="cb1-65"><a href="#cb1-65"></a>status_time = default</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1">[color]</a>
+<a class="sourceLine" id="cb1-2" title="2">bar_more = lightmagenta</a>
+<a class="sourceLine" id="cb1-3" title="3">chat = default</a>
+<a class="sourceLine" id="cb1-4" title="4">chat_bg = default</a>
+<a class="sourceLine" id="cb1-5" title="5">chat_buffer = white</a>
+<a class="sourceLine" id="cb1-6" title="6">chat_channel = white</a>
+<a class="sourceLine" id="cb1-7" title="7">chat_day_change = cyan</a>
+<a class="sourceLine" id="cb1-8" title="8">chat_delimiters = green</a>
+<a class="sourceLine" id="cb1-9" title="9">chat_highlight = red</a>
+<a class="sourceLine" id="cb1-10" title="10">chat_highlight_bg = default</a>
+<a class="sourceLine" id="cb1-11" title="11">chat_host = cyan</a>
+<a class="sourceLine" id="cb1-12" title="12">chat_inactive_buffer = default</a>
+<a class="sourceLine" id="cb1-13" title="13">chat_inactive_window = default</a>
+<a class="sourceLine" id="cb1-14" title="14">chat_nick = lightcyan</a>
+<a class="sourceLine" id="cb1-15" title="15">chat_nick_colors = &quot;lighblue,cyan,default,lightblue&quot;</a>
+<a class="sourceLine" id="cb1-16" title="16">chat_nick_offline = default</a>
+<a class="sourceLine" id="cb1-17" title="17">chat_nick_offline_highlight = default</a>
+<a class="sourceLine" id="cb1-18" title="18">chat_nick_offline_highlight_bg = blue</a>
+<a class="sourceLine" id="cb1-19" title="19">chat_nick_other = cyan</a>
+<a class="sourceLine" id="cb1-20" title="20">chat_nick_prefix = green</a>
+<a class="sourceLine" id="cb1-21" title="21">chat_nick_self = white</a>
+<a class="sourceLine" id="cb1-22" title="22">chat_nick_suffix = green</a>
+<a class="sourceLine" id="cb1-23" title="23">chat_prefix_action = white</a>
+<a class="sourceLine" id="cb1-24" title="24">chat_prefix_buffer = brown</a>
+<a class="sourceLine" id="cb1-25" title="25">chat_prefix_buffer_inactive_buffer = default</a>
+<a class="sourceLine" id="cb1-26" title="26">chat_prefix_error = yellow</a>
+<a class="sourceLine" id="cb1-27" title="27">chat_prefix_join = lightgreen</a>
+<a class="sourceLine" id="cb1-28" title="28">chat_prefix_more = lightmagenta</a>
+<a class="sourceLine" id="cb1-29" title="29">chat_prefix_network = magenta</a>
+<a class="sourceLine" id="cb1-30" title="30">chat_prefix_quit = lightred</a>
+<a class="sourceLine" id="cb1-31" title="31">chat_prefix_suffix = green</a>
+<a class="sourceLine" id="cb1-32" title="32">chat_read_marker = magenta</a>
+<a class="sourceLine" id="cb1-33" title="33">chat_read_marker_bg = default</a>
+<a class="sourceLine" id="cb1-34" title="34">chat_server = brown</a>
+<a class="sourceLine" id="cb1-35" title="35">chat_tags = red</a>
+<a class="sourceLine" id="cb1-36" title="36">chat_text_found = cyan</a>
+<a class="sourceLine" id="cb1-37" title="37">chat_text_found_bg = lightmagenta</a>
+<a class="sourceLine" id="cb1-38" title="38">chat_time = default</a>
+<a class="sourceLine" id="cb1-39" title="39">chat_time_delimiters = brown</a>
+<a class="sourceLine" id="cb1-40" title="40">chat_value = cyan</a>
+<a class="sourceLine" id="cb1-41" title="41">chat_value_null = blue</a>
+<a class="sourceLine" id="cb1-42" title="42">emphasized = yellow</a>
+<a class="sourceLine" id="cb1-43" title="43">emphasized_bg = magenta</a>
+<a class="sourceLine" id="cb1-44" title="44">input_actions = lightgreen</a>
+<a class="sourceLine" id="cb1-45" title="45">input_text_not_found = red</a>
+<a class="sourceLine" id="cb1-46" title="46">item_away = yellow</a>
+<a class="sourceLine" id="cb1-47" title="47">nicklist_away = cyan</a>
+<a class="sourceLine" id="cb1-48" title="48">nicklist_group = green</a>
+<a class="sourceLine" id="cb1-49" title="49">separator = blue</a>
+<a class="sourceLine" id="cb1-50" title="50">status_count_highlight = magenta</a>
+<a class="sourceLine" id="cb1-51" title="51">status_count_msg = brown</a>
+<a class="sourceLine" id="cb1-52" title="52">status_count_other = default</a>
+<a class="sourceLine" id="cb1-53" title="53">status_count_private = green</a>
+<a class="sourceLine" id="cb1-54" title="54">status_data_highlight = lightmagenta</a>
+<a class="sourceLine" id="cb1-55" title="55">status_data_msg = yellow</a>
+<a class="sourceLine" id="cb1-56" title="56">status_data_other = default</a>
+<a class="sourceLine" id="cb1-57" title="57">status_data_private = lightgreen</a>
+<a class="sourceLine" id="cb1-58" title="58">status_filter = green</a>
+<a class="sourceLine" id="cb1-59" title="59">status_more = yellow</a>
+<a class="sourceLine" id="cb1-60" title="60">status_mouse = green</a>
+<a class="sourceLine" id="cb1-61" title="61">status_name = white</a>
+<a class="sourceLine" id="cb1-62" title="62">status_name_ssl = lightgreen</a>
+<a class="sourceLine" id="cb1-63" title="63">status_nicklist_count = default</a>
+<a class="sourceLine" id="cb1-64" title="64">status_number = yellow</a>
+<a class="sourceLine" id="cb1-65" title="65">status_time = default</a></code></pre></div>
 <p>О настройках цветовой схемы <code>Zenburn</code> в терминале можно прочитать <a href="https://chubaduba.github.io/posts/2018-02-23-1.html">тут</a>.</p>
 <p><a href="http://www.imagebam.com/image/6a8fca1106277554"><img src="http://thumbs2.imagebam.com/9d/a8/c3/6a8fca1106277554.jpg" alt="imagebam.com"></a></p>]]></description>
     <pubDate>Tue, 29 Jan 2019 00:00:00 UT</pubDate>
@@ -250,23 +273,23 @@ APT::Install-Suggests &quot;0&quot;;
 <pre class="haskel"><code>import XMonad.Layout.Spacing
 </code></pre>
 <p>После чего модифицируем секцию <code>Layouts</code>. В моём случае это выглядит так:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">-- Layouts</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>myLayouts <span class="ot">=</span> minimize (avoidStruts tiled</span>
-<span id="cb2-3"><a href="#cb2-3"></a>           <span class="op">|||</span> threecolmid</span>
-<span id="cb2-4"><a href="#cb2-4"></a>           <span class="op">|||</span> onebig</span>
-<span id="cb2-5"><a href="#cb2-5"></a>           <span class="op">|||</span> imTkabber</span>
-<span id="cb2-6"><a href="#cb2-6"></a>           <span class="op">|||</span> full)</span>
-<span id="cb2-7"><a href="#cb2-7"></a> <span class="kw">where</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>    tiled   <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</span>
-<span id="cb2-9"><a href="#cb2-9"></a>    nmaster <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>    ratio   <span class="ot">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>    delta   <span class="ot">=</span> <span class="dv">3</span><span class="op">/</span><span class="dv">100</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">-- basic layouts</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>full        <span class="ot">=</span> noBorders <span class="dt">Full</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a>onebig      <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)</span>
-<span id="cb2-16"><a href="#cb2-16"></a>threecolmid <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="op">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb2-17"><a href="#cb2-17"></a>imTkabber   <span class="ot">=</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="co">-- Layouts</span></a>
+<a class="sourceLine" id="cb2-2" title="2">myLayouts <span class="ot">=</span> minimize (avoidStruts tiled</a>
+<a class="sourceLine" id="cb2-3" title="3">           <span class="op">|||</span> threecolmid</a>
+<a class="sourceLine" id="cb2-4" title="4">           <span class="op">|||</span> onebig</a>
+<a class="sourceLine" id="cb2-5" title="5">           <span class="op">|||</span> imTkabber</a>
+<a class="sourceLine" id="cb2-6" title="6">           <span class="op">|||</span> full)</a>
+<a class="sourceLine" id="cb2-7" title="7"> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-8" title="8">    tiled   <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</a>
+<a class="sourceLine" id="cb2-9" title="9">    nmaster <span class="ot">=</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-10" title="10">    ratio   <span class="ot">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-11" title="11">    delta   <span class="ot">=</span> <span class="dv">3</span><span class="op">/</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">-- basic layouts</span></a>
+<a class="sourceLine" id="cb2-14" title="14">full        <span class="ot">=</span> noBorders <span class="dt">Full</span></a>
+<a class="sourceLine" id="cb2-15" title="15">onebig      <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-16" title="16">threecolmid <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="op">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-17" title="17">imTkabber   <span class="ot">=</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
 <p>Если в какой-то компановке вам не нужны отступы, то просто не прописывайте их. Например, я в компановке окон <code>imTkabber</code> отступы не использую.</p>
 <p>Остаётся сохранить <code>xmonad.hs</code> и перекомпилировать наш <code>xmonad</code>.</p>
 <blockquote>
@@ -288,452 +311,452 @@ APT::Install-Suggests &quot;0&quot;;
 <details>
 <p><summary><code>rtorrent-0.9.6_color.patch</code></summary></p>
 <hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1"></a>diff --git a/src/command_network.cc b/src/command_network.cc</span>
-<span id="cb1-2"><a href="#cb1-2"></a>index c445c38..24ad5c0 <span class="dv">100644</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>--- a/src/command_network.cc</span>
-<span id="cb1-4"><a href="#cb1-4"></a>+++ b/src/command_network.cc</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="er">@@</span> <span class="dv">-241</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">241</span><span class="ot">,</span><span class="dv">26</span> <span class="er">@@</span> initialize_command_network<span class="ot">()</span> {</span>
-<span id="cb1-6"><a href="#cb1-6"></a>   <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;strings.connection_type&quot;</span><span class="ot">,</span> tr1::bind<span class="ot">(</span>&amp;torrent::option_list_strings<span class="ot">,</span> torrent::<span class="kw">OPTION_CONNECTION_TYPE</span><span class="ot">));</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>   <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;strings.encryption&quot;</span><span class="ot">,</span>      tr1::bind<span class="ot">(</span>&amp;torrent::option_list_strings<span class="ot">,</span> torrent::<span class="kw">OPTION_ENCRYPTION</span><span class="ot">));</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a> </span>
-<span id="cb1-9"><a href="#cb1-9"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_inactive_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_inactive_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_inactive_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_inactive_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_inactive_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_inactive_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_inactive_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_inactive_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>+  </span>
-<span id="cb1-14"><a href="#cb1-14"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_dead_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_dead_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_dead_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_dead_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_dead_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_dead_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_dead_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_dead_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a>+</span>
-<span id="cb1-19"><a href="#cb1-19"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_active_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_active_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_active_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_active_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_active_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_active_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_active_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_active_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a>+</span>
-<span id="cb1-24"><a href="#cb1-24"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_finished_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_finished_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_finished_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_finished_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_finished_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_finished_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_finished_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_finished_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a>+</span>
-<span id="cb1-29"><a href="#cb1-29"></a>   <span class="co">// CMD2_ANY_STRING  (&quot;encoding_list&quot;,    tr1::bind(&amp;apply_encoding_list, tr1::placeholders::_2));</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a>   <span class="kw">CMD2_ANY_STRING</span>  <span class="ot">(</span><span class="st">&quot;encoding.add&quot;</span><span class="ot">,</span> tr1::bind<span class="ot">(</span>&amp;apply_encoding_list<span class="ot">,</span> tr1::placeholders::_2<span class="ot">));</span></span>
-<span id="cb1-31"><a href="#cb1-31"></a> </span>
-<span id="cb1-32"><a href="#cb1-32"></a>diff --git a/src/display/canvas.cc b/src/display/canvas.cc</span>
-<span id="cb1-33"><a href="#cb1-33"></a>index 31db4ad..<span class="fl">255e7</span>c3 <span class="dv">100644</span></span>
-<span id="cb1-34"><a href="#cb1-34"></a>--- a/src/display/canvas.cc</span>
-<span id="cb1-35"><a href="#cb1-35"></a>+++ b/src/display/canvas.cc</span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="er">@@</span> <span class="dv">-99</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">99</span><span class="ot">,</span><span class="dv">12</span> <span class="er">@@</span> Canvas::initialize<span class="ot">()</span> {</span>
-<span id="cb1-37"><a href="#cb1-37"></a>   m_isInitialized = <span class="kw">true</span><span class="ot">;</span></span>
-<span id="cb1-38"><a href="#cb1-38"></a> </span>
-<span id="cb1-39"><a href="#cb1-39"></a>   initscr<span class="ot">();</span></span>
-<span id="cb1-40"><a href="#cb1-40"></a>+  start_color<span class="ot">();</span></span>
-<span id="cb1-41"><a href="#cb1-41"></a>+  use_default_colors<span class="ot">();</span></span>
-<span id="cb1-42"><a href="#cb1-42"></a>+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
-<span id="cb1-43"><a href="#cb1-43"></a>+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
-<span id="cb1-44"><a href="#cb1-44"></a>+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
-<span id="cb1-45"><a href="#cb1-45"></a>+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
-<span id="cb1-46"><a href="#cb1-46"></a>   raw<span class="ot">();</span></span>
-<span id="cb1-47"><a href="#cb1-47"></a>   noecho<span class="ot">();</span></span>
-<span id="cb1-48"><a href="#cb1-48"></a>   nodelay<span class="ot">(</span>stdscr<span class="ot">,</span> <span class="kw">TRUE</span><span class="ot">);</span></span>
-<span id="cb1-49"><a href="#cb1-49"></a>diff --git a/src/display/window_download_list.cc b/src/display/window_download_list.cc</span>
-<span id="cb1-50"><a href="#cb1-50"></a>index ead4ddd..ffd79c9 <span class="dv">100644</span></span>
-<span id="cb1-51"><a href="#cb1-51"></a>--- a/src/display/window_download_list.cc</span>
-<span id="cb1-52"><a href="#cb1-52"></a>+++ b/src/display/window_download_list.cc</span>
-<span id="cb1-53"><a href="#cb1-53"></a><span class="er">@@</span> <span class="dv">-37</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">37</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span></span>
-<span id="cb1-54"><a href="#cb1-54"></a> <span class="co">#include &quot;config.h&quot;</span></span>
-<span id="cb1-55"><a href="#cb1-55"></a> </span>
-<span id="cb1-56"><a href="#cb1-56"></a> <span class="co">#include &lt;rak/algorithm.h&gt;</span></span>
-<span id="cb1-57"><a href="#cb1-57"></a>+<span class="co">#include &lt;torrent/rate.h&gt;</span></span>
-<span id="cb1-58"><a href="#cb1-58"></a> </span>
-<span id="cb1-59"><a href="#cb1-59"></a> <span class="co">#include &quot;core/download.h&quot;</span></span>
-<span id="cb1-60"><a href="#cb1-60"></a> <span class="co">#include &quot;core/view.h&quot;</span></span>
-<span id="cb1-61"><a href="#cb1-61"></a><span class="er">@@</span> <span class="dv">-104</span><span class="ot">,</span><span class="dv">9</span> +<span class="dv">105</span><span class="ot">,</span><span class="dv">41</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</span>
-<span id="cb1-62"><a href="#cb1-62"></a>     char buffer<span class="ot">[</span>m_canvas-&gt;width<span class="ot">()</span> + <span class="dv">1</span><span class="ot">];</span></span>
-<span id="cb1-63"><a href="#cb1-63"></a>     char* last = buffer + m_canvas-&gt;width<span class="ot">()</span> - <span class="dv">2</span> + <span class="dv">1</span><span class="ot">;</span></span>
-<span id="cb1-64"><a href="#cb1-64"></a> </span>
-<span id="cb1-65"><a href="#cb1-65"></a>+    <span class="co">/*</span></span>
-<span id="cb1-66"><a href="#cb1-66"></a><span class="co">+    There are four states where colors are applied:</span></span>
-<span id="cb1-67"><a href="#cb1-67"></a><span class="co">+    1 inactive  # If inactive, e.g. user stopped down/upload</span></span>
-<span id="cb1-68"><a href="#cb1-68"></a><span class="co">+    2 dead      # If active but no down/upload</span></span>
-<span id="cb1-69"><a href="#cb1-69"></a><span class="co">+    3 active    # If active and download</span></span>
-<span id="cb1-70"><a href="#cb1-70"></a><span class="co">+    4 finished  # If finished</span></span>
-<span id="cb1-71"><a href="#cb1-71"></a><span class="co">+    */</span></span>
-<span id="cb1-72"><a href="#cb1-72"></a>+</span>
-<span id="cb1-73"><a href="#cb1-73"></a>     print_download_title<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></span>
-<span id="cb1-74"><a href="#cb1-74"></a>-    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
-<span id="cb1-75"><a href="#cb1-75"></a>-    </span>
-<span id="cb1-76"><a href="#cb1-76"></a>+    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
-<span id="cb1-77"><a href="#cb1-77"></a>+    <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_done<span class="ot">()</span> <span class="ot">)</span> {</span>
-<span id="cb1-78"><a href="#cb1-78"></a>+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
-<span id="cb1-79"><a href="#cb1-79"></a>+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>       <span class="co">// Finished and uploading</span></span>
-<span id="cb1-80"><a href="#cb1-80"></a>+      } <span class="kw">else</span> {</span>
-<span id="cb1-81"><a href="#cb1-81"></a>+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>     <span class="co">// Finished</span></span>
-<span id="cb1-82"><a href="#cb1-82"></a>+      }</span>
-<span id="cb1-83"><a href="#cb1-83"></a>+    } <span class="kw">else</span> <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_active<span class="ot">()</span> <span class="ot">)</span> {</span>
-<span id="cb1-84"><a href="#cb1-84"></a>+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;down_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
-<span id="cb1-85"><a href="#cb1-85"></a>+        <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
-<span id="cb1-86"><a href="#cb1-86"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">);</span>     <span class="co">// Active and uploading</span></span>
-<span id="cb1-87"><a href="#cb1-87"></a>+        } <span class="kw">else</span> {</span>
-<span id="cb1-88"><a href="#cb1-88"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">);</span>   <span class="co">// Active</span></span>
-<span id="cb1-89"><a href="#cb1-89"></a>+        }</span>
-<span id="cb1-90"><a href="#cb1-90"></a>+      } <span class="kw">else</span> {</span>
-<span id="cb1-91"><a href="#cb1-91"></a>+        <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
-<span id="cb1-92"><a href="#cb1-92"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">);</span>     <span class="co">// Dead but still uploading</span></span>
-<span id="cb1-93"><a href="#cb1-93"></a>+        } <span class="kw">else</span> {</span>
-<span id="cb1-94"><a href="#cb1-94"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">);</span>   <span class="co">// Dead</span></span>
-<span id="cb1-95"><a href="#cb1-95"></a>+        }</span>
-<span id="cb1-96"><a href="#cb1-96"></a>+      }</span>
-<span id="cb1-97"><a href="#cb1-97"></a>+    } <span class="kw">else</span> {</span>
-<span id="cb1-98"><a href="#cb1-98"></a>+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">);</span>     <span class="co">// Inactive</span></span>
-<span id="cb1-99"><a href="#cb1-99"></a>+    }</span>
-<span id="cb1-100"><a href="#cb1-100"></a>+    <span class="fu">pos</span>++<span class="ot">;</span></span>
-<span id="cb1-101"><a href="#cb1-101"></a>+</span>
-<span id="cb1-102"><a href="#cb1-102"></a>     print_download_info<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></span>
-<span id="cb1-103"><a href="#cb1-103"></a>     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
-<span id="cb1-104"><a href="#cb1-104"></a> </span>
-<span id="cb1-105"><a href="#cb1-105"></a><span class="er">@@</span> <span class="dv">-114</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">147</span><span class="ot">,</span><span class="dv">83</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</span>
-<span id="cb1-106"><a href="#cb1-106"></a>     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
-<span id="cb1-107"><a href="#cb1-107"></a> </span>
-<span id="cb1-108"><a href="#cb1-108"></a>     ++<span class="fu">range</span>.first<span class="ot">;</span></span>
-<span id="cb1-109"><a href="#cb1-109"></a>-  }    </span>
-<span id="cb1-110"><a href="#cb1-110"></a>+  }</span>
-<span id="cb1-111"><a href="#cb1-111"></a>+}</span>
-<span id="cb1-112"><a href="#cb1-112"></a>+</span>
-<span id="cb1-113"><a href="#cb1-113"></a>+<span class="co">// Inactive</span></span>
-<span id="cb1-114"><a href="#cb1-114"></a>+<span class="kw">void</span></span>
-<span id="cb1-115"><a href="#cb1-115"></a>+WindowDownloadList::set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-116"><a href="#cb1-116"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-117"><a href="#cb1-117"></a>+  pair_content<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-118"><a href="#cb1-118"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-119"><a href="#cb1-119"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-120"><a href="#cb1-120"></a>+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
-<span id="cb1-121"><a href="#cb1-121"></a>+}</span>
-<span id="cb1-122"><a href="#cb1-122"></a>+</span>
-<span id="cb1-123"><a href="#cb1-123"></a>+<span class="kw">void</span></span>
-<span id="cb1-124"><a href="#cb1-124"></a>+WindowDownloadList::set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-125"><a href="#cb1-125"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-126"><a href="#cb1-126"></a>+  pair_content<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-127"><a href="#cb1-127"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-128"><a href="#cb1-128"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-129"><a href="#cb1-129"></a>+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
-<span id="cb1-130"><a href="#cb1-130"></a>+}</span>
-<span id="cb1-131"><a href="#cb1-131"></a>+</span>
-<span id="cb1-132"><a href="#cb1-132"></a>+<span class="co">// Dead</span></span>
-<span id="cb1-133"><a href="#cb1-133"></a>+<span class="kw">void</span></span>
-<span id="cb1-134"><a href="#cb1-134"></a>+WindowDownloadList::set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-135"><a href="#cb1-135"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-136"><a href="#cb1-136"></a>+  pair_content<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-137"><a href="#cb1-137"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-138"><a href="#cb1-138"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-139"><a href="#cb1-139"></a>+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
-<span id="cb1-140"><a href="#cb1-140"></a>+}</span>
-<span id="cb1-141"><a href="#cb1-141"></a>+</span>
-<span id="cb1-142"><a href="#cb1-142"></a>+<span class="kw">void</span></span>
-<span id="cb1-143"><a href="#cb1-143"></a>+WindowDownloadList::set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-144"><a href="#cb1-144"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-145"><a href="#cb1-145"></a>+  pair_content<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-146"><a href="#cb1-146"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-147"><a href="#cb1-147"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-148"><a href="#cb1-148"></a>+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
-<span id="cb1-149"><a href="#cb1-149"></a>+}</span>
-<span id="cb1-150"><a href="#cb1-150"></a>+</span>
-<span id="cb1-151"><a href="#cb1-151"></a>+<span class="co">// Active</span></span>
-<span id="cb1-152"><a href="#cb1-152"></a>+<span class="kw">void</span></span>
-<span id="cb1-153"><a href="#cb1-153"></a>+WindowDownloadList::set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-154"><a href="#cb1-154"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-155"><a href="#cb1-155"></a>+  pair_content<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-156"><a href="#cb1-156"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-157"><a href="#cb1-157"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-158"><a href="#cb1-158"></a>+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
-<span id="cb1-159"><a href="#cb1-159"></a>+}</span>
-<span id="cb1-160"><a href="#cb1-160"></a>+</span>
-<span id="cb1-161"><a href="#cb1-161"></a>+<span class="kw">void</span></span>
-<span id="cb1-162"><a href="#cb1-162"></a>+WindowDownloadList::set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-163"><a href="#cb1-163"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-164"><a href="#cb1-164"></a>+  pair_content<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-165"><a href="#cb1-165"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-166"><a href="#cb1-166"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-167"><a href="#cb1-167"></a>+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
-<span id="cb1-168"><a href="#cb1-168"></a>+}</span>
-<span id="cb1-169"><a href="#cb1-169"></a>+</span>
-<span id="cb1-170"><a href="#cb1-170"></a>+<span class="co">// Finished</span></span>
-<span id="cb1-171"><a href="#cb1-171"></a>+<span class="kw">void</span></span>
-<span id="cb1-172"><a href="#cb1-172"></a>+WindowDownloadList::set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-173"><a href="#cb1-173"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-174"><a href="#cb1-174"></a>+  pair_content<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-175"><a href="#cb1-175"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-176"><a href="#cb1-176"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-177"><a href="#cb1-177"></a>+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
-<span id="cb1-178"><a href="#cb1-178"></a>+}</span>
-<span id="cb1-179"><a href="#cb1-179"></a>+</span>
-<span id="cb1-180"><a href="#cb1-180"></a>+<span class="kw">void</span></span>
-<span id="cb1-181"><a href="#cb1-181"></a>+WindowDownloadList::set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-182"><a href="#cb1-182"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
-<span id="cb1-183"><a href="#cb1-183"></a>+  pair_content<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
-<span id="cb1-184"><a href="#cb1-184"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
-<span id="cb1-185"><a href="#cb1-185"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
-<span id="cb1-186"><a href="#cb1-186"></a>+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
-<span id="cb1-187"><a href="#cb1-187"></a> }</span>
-<span id="cb1-188"><a href="#cb1-188"></a> </span>
-<span id="cb1-189"><a href="#cb1-189"></a> }</span>
-<span id="cb1-190"><a href="#cb1-190"></a>diff --git a/src/display/window_download_list.h b/src/display/window_download_list.h</span>
-<span id="cb1-191"><a href="#cb1-191"></a>index <span class="fl">8e15</span>cac..4551a47 <span class="dv">100644</span></span>
-<span id="cb1-192"><a href="#cb1-192"></a>--- a/src/display/window_download_list.h</span>
-<span id="cb1-193"><a href="#cb1-193"></a>+++ b/src/display/window_download_list.h</span>
-<span id="cb1-194"><a href="#cb1-194"></a><span class="er">@@</span> <span class="dv">-55</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">55</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
-<span id="cb1-195"><a href="#cb1-195"></a> </span>
-<span id="cb1-196"><a href="#cb1-196"></a>   <span class="kw">void</span>                set_view<span class="ot">(</span>core::View* l<span class="ot">);</span></span>
-<span id="cb1-197"><a href="#cb1-197"></a> </span>
-<span id="cb1-198"><a href="#cb1-198"></a>+  <span class="kw">void</span>                set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-199"><a href="#cb1-199"></a>+  <span class="kw">void</span>                set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-200"><a href="#cb1-200"></a>+  <span class="kw">void</span>                set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-201"><a href="#cb1-201"></a>+  <span class="kw">void</span>                set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-202"><a href="#cb1-202"></a>+  <span class="kw">void</span>                set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-203"><a href="#cb1-203"></a>+  <span class="kw">void</span>                set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-204"><a href="#cb1-204"></a>+  <span class="kw">void</span>                set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-205"><a href="#cb1-205"></a>+  <span class="kw">void</span>                set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-206"><a href="#cb1-206"></a>+</span>
-<span id="cb1-207"><a href="#cb1-207"></a> <span class="kw">private</span>:</span>
-<span id="cb1-208"><a href="#cb1-208"></a>   core::View*         m_view<span class="ot">;</span></span>
-<span id="cb1-209"><a href="#cb1-209"></a> </span>
-<span id="cb1-210"><a href="#cb1-210"></a>diff --git a/src/main.cc b/src/main.cc</span>
-<span id="cb1-211"><a href="#cb1-211"></a>index <span class="fl">5e826</span>bb..44faa21 <span class="dv">100644</span></span>
-<span id="cb1-212"><a href="#cb1-212"></a>--- a/src/main.cc</span>
-<span id="cb1-213"><a href="#cb1-213"></a>+++ b/src/main.cc</span>
-<span id="cb1-214"><a href="#cb1-214"></a><span class="er">@@</span> <span class="dv">-388</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">388</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> main<span class="ot">(</span><span class="kw">int</span> argc<span class="ot">,</span> char** argv<span class="ot">)</span> {</span>
-<span id="cb1-215"><a href="#cb1-215"></a>     <span class="kw">CMD2_REDIRECT</span>        <span class="ot">(</span><span class="st">&quot;ip&quot;</span><span class="ot">,</span>         <span class="st">&quot;network.local_address.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-216"><a href="#cb1-216"></a>     <span class="kw">CMD2_REDIRECT</span>        <span class="ot">(</span><span class="st">&quot;port_range&quot;</span><span class="ot">,</span> <span class="st">&quot;network.port_range.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-217"><a href="#cb1-217"></a> </span>
-<span id="cb1-218"><a href="#cb1-218"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_inactive_fg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_inactive_fg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-219"><a href="#cb1-219"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_inactive_bg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_inactive_bg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-220"><a href="#cb1-220"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_dead_fg&quot;</span><span class="ot">,</span>     <span class="st">&quot;colors.color_dead_fg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-221"><a href="#cb1-221"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_dead_bg&quot;</span><span class="ot">,</span>     <span class="st">&quot;colors.color_dead_bg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-222"><a href="#cb1-222"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_active_fg&quot;</span><span class="ot">,</span>   <span class="st">&quot;colors.color_active_fg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-223"><a href="#cb1-223"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_active_bg&quot;</span><span class="ot">,</span>   <span class="st">&quot;colors.color_active_bg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-224"><a href="#cb1-224"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_finished_fg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_finished_fg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-225"><a href="#cb1-225"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_finished_bg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_finished_bg.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-226"><a href="#cb1-226"></a>+</span>
-<span id="cb1-227"><a href="#cb1-227"></a>     <span class="kw">CMD2_REDIRECT_GENERIC</span><span class="ot">(</span><span class="st">&quot;dht&quot;</span><span class="ot">,</span>      <span class="st">&quot;dht.mode.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-228"><a href="#cb1-228"></a>     <span class="kw">CMD2_REDIRECT_GENERIC</span><span class="ot">(</span><span class="st">&quot;dht_port&quot;</span><span class="ot">,</span> <span class="st">&quot;dht.port.set&quot;</span><span class="ot">);</span></span>
-<span id="cb1-229"><a href="#cb1-229"></a> </span>
-<span id="cb1-230"><a href="#cb1-230"></a>diff --git a/src/ui/download_list.cc b/src/ui/download_list.cc</span>
-<span id="cb1-231"><a href="#cb1-231"></a>index e3abc9a..7dc7469 <span class="dv">100644</span></span>
-<span id="cb1-232"><a href="#cb1-232"></a>--- a/src/ui/download_list.cc</span>
-<span id="cb1-233"><a href="#cb1-233"></a>+++ b/src/ui/download_list.cc</span>
-<span id="cb1-234"><a href="#cb1-234"></a><span class="er">@@</span> <span class="dv">-136</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">136</span><span class="ot">,</span><span class="dv">11</span> <span class="er">@@</span> DownloadList::unfocus_download<span class="ot">(</span>core::Download* d<span class="ot">)</span> {</span>
-<span id="cb1-235"><a href="#cb1-235"></a>   current_view<span class="ot">()</span>-&gt;next_focus<span class="ot">();</span></span>
-<span id="cb1-236"><a href="#cb1-236"></a> }</span>
-<span id="cb1-237"><a href="#cb1-237"></a> </span>
-<span id="cb1-238"><a href="#cb1-238"></a>+display::WindowDownloadList*</span>
-<span id="cb1-239"><a href="#cb1-239"></a>+DownloadList::current_window_list<span class="ot">()</span> {</span>
-<span id="cb1-240"><a href="#cb1-240"></a>+  <span class="kw">return</span> dynamic_cast&lt;ElementDownloadList*&gt;<span class="ot">(</span>m_uiArray<span class="ot">[</span><span class="kw">DISPLAY_DOWNLOAD_LIST</span><span class="ot">])</span>-&gt;window<span class="ot">();</span></span>
-<span id="cb1-241"><a href="#cb1-241"></a>+}</span>
-<span id="cb1-242"><a href="#cb1-242"></a>+</span>
-<span id="cb1-243"><a href="#cb1-243"></a> <span class="kw">void</span></span>
-<span id="cb1-244"><a href="#cb1-244"></a> DownloadList::activate_display<span class="ot">(</span>Display displayType<span class="ot">)</span> {</span>
-<span id="cb1-245"><a href="#cb1-245"></a>   <span class="kw">if</span> <span class="ot">(</span>!is_active<span class="ot">())</span></span>
-<span id="cb1-246"><a href="#cb1-246"></a>diff --git a/src/ui/download_list.h b/src/ui/download_list.h</span>
-<span id="cb1-247"><a href="#cb1-247"></a>index 3712e36..7810f65 <span class="dv">100644</span></span>
-<span id="cb1-248"><a href="#cb1-248"></a>--- a/src/ui/download_list.h</span>
-<span id="cb1-249"><a href="#cb1-249"></a>+++ b/src/ui/download_list.h</span>
-<span id="cb1-250"><a href="#cb1-250"></a><span class="er">@@</span> <span class="dv">-98</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">98</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
-<span id="cb1-251"><a href="#cb1-251"></a>   <span class="kw">void</span>                activate_display<span class="ot">(</span>Display d<span class="ot">);</span></span>
-<span id="cb1-252"><a href="#cb1-252"></a> </span>
-<span id="cb1-253"><a href="#cb1-253"></a>   core::View*         current_view<span class="ot">();</span></span>
-<span id="cb1-254"><a href="#cb1-254"></a>+  display::WindowDownloadList* current_window_list<span class="ot">();</span></span>
-<span id="cb1-255"><a href="#cb1-255"></a>   <span class="kw">void</span>                set_current_view<span class="ot">(</span><span class="kw">const</span> std::<span class="kw">string</span>&amp; name<span class="ot">);</span></span>
-<span id="cb1-256"><a href="#cb1-256"></a> </span>
-<span id="cb1-257"><a href="#cb1-257"></a>   <span class="kw">void</span>                slot_open_uri<span class="ot">(</span>slot_string s<span class="ot">)</span> { m_slot_open_uri = s<span class="ot">;</span> }</span>
-<span id="cb1-258"><a href="#cb1-258"></a>diff --git a/src/ui/element_download_list.h b/src/ui/element_download_list.h</span>
-<span id="cb1-259"><a href="#cb1-259"></a>index 20185b5..00ef880 <span class="dv">100644</span></span>
-<span id="cb1-260"><a href="#cb1-260"></a>--- a/src/ui/element_download_list.h</span>
-<span id="cb1-261"><a href="#cb1-261"></a>+++ b/src/ui/element_download_list.h</span>
-<span id="cb1-262"><a href="#cb1-262"></a><span class="er">@@</span> <span class="dv">-60</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">60</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
-<span id="cb1-263"><a href="#cb1-263"></a>   <span class="kw">void</span>                disable<span class="ot">();</span></span>
-<span id="cb1-264"><a href="#cb1-264"></a> </span>
-<span id="cb1-265"><a href="#cb1-265"></a>   core::View*         view<span class="ot">()</span> { <span class="kw">return</span> m_view<span class="ot">;</span> }</span>
-<span id="cb1-266"><a href="#cb1-266"></a>+  WDownloadList*      window<span class="ot">()</span> { <span class="kw">return</span> m_window<span class="ot">;</span> }</span>
-<span id="cb1-267"><a href="#cb1-267"></a>   <span class="kw">void</span>                set_view<span class="ot">(</span>core::View* l<span class="ot">);</span></span>
-<span id="cb1-268"><a href="#cb1-268"></a> </span>
-<span id="cb1-269"><a href="#cb1-269"></a>   <span class="kw">void</span>                receive_command<span class="ot">(</span><span class="kw">const</span> char* cmd<span class="ot">);</span></span>
-<span id="cb1-270"><a href="#cb1-270"></a>diff --git a/src/ui/root.cc b/src/ui/root.cc</span>
-<span id="cb1-271"><a href="#cb1-271"></a>index 981fcc2..2df0f5a <span class="dv">100644</span></span>
-<span id="cb1-272"><a href="#cb1-272"></a>--- a/src/ui/root.cc</span>
-<span id="cb1-273"><a href="#cb1-273"></a>+++ b/src/ui/root.cc</span>
-<span id="cb1-274"><a href="#cb1-274"></a><span class="er">@@</span> <span class="dv">-44</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">44</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span></span>
-<span id="cb1-275"><a href="#cb1-275"></a> </span>
-<span id="cb1-276"><a href="#cb1-276"></a> <span class="co">#include &quot;core/manager.h&quot;</span></span>
-<span id="cb1-277"><a href="#cb1-277"></a> <span class="co">#include &quot;display/frame.h&quot;</span></span>
-<span id="cb1-278"><a href="#cb1-278"></a>+<span class="co">#include &quot;display/window_download_list.h&quot;</span></span>
-<span id="cb1-279"><a href="#cb1-279"></a> <span class="co">#include &quot;display/window_http_queue.h&quot;</span></span>
-<span id="cb1-280"><a href="#cb1-280"></a> <span class="co">#include &quot;display/window_title.h&quot;</span></span>
-<span id="cb1-281"><a href="#cb1-281"></a> <span class="co">#include &quot;display/window_input.h&quot;</span></span>
-<span id="cb1-282"><a href="#cb1-282"></a><span class="er">@@</span> <span class="dv">-65</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">66</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> Root::Root<span class="ot">()</span> :</span>
-<span id="cb1-283"><a href="#cb1-283"></a>   m_windowTitle<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
-<span id="cb1-284"><a href="#cb1-284"></a>   m_windowHttpQueue<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
-<span id="cb1-285"><a href="#cb1-285"></a>   m_windowInput<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
-<span id="cb1-286"><a href="#cb1-286"></a>-  m_windowStatusbar<span class="ot">(</span><span class="kw">NULL</span><span class="ot">)</span> {</span>
-<span id="cb1-287"><a href="#cb1-287"></a>+  m_windowStatusbar<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
-<span id="cb1-288"><a href="#cb1-288"></a>+  color_inactive_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-289"><a href="#cb1-289"></a>+  color_inactive_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-290"><a href="#cb1-290"></a>+  color_dead_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-291"><a href="#cb1-291"></a>+  color_dead_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-292"><a href="#cb1-292"></a>+  color_active_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-293"><a href="#cb1-293"></a>+  color_active_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-294"><a href="#cb1-294"></a>+  color_finished_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
-<span id="cb1-295"><a href="#cb1-295"></a>+  color_finished_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">)</span> {</span>
-<span id="cb1-296"><a href="#cb1-296"></a> }</span>
-<span id="cb1-297"><a href="#cb1-297"></a> </span>
-<span id="cb1-298"><a href="#cb1-298"></a> <span class="kw">void</span></span>
-<span id="cb1-299"><a href="#cb1-299"></a><span class="er">@@</span> <span class="dv">-97</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">106</span><span class="ot">,</span><span class="dv">14</span> <span class="er">@@</span> Root::init<span class="ot">(</span>Control* c<span class="ot">)</span> {</span>
-<span id="cb1-300"><a href="#cb1-300"></a>   setup_keys<span class="ot">();</span></span>
-<span id="cb1-301"><a href="#cb1-301"></a> </span>
-<span id="cb1-302"><a href="#cb1-302"></a>   m_downloadList-&gt;activate<span class="ot">(</span>rootFrame-&gt;frame<span class="ot">(</span><span class="dv">1</span><span class="ot">));</span></span>
-<span id="cb1-303"><a href="#cb1-303"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_inactive_fg<span class="ot">(</span>color_inactive_fg<span class="ot">);</span></span>
-<span id="cb1-304"><a href="#cb1-304"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_inactive_bg<span class="ot">(</span>color_inactive_bg<span class="ot">);</span></span>
-<span id="cb1-305"><a href="#cb1-305"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_dead_fg<span class="ot">(</span>color_dead_fg<span class="ot">);</span></span>
-<span id="cb1-306"><a href="#cb1-306"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_dead_bg<span class="ot">(</span>color_dead_bg<span class="ot">);</span></span>
-<span id="cb1-307"><a href="#cb1-307"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_active_fg<span class="ot">(</span>color_active_fg<span class="ot">);</span></span>
-<span id="cb1-308"><a href="#cb1-308"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_active_bg<span class="ot">(</span>color_active_bg<span class="ot">);</span></span>
-<span id="cb1-309"><a href="#cb1-309"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_finished_fg<span class="ot">(</span>color_finished_fg<span class="ot">);</span></span>
-<span id="cb1-310"><a href="#cb1-310"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_finished_bg<span class="ot">(</span>color_finished_bg<span class="ot">);</span></span>
-<span id="cb1-311"><a href="#cb1-311"></a> }</span>
-<span id="cb1-312"><a href="#cb1-312"></a> </span>
-<span id="cb1-313"><a href="#cb1-313"></a> <span class="kw">void</span></span>
-<span id="cb1-314"><a href="#cb1-314"></a><span class="er">@@</span> <span class="dv">-272</span><span class="ot">,</span><span class="dv">4</span> +<span class="dv">289</span><span class="ot">,</span><span class="dv">88</span> <span class="er">@@</span> Root::current_input<span class="ot">()</span> {</span>
-<span id="cb1-315"><a href="#cb1-315"></a>   <span class="kw">return</span> m_windowInput-&gt;input<span class="ot">();</span></span>
-<span id="cb1-316"><a href="#cb1-316"></a> }</span>
-<span id="cb1-317"><a href="#cb1-317"></a> </span>
-<span id="cb1-318"><a href="#cb1-318"></a>+<span class="co">// Inactive</span></span>
-<span id="cb1-319"><a href="#cb1-319"></a>+<span class="kw">int</span></span>
-<span id="cb1-320"><a href="#cb1-320"></a>+Root::get_color_inactive_fg<span class="ot">()</span> {</span>
-<span id="cb1-321"><a href="#cb1-321"></a>+  <span class="kw">return</span> color_inactive_fg<span class="ot">;</span></span>
-<span id="cb1-322"><a href="#cb1-322"></a>+}</span>
-<span id="cb1-323"><a href="#cb1-323"></a>+</span>
-<span id="cb1-324"><a href="#cb1-324"></a>+<span class="kw">void</span></span>
-<span id="cb1-325"><a href="#cb1-325"></a>+Root::set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-326"><a href="#cb1-326"></a>+  color_inactive_fg = color<span class="ot">;</span></span>
-<span id="cb1-327"><a href="#cb1-327"></a>+}</span>
-<span id="cb1-328"><a href="#cb1-328"></a>+</span>
-<span id="cb1-329"><a href="#cb1-329"></a>+<span class="kw">int</span></span>
-<span id="cb1-330"><a href="#cb1-330"></a>+Root::get_color_inactive_bg<span class="ot">()</span> {</span>
-<span id="cb1-331"><a href="#cb1-331"></a>+  <span class="kw">return</span> color_inactive_bg<span class="ot">;</span></span>
-<span id="cb1-332"><a href="#cb1-332"></a>+}</span>
-<span id="cb1-333"><a href="#cb1-333"></a>+</span>
-<span id="cb1-334"><a href="#cb1-334"></a>+<span class="kw">void</span></span>
-<span id="cb1-335"><a href="#cb1-335"></a>+Root::set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-336"><a href="#cb1-336"></a>+  color_inactive_bg = color<span class="ot">;</span></span>
-<span id="cb1-337"><a href="#cb1-337"></a>+}</span>
-<span id="cb1-338"><a href="#cb1-338"></a>+</span>
-<span id="cb1-339"><a href="#cb1-339"></a>+<span class="co">// Dead</span></span>
-<span id="cb1-340"><a href="#cb1-340"></a>+<span class="kw">int</span></span>
-<span id="cb1-341"><a href="#cb1-341"></a>+Root::get_color_dead_fg<span class="ot">()</span> {</span>
-<span id="cb1-342"><a href="#cb1-342"></a>+  <span class="kw">return</span> color_dead_fg<span class="ot">;</span></span>
-<span id="cb1-343"><a href="#cb1-343"></a>+}</span>
-<span id="cb1-344"><a href="#cb1-344"></a>+</span>
-<span id="cb1-345"><a href="#cb1-345"></a>+<span class="kw">void</span></span>
-<span id="cb1-346"><a href="#cb1-346"></a>+Root::set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-347"><a href="#cb1-347"></a>+  color_dead_fg = color<span class="ot">;</span></span>
-<span id="cb1-348"><a href="#cb1-348"></a>+}</span>
-<span id="cb1-349"><a href="#cb1-349"></a>+</span>
-<span id="cb1-350"><a href="#cb1-350"></a>+<span class="kw">int</span></span>
-<span id="cb1-351"><a href="#cb1-351"></a>+Root::get_color_dead_bg<span class="ot">()</span> {</span>
-<span id="cb1-352"><a href="#cb1-352"></a>+  <span class="kw">return</span> color_dead_bg<span class="ot">;</span></span>
-<span id="cb1-353"><a href="#cb1-353"></a>+}</span>
-<span id="cb1-354"><a href="#cb1-354"></a>+</span>
-<span id="cb1-355"><a href="#cb1-355"></a>+<span class="kw">void</span></span>
-<span id="cb1-356"><a href="#cb1-356"></a>+Root::set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-357"><a href="#cb1-357"></a>+  color_dead_bg = color<span class="ot">;</span></span>
-<span id="cb1-358"><a href="#cb1-358"></a>+}</span>
-<span id="cb1-359"><a href="#cb1-359"></a>+</span>
-<span id="cb1-360"><a href="#cb1-360"></a>+<span class="co">// Active</span></span>
-<span id="cb1-361"><a href="#cb1-361"></a>+<span class="kw">int</span></span>
-<span id="cb1-362"><a href="#cb1-362"></a>+Root::get_color_active_fg<span class="ot">()</span> {</span>
-<span id="cb1-363"><a href="#cb1-363"></a>+  <span class="kw">return</span> color_active_fg<span class="ot">;</span></span>
-<span id="cb1-364"><a href="#cb1-364"></a>+}</span>
-<span id="cb1-365"><a href="#cb1-365"></a>+</span>
-<span id="cb1-366"><a href="#cb1-366"></a>+<span class="kw">void</span></span>
-<span id="cb1-367"><a href="#cb1-367"></a>+Root::set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-368"><a href="#cb1-368"></a>+  color_active_fg = color<span class="ot">;</span></span>
-<span id="cb1-369"><a href="#cb1-369"></a>+}</span>
-<span id="cb1-370"><a href="#cb1-370"></a>+</span>
-<span id="cb1-371"><a href="#cb1-371"></a>+<span class="kw">int</span></span>
-<span id="cb1-372"><a href="#cb1-372"></a>+Root::get_color_active_bg<span class="ot">()</span> {</span>
-<span id="cb1-373"><a href="#cb1-373"></a>+  <span class="kw">return</span> color_active_bg<span class="ot">;</span></span>
-<span id="cb1-374"><a href="#cb1-374"></a>+}</span>
-<span id="cb1-375"><a href="#cb1-375"></a>+</span>
-<span id="cb1-376"><a href="#cb1-376"></a>+<span class="kw">void</span></span>
-<span id="cb1-377"><a href="#cb1-377"></a>+Root::set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-378"><a href="#cb1-378"></a>+  color_active_bg = color<span class="ot">;</span></span>
-<span id="cb1-379"><a href="#cb1-379"></a>+}</span>
-<span id="cb1-380"><a href="#cb1-380"></a>+</span>
-<span id="cb1-381"><a href="#cb1-381"></a>+<span class="co">// Finished</span></span>
-<span id="cb1-382"><a href="#cb1-382"></a>+<span class="kw">int</span></span>
-<span id="cb1-383"><a href="#cb1-383"></a>+Root::get_color_finished_fg<span class="ot">()</span> {</span>
-<span id="cb1-384"><a href="#cb1-384"></a>+  <span class="kw">return</span> color_finished_fg<span class="ot">;</span></span>
-<span id="cb1-385"><a href="#cb1-385"></a>+}</span>
-<span id="cb1-386"><a href="#cb1-386"></a>+</span>
-<span id="cb1-387"><a href="#cb1-387"></a>+<span class="kw">void</span></span>
-<span id="cb1-388"><a href="#cb1-388"></a>+Root::set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-389"><a href="#cb1-389"></a>+  color_finished_fg = color<span class="ot">;</span></span>
-<span id="cb1-390"><a href="#cb1-390"></a>+}</span>
-<span id="cb1-391"><a href="#cb1-391"></a>+</span>
-<span id="cb1-392"><a href="#cb1-392"></a>+<span class="kw">int</span></span>
-<span id="cb1-393"><a href="#cb1-393"></a>+Root::get_color_finished_bg<span class="ot">()</span> {</span>
-<span id="cb1-394"><a href="#cb1-394"></a>+  <span class="kw">return</span> color_finished_bg<span class="ot">;</span></span>
-<span id="cb1-395"><a href="#cb1-395"></a>+}</span>
-<span id="cb1-396"><a href="#cb1-396"></a>+</span>
-<span id="cb1-397"><a href="#cb1-397"></a>+<span class="kw">void</span></span>
-<span id="cb1-398"><a href="#cb1-398"></a>+Root::set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
-<span id="cb1-399"><a href="#cb1-399"></a>+  color_finished_bg = color<span class="ot">;</span></span>
-<span id="cb1-400"><a href="#cb1-400"></a>+}</span>
-<span id="cb1-401"><a href="#cb1-401"></a>+</span>
-<span id="cb1-402"><a href="#cb1-402"></a> }</span>
-<span id="cb1-403"><a href="#cb1-403"></a>diff --git a/src/ui/root.h b/src/ui/root.h</span>
-<span id="cb1-404"><a href="#cb1-404"></a>index cbc5ff4..a550aeb <span class="dv">100644</span></span>
-<span id="cb1-405"><a href="#cb1-405"></a>--- a/src/ui/root.h</span>
-<span id="cb1-406"><a href="#cb1-406"></a>+++ b/src/ui/root.h</span>
-<span id="cb1-407"><a href="#cb1-407"></a><span class="er">@@</span> <span class="dv">-83</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">83</span><span class="ot">,</span><span class="dv">23</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
-<span id="cb1-408"><a href="#cb1-408"></a>   <span class="kw">void</span>                set_down_throttle_i64<span class="ot">(</span>int64_t throttle<span class="ot">)</span> { set_down_throttle<span class="ot">(</span>throttle &gt;&gt; <span class="dv">10</span><span class="ot">);</span> }</span>
-<span id="cb1-409"><a href="#cb1-409"></a>   <span class="kw">void</span>                set_up_throttle_i64<span class="ot">(</span>int64_t throttle<span class="ot">)</span>   { set_up_throttle<span class="ot">(</span>throttle &gt;&gt; <span class="dv">10</span><span class="ot">);</span> }</span>
-<span id="cb1-410"><a href="#cb1-410"></a> </span>
-<span id="cb1-411"><a href="#cb1-411"></a>+  <span class="kw">int</span>                 get_color_inactive_fg<span class="ot">();</span></span>
-<span id="cb1-412"><a href="#cb1-412"></a>+  <span class="kw">void</span>                set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-413"><a href="#cb1-413"></a>+  <span class="kw">int</span>                 get_color_inactive_bg<span class="ot">();</span></span>
-<span id="cb1-414"><a href="#cb1-414"></a>+  <span class="kw">void</span>                set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-415"><a href="#cb1-415"></a>+  <span class="kw">int</span>                 get_color_dead_fg<span class="ot">();</span></span>
-<span id="cb1-416"><a href="#cb1-416"></a>+  <span class="kw">void</span>                set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-417"><a href="#cb1-417"></a>+  <span class="kw">int</span>                 get_color_dead_bg<span class="ot">();</span></span>
-<span id="cb1-418"><a href="#cb1-418"></a>+  <span class="kw">void</span>                set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-419"><a href="#cb1-419"></a>+  <span class="kw">int</span>                 get_color_active_fg<span class="ot">();</span></span>
-<span id="cb1-420"><a href="#cb1-420"></a>+  <span class="kw">void</span>                set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-421"><a href="#cb1-421"></a>+  <span class="kw">int</span>                 get_color_active_bg<span class="ot">();</span></span>
-<span id="cb1-422"><a href="#cb1-422"></a>+  <span class="kw">void</span>                set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-423"><a href="#cb1-423"></a>+  <span class="kw">int</span>                 get_color_finished_fg<span class="ot">();</span></span>
-<span id="cb1-424"><a href="#cb1-424"></a>+  <span class="kw">void</span>                set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-425"><a href="#cb1-425"></a>+  <span class="kw">int</span>                 get_color_finished_bg<span class="ot">();</span></span>
-<span id="cb1-426"><a href="#cb1-426"></a>+  <span class="kw">void</span>                set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
-<span id="cb1-427"><a href="#cb1-427"></a>+</span>
-<span id="cb1-428"><a href="#cb1-428"></a>   <span class="kw">void</span>                adjust_down_throttle<span class="ot">(</span><span class="kw">int</span> throttle<span class="ot">);</span></span>
-<span id="cb1-429"><a href="#cb1-429"></a>   <span class="kw">void</span>                adjust_up_throttle<span class="ot">(</span><span class="kw">int</span> throttle<span class="ot">);</span></span>
-<span id="cb1-430"><a href="#cb1-430"></a> </span>
-<span id="cb1-431"><a href="#cb1-431"></a><span class="er">@@</span> <span class="dv">-105</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">122</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> <span class="kw">private</span>:</span>
-<span id="cb1-432"><a href="#cb1-432"></a>   WStatusbar*         m_windowStatusbar<span class="ot">;</span></span>
-<span id="cb1-433"><a href="#cb1-433"></a> </span>
-<span id="cb1-434"><a href="#cb1-434"></a>   input::Bindings     m_bindings<span class="ot">;</span></span>
-<span id="cb1-435"><a href="#cb1-435"></a>+</span>
-<span id="cb1-436"><a href="#cb1-436"></a>+  int64_t             color_inactive_fg<span class="ot">;</span></span>
-<span id="cb1-437"><a href="#cb1-437"></a>+  int64_t             color_inactive_bg<span class="ot">;</span></span>
-<span id="cb1-438"><a href="#cb1-438"></a>+  int64_t             color_dead_fg<span class="ot">;</span></span>
-<span id="cb1-439"><a href="#cb1-439"></a>+  int64_t             color_dead_bg<span class="ot">;</span></span>
-<span id="cb1-440"><a href="#cb1-440"></a>+  int64_t             color_active_fg<span class="ot">;</span></span>
-<span id="cb1-441"><a href="#cb1-441"></a>+  int64_t             color_active_bg<span class="ot">;</span></span>
-<span id="cb1-442"><a href="#cb1-442"></a>+  int64_t             color_finished_fg<span class="ot">;</span></span>
-<span id="cb1-443"><a href="#cb1-443"></a>+  int64_t             color_finished_bg<span class="ot">;</span></span>
-<span id="cb1-444"><a href="#cb1-444"></a> }<span class="ot">;</span></span>
-<span id="cb1-445"><a href="#cb1-445"></a> </span>
-<span id="cb1-446"><a href="#cb1-446"></a> }</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb1-1" title="1">diff --git a/src/command_network.cc b/src/command_network.cc</a>
+<a class="sourceLine" id="cb1-2" title="2">index c445c38..24ad5c0 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-3" title="3">--- a/src/command_network.cc</a>
+<a class="sourceLine" id="cb1-4" title="4">+++ b/src/command_network.cc</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="er">@@</span> <span class="dv">-241</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">241</span><span class="ot">,</span><span class="dv">26</span> <span class="er">@@</span> initialize_command_network<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-6" title="6">   <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;strings.connection_type&quot;</span><span class="ot">,</span> tr1::bind<span class="ot">(</span>&amp;torrent::option_list_strings<span class="ot">,</span> torrent::<span class="kw">OPTION_CONNECTION_TYPE</span><span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-7" title="7">   <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;strings.encryption&quot;</span><span class="ot">,</span>      tr1::bind<span class="ot">(</span>&amp;torrent::option_list_strings<span class="ot">,</span> torrent::<span class="kw">OPTION_ENCRYPTION</span><span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-8" title="8"> </a>
+<a class="sourceLine" id="cb1-9" title="9">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_inactive_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_inactive_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-10" title="10">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_inactive_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_inactive_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-11" title="11">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_inactive_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_inactive_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-12" title="12">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_inactive_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_inactive_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-13" title="13">+  </a>
+<a class="sourceLine" id="cb1-14" title="14">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_dead_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_dead_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-15" title="15">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_dead_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_dead_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-16" title="16">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_dead_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_dead_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-17" title="17">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_dead_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_dead_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-18" title="18">+</a>
+<a class="sourceLine" id="cb1-19" title="19">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_active_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_active_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-20" title="20">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_active_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_active_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-21" title="21">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_active_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_active_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-22" title="22">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_active_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_active_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-23" title="23">+</a>
+<a class="sourceLine" id="cb1-24" title="24">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_finished_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_finished_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-25" title="25">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_finished_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_finished_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-26" title="26">+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_finished_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_finished_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></a>
+<a class="sourceLine" id="cb1-27" title="27">+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_finished_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_finished_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-28" title="28">+</a>
+<a class="sourceLine" id="cb1-29" title="29">   <span class="co">// CMD2_ANY_STRING  (&quot;encoding_list&quot;,    tr1::bind(&amp;apply_encoding_list, tr1::placeholders::_2));</span></a>
+<a class="sourceLine" id="cb1-30" title="30">   <span class="kw">CMD2_ANY_STRING</span>  <span class="ot">(</span><span class="st">&quot;encoding.add&quot;</span><span class="ot">,</span> tr1::bind<span class="ot">(</span>&amp;apply_encoding_list<span class="ot">,</span> tr1::placeholders::_2<span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-31" title="31"> </a>
+<a class="sourceLine" id="cb1-32" title="32">diff --git a/src/display/canvas.cc b/src/display/canvas.cc</a>
+<a class="sourceLine" id="cb1-33" title="33">index 31db4ad..<span class="fl">255e7</span>c3 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-34" title="34">--- a/src/display/canvas.cc</a>
+<a class="sourceLine" id="cb1-35" title="35">+++ b/src/display/canvas.cc</a>
+<a class="sourceLine" id="cb1-36" title="36"><span class="er">@@</span> <span class="dv">-99</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">99</span><span class="ot">,</span><span class="dv">12</span> <span class="er">@@</span> Canvas::initialize<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-37" title="37">   m_isInitialized = <span class="kw">true</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-38" title="38"> </a>
+<a class="sourceLine" id="cb1-39" title="39">   initscr<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-40" title="40">+  start_color<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-41" title="41">+  use_default_colors<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-42" title="42">+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-43" title="43">+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-44" title="44">+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-45" title="45">+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-46" title="46">   raw<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-47" title="47">   noecho<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-48" title="48">   nodelay<span class="ot">(</span>stdscr<span class="ot">,</span> <span class="kw">TRUE</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-49" title="49">diff --git a/src/display/window_download_list.cc b/src/display/window_download_list.cc</a>
+<a class="sourceLine" id="cb1-50" title="50">index ead4ddd..ffd79c9 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-51" title="51">--- a/src/display/window_download_list.cc</a>
+<a class="sourceLine" id="cb1-52" title="52">+++ b/src/display/window_download_list.cc</a>
+<a class="sourceLine" id="cb1-53" title="53"><span class="er">@@</span> <span class="dv">-37</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">37</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span></a>
+<a class="sourceLine" id="cb1-54" title="54"> <span class="co">#include &quot;config.h&quot;</span></a>
+<a class="sourceLine" id="cb1-55" title="55"> </a>
+<a class="sourceLine" id="cb1-56" title="56"> <span class="co">#include &lt;rak/algorithm.h&gt;</span></a>
+<a class="sourceLine" id="cb1-57" title="57">+<span class="co">#include &lt;torrent/rate.h&gt;</span></a>
+<a class="sourceLine" id="cb1-58" title="58"> </a>
+<a class="sourceLine" id="cb1-59" title="59"> <span class="co">#include &quot;core/download.h&quot;</span></a>
+<a class="sourceLine" id="cb1-60" title="60"> <span class="co">#include &quot;core/view.h&quot;</span></a>
+<a class="sourceLine" id="cb1-61" title="61"><span class="er">@@</span> <span class="dv">-104</span><span class="ot">,</span><span class="dv">9</span> +<span class="dv">105</span><span class="ot">,</span><span class="dv">41</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-62" title="62">     char buffer<span class="ot">[</span>m_canvas-&gt;width<span class="ot">()</span> + <span class="dv">1</span><span class="ot">];</span></a>
+<a class="sourceLine" id="cb1-63" title="63">     char* last = buffer + m_canvas-&gt;width<span class="ot">()</span> - <span class="dv">2</span> + <span class="dv">1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-64" title="64"> </a>
+<a class="sourceLine" id="cb1-65" title="65">+    <span class="co">/*</span></a>
+<a class="sourceLine" id="cb1-66" title="66"><span class="co">+    There are four states where colors are applied:</span></a>
+<a class="sourceLine" id="cb1-67" title="67"><span class="co">+    1 inactive  # If inactive, e.g. user stopped down/upload</span></a>
+<a class="sourceLine" id="cb1-68" title="68"><span class="co">+    2 dead      # If active but no down/upload</span></a>
+<a class="sourceLine" id="cb1-69" title="69"><span class="co">+    3 active    # If active and download</span></a>
+<a class="sourceLine" id="cb1-70" title="70"><span class="co">+    4 finished  # If finished</span></a>
+<a class="sourceLine" id="cb1-71" title="71"><span class="co">+    */</span></a>
+<a class="sourceLine" id="cb1-72" title="72">+</a>
+<a class="sourceLine" id="cb1-73" title="73">     print_download_title<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-74" title="74">-    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-75" title="75">-    </a>
+<a class="sourceLine" id="cb1-76" title="76">+    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-77" title="77">+    <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_done<span class="ot">()</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-78" title="78">+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-79" title="79">+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>       <span class="co">// Finished and uploading</span></a>
+<a class="sourceLine" id="cb1-80" title="80">+      } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb1-81" title="81">+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>     <span class="co">// Finished</span></a>
+<a class="sourceLine" id="cb1-82" title="82">+      }</a>
+<a class="sourceLine" id="cb1-83" title="83">+    } <span class="kw">else</span> <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_active<span class="ot">()</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-84" title="84">+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;down_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-85" title="85">+        <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-86" title="86">+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">);</span>     <span class="co">// Active and uploading</span></a>
+<a class="sourceLine" id="cb1-87" title="87">+        } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb1-88" title="88">+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">);</span>   <span class="co">// Active</span></a>
+<a class="sourceLine" id="cb1-89" title="89">+        }</a>
+<a class="sourceLine" id="cb1-90" title="90">+      } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb1-91" title="91">+        <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-92" title="92">+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">);</span>     <span class="co">// Dead but still uploading</span></a>
+<a class="sourceLine" id="cb1-93" title="93">+        } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb1-94" title="94">+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">);</span>   <span class="co">// Dead</span></a>
+<a class="sourceLine" id="cb1-95" title="95">+        }</a>
+<a class="sourceLine" id="cb1-96" title="96">+      }</a>
+<a class="sourceLine" id="cb1-97" title="97">+    } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb1-98" title="98">+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">);</span>     <span class="co">// Inactive</span></a>
+<a class="sourceLine" id="cb1-99" title="99">+    }</a>
+<a class="sourceLine" id="cb1-100" title="100">+    <span class="fu">pos</span>++<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-101" title="101">+</a>
+<a class="sourceLine" id="cb1-102" title="102">     print_download_info<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-103" title="103">     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-104" title="104"> </a>
+<a class="sourceLine" id="cb1-105" title="105"><span class="er">@@</span> <span class="dv">-114</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">147</span><span class="ot">,</span><span class="dv">83</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-106" title="106">     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-107" title="107"> </a>
+<a class="sourceLine" id="cb1-108" title="108">     ++<span class="fu">range</span>.first<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-109" title="109">-  }    </a>
+<a class="sourceLine" id="cb1-110" title="110">+  }</a>
+<a class="sourceLine" id="cb1-111" title="111">+}</a>
+<a class="sourceLine" id="cb1-112" title="112">+</a>
+<a class="sourceLine" id="cb1-113" title="113">+<span class="co">// Inactive</span></a>
+<a class="sourceLine" id="cb1-114" title="114">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-115" title="115">+WindowDownloadList::set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-116" title="116">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-117" title="117">+  pair_content<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-118" title="118">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-119" title="119">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-120" title="120">+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-121" title="121">+}</a>
+<a class="sourceLine" id="cb1-122" title="122">+</a>
+<a class="sourceLine" id="cb1-123" title="123">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-124" title="124">+WindowDownloadList::set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-125" title="125">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-126" title="126">+  pair_content<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-127" title="127">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-128" title="128">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-129" title="129">+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-130" title="130">+}</a>
+<a class="sourceLine" id="cb1-131" title="131">+</a>
+<a class="sourceLine" id="cb1-132" title="132">+<span class="co">// Dead</span></a>
+<a class="sourceLine" id="cb1-133" title="133">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-134" title="134">+WindowDownloadList::set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-135" title="135">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-136" title="136">+  pair_content<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-137" title="137">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-138" title="138">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-139" title="139">+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-140" title="140">+}</a>
+<a class="sourceLine" id="cb1-141" title="141">+</a>
+<a class="sourceLine" id="cb1-142" title="142">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-143" title="143">+WindowDownloadList::set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-144" title="144">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-145" title="145">+  pair_content<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-146" title="146">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-147" title="147">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-148" title="148">+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-149" title="149">+}</a>
+<a class="sourceLine" id="cb1-150" title="150">+</a>
+<a class="sourceLine" id="cb1-151" title="151">+<span class="co">// Active</span></a>
+<a class="sourceLine" id="cb1-152" title="152">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-153" title="153">+WindowDownloadList::set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-154" title="154">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-155" title="155">+  pair_content<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-156" title="156">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-157" title="157">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-158" title="158">+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-159" title="159">+}</a>
+<a class="sourceLine" id="cb1-160" title="160">+</a>
+<a class="sourceLine" id="cb1-161" title="161">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-162" title="162">+WindowDownloadList::set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-163" title="163">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-164" title="164">+  pair_content<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-165" title="165">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-166" title="166">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-167" title="167">+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-168" title="168">+}</a>
+<a class="sourceLine" id="cb1-169" title="169">+</a>
+<a class="sourceLine" id="cb1-170" title="170">+<span class="co">// Finished</span></a>
+<a class="sourceLine" id="cb1-171" title="171">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-172" title="172">+WindowDownloadList::set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-173" title="173">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-174" title="174">+  pair_content<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-175" title="175">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-176" title="176">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-177" title="177">+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-178" title="178">+}</a>
+<a class="sourceLine" id="cb1-179" title="179">+</a>
+<a class="sourceLine" id="cb1-180" title="180">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-181" title="181">+WindowDownloadList::set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-182" title="182">+  short fg<span class="ot">,</span> bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-183" title="183">+  pair_content<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-184" title="184">+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-185" title="185">+  color = color % <span class="dv">8</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-186" title="186">+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-187" title="187"> }</a>
+<a class="sourceLine" id="cb1-188" title="188"> </a>
+<a class="sourceLine" id="cb1-189" title="189"> }</a>
+<a class="sourceLine" id="cb1-190" title="190">diff --git a/src/display/window_download_list.h b/src/display/window_download_list.h</a>
+<a class="sourceLine" id="cb1-191" title="191">index <span class="fl">8e15</span>cac..4551a47 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-192" title="192">--- a/src/display/window_download_list.h</a>
+<a class="sourceLine" id="cb1-193" title="193">+++ b/src/display/window_download_list.h</a>
+<a class="sourceLine" id="cb1-194" title="194"><span class="er">@@</span> <span class="dv">-55</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">55</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> <span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb1-195" title="195"> </a>
+<a class="sourceLine" id="cb1-196" title="196">   <span class="kw">void</span>                set_view<span class="ot">(</span>core::View* l<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-197" title="197"> </a>
+<a class="sourceLine" id="cb1-198" title="198">+  <span class="kw">void</span>                set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-199" title="199">+  <span class="kw">void</span>                set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-200" title="200">+  <span class="kw">void</span>                set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-201" title="201">+  <span class="kw">void</span>                set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-202" title="202">+  <span class="kw">void</span>                set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-203" title="203">+  <span class="kw">void</span>                set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-204" title="204">+  <span class="kw">void</span>                set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-205" title="205">+  <span class="kw">void</span>                set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-206" title="206">+</a>
+<a class="sourceLine" id="cb1-207" title="207"> <span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb1-208" title="208">   core::View*         m_view<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-209" title="209"> </a>
+<a class="sourceLine" id="cb1-210" title="210">diff --git a/src/main.cc b/src/main.cc</a>
+<a class="sourceLine" id="cb1-211" title="211">index <span class="fl">5e826</span>bb..44faa21 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-212" title="212">--- a/src/main.cc</a>
+<a class="sourceLine" id="cb1-213" title="213">+++ b/src/main.cc</a>
+<a class="sourceLine" id="cb1-214" title="214"><span class="er">@@</span> <span class="dv">-388</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">388</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> main<span class="ot">(</span><span class="kw">int</span> argc<span class="ot">,</span> char** argv<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-215" title="215">     <span class="kw">CMD2_REDIRECT</span>        <span class="ot">(</span><span class="st">&quot;ip&quot;</span><span class="ot">,</span>         <span class="st">&quot;network.local_address.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-216" title="216">     <span class="kw">CMD2_REDIRECT</span>        <span class="ot">(</span><span class="st">&quot;port_range&quot;</span><span class="ot">,</span> <span class="st">&quot;network.port_range.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-217" title="217"> </a>
+<a class="sourceLine" id="cb1-218" title="218">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_inactive_fg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_inactive_fg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-219" title="219">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_inactive_bg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_inactive_bg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-220" title="220">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_dead_fg&quot;</span><span class="ot">,</span>     <span class="st">&quot;colors.color_dead_fg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-221" title="221">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_dead_bg&quot;</span><span class="ot">,</span>     <span class="st">&quot;colors.color_dead_bg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-222" title="222">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_active_fg&quot;</span><span class="ot">,</span>   <span class="st">&quot;colors.color_active_fg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-223" title="223">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_active_bg&quot;</span><span class="ot">,</span>   <span class="st">&quot;colors.color_active_bg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-224" title="224">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_finished_fg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_finished_fg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-225" title="225">+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_finished_bg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_finished_bg.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-226" title="226">+</a>
+<a class="sourceLine" id="cb1-227" title="227">     <span class="kw">CMD2_REDIRECT_GENERIC</span><span class="ot">(</span><span class="st">&quot;dht&quot;</span><span class="ot">,</span>      <span class="st">&quot;dht.mode.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-228" title="228">     <span class="kw">CMD2_REDIRECT_GENERIC</span><span class="ot">(</span><span class="st">&quot;dht_port&quot;</span><span class="ot">,</span> <span class="st">&quot;dht.port.set&quot;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-229" title="229"> </a>
+<a class="sourceLine" id="cb1-230" title="230">diff --git a/src/ui/download_list.cc b/src/ui/download_list.cc</a>
+<a class="sourceLine" id="cb1-231" title="231">index e3abc9a..7dc7469 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-232" title="232">--- a/src/ui/download_list.cc</a>
+<a class="sourceLine" id="cb1-233" title="233">+++ b/src/ui/download_list.cc</a>
+<a class="sourceLine" id="cb1-234" title="234"><span class="er">@@</span> <span class="dv">-136</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">136</span><span class="ot">,</span><span class="dv">11</span> <span class="er">@@</span> DownloadList::unfocus_download<span class="ot">(</span>core::Download* d<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-235" title="235">   current_view<span class="ot">()</span>-&gt;next_focus<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-236" title="236"> }</a>
+<a class="sourceLine" id="cb1-237" title="237"> </a>
+<a class="sourceLine" id="cb1-238" title="238">+display::WindowDownloadList*</a>
+<a class="sourceLine" id="cb1-239" title="239">+DownloadList::current_window_list<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-240" title="240">+  <span class="kw">return</span> dynamic_cast&lt;ElementDownloadList*&gt;<span class="ot">(</span>m_uiArray<span class="ot">[</span><span class="kw">DISPLAY_DOWNLOAD_LIST</span><span class="ot">])</span>-&gt;window<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-241" title="241">+}</a>
+<a class="sourceLine" id="cb1-242" title="242">+</a>
+<a class="sourceLine" id="cb1-243" title="243"> <span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-244" title="244"> DownloadList::activate_display<span class="ot">(</span>Display displayType<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-245" title="245">   <span class="kw">if</span> <span class="ot">(</span>!is_active<span class="ot">())</span></a>
+<a class="sourceLine" id="cb1-246" title="246">diff --git a/src/ui/download_list.h b/src/ui/download_list.h</a>
+<a class="sourceLine" id="cb1-247" title="247">index 3712e36..7810f65 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-248" title="248">--- a/src/ui/download_list.h</a>
+<a class="sourceLine" id="cb1-249" title="249">+++ b/src/ui/download_list.h</a>
+<a class="sourceLine" id="cb1-250" title="250"><span class="er">@@</span> <span class="dv">-98</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">98</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span> <span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb1-251" title="251">   <span class="kw">void</span>                activate_display<span class="ot">(</span>Display d<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-252" title="252"> </a>
+<a class="sourceLine" id="cb1-253" title="253">   core::View*         current_view<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-254" title="254">+  display::WindowDownloadList* current_window_list<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-255" title="255">   <span class="kw">void</span>                set_current_view<span class="ot">(</span><span class="kw">const</span> std::<span class="kw">string</span>&amp; name<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-256" title="256"> </a>
+<a class="sourceLine" id="cb1-257" title="257">   <span class="kw">void</span>                slot_open_uri<span class="ot">(</span>slot_string s<span class="ot">)</span> { m_slot_open_uri = s<span class="ot">;</span> }</a>
+<a class="sourceLine" id="cb1-258" title="258">diff --git a/src/ui/element_download_list.h b/src/ui/element_download_list.h</a>
+<a class="sourceLine" id="cb1-259" title="259">index 20185b5..00ef880 <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-260" title="260">--- a/src/ui/element_download_list.h</a>
+<a class="sourceLine" id="cb1-261" title="261">+++ b/src/ui/element_download_list.h</a>
+<a class="sourceLine" id="cb1-262" title="262"><span class="er">@@</span> <span class="dv">-60</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">60</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span> <span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb1-263" title="263">   <span class="kw">void</span>                disable<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-264" title="264"> </a>
+<a class="sourceLine" id="cb1-265" title="265">   core::View*         view<span class="ot">()</span> { <span class="kw">return</span> m_view<span class="ot">;</span> }</a>
+<a class="sourceLine" id="cb1-266" title="266">+  WDownloadList*      window<span class="ot">()</span> { <span class="kw">return</span> m_window<span class="ot">;</span> }</a>
+<a class="sourceLine" id="cb1-267" title="267">   <span class="kw">void</span>                set_view<span class="ot">(</span>core::View* l<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-268" title="268"> </a>
+<a class="sourceLine" id="cb1-269" title="269">   <span class="kw">void</span>                receive_command<span class="ot">(</span><span class="kw">const</span> char* cmd<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-270" title="270">diff --git a/src/ui/root.cc b/src/ui/root.cc</a>
+<a class="sourceLine" id="cb1-271" title="271">index 981fcc2..2df0f5a <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-272" title="272">--- a/src/ui/root.cc</a>
+<a class="sourceLine" id="cb1-273" title="273">+++ b/src/ui/root.cc</a>
+<a class="sourceLine" id="cb1-274" title="274"><span class="er">@@</span> <span class="dv">-44</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">44</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span></a>
+<a class="sourceLine" id="cb1-275" title="275"> </a>
+<a class="sourceLine" id="cb1-276" title="276"> <span class="co">#include &quot;core/manager.h&quot;</span></a>
+<a class="sourceLine" id="cb1-277" title="277"> <span class="co">#include &quot;display/frame.h&quot;</span></a>
+<a class="sourceLine" id="cb1-278" title="278">+<span class="co">#include &quot;display/window_download_list.h&quot;</span></a>
+<a class="sourceLine" id="cb1-279" title="279"> <span class="co">#include &quot;display/window_http_queue.h&quot;</span></a>
+<a class="sourceLine" id="cb1-280" title="280"> <span class="co">#include &quot;display/window_title.h&quot;</span></a>
+<a class="sourceLine" id="cb1-281" title="281"> <span class="co">#include &quot;display/window_input.h&quot;</span></a>
+<a class="sourceLine" id="cb1-282" title="282"><span class="er">@@</span> <span class="dv">-65</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">66</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> Root::Root<span class="ot">()</span> :</a>
+<a class="sourceLine" id="cb1-283" title="283">   m_windowTitle<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-284" title="284">   m_windowHttpQueue<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-285" title="285">   m_windowInput<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-286" title="286">-  m_windowStatusbar<span class="ot">(</span><span class="kw">NULL</span><span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-287" title="287">+  m_windowStatusbar<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-288" title="288">+  color_inactive_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-289" title="289">+  color_inactive_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-290" title="290">+  color_dead_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-291" title="291">+  color_dead_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-292" title="292">+  color_active_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-293" title="293">+  color_active_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-294" title="294">+  color_finished_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></a>
+<a class="sourceLine" id="cb1-295" title="295">+  color_finished_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-296" title="296"> }</a>
+<a class="sourceLine" id="cb1-297" title="297"> </a>
+<a class="sourceLine" id="cb1-298" title="298"> <span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-299" title="299"><span class="er">@@</span> <span class="dv">-97</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">106</span><span class="ot">,</span><span class="dv">14</span> <span class="er">@@</span> Root::init<span class="ot">(</span>Control* c<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-300" title="300">   setup_keys<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-301" title="301"> </a>
+<a class="sourceLine" id="cb1-302" title="302">   m_downloadList-&gt;activate<span class="ot">(</span>rootFrame-&gt;frame<span class="ot">(</span><span class="dv">1</span><span class="ot">));</span></a>
+<a class="sourceLine" id="cb1-303" title="303">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_inactive_fg<span class="ot">(</span>color_inactive_fg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-304" title="304">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_inactive_bg<span class="ot">(</span>color_inactive_bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-305" title="305">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_dead_fg<span class="ot">(</span>color_dead_fg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-306" title="306">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_dead_bg<span class="ot">(</span>color_dead_bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-307" title="307">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_active_fg<span class="ot">(</span>color_active_fg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-308" title="308">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_active_bg<span class="ot">(</span>color_active_bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-309" title="309">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_finished_fg<span class="ot">(</span>color_finished_fg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-310" title="310">+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_finished_bg<span class="ot">(</span>color_finished_bg<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-311" title="311"> }</a>
+<a class="sourceLine" id="cb1-312" title="312"> </a>
+<a class="sourceLine" id="cb1-313" title="313"> <span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-314" title="314"><span class="er">@@</span> <span class="dv">-272</span><span class="ot">,</span><span class="dv">4</span> +<span class="dv">289</span><span class="ot">,</span><span class="dv">88</span> <span class="er">@@</span> Root::current_input<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-315" title="315">   <span class="kw">return</span> m_windowInput-&gt;input<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-316" title="316"> }</a>
+<a class="sourceLine" id="cb1-317" title="317"> </a>
+<a class="sourceLine" id="cb1-318" title="318">+<span class="co">// Inactive</span></a>
+<a class="sourceLine" id="cb1-319" title="319">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-320" title="320">+Root::get_color_inactive_fg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-321" title="321">+  <span class="kw">return</span> color_inactive_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-322" title="322">+}</a>
+<a class="sourceLine" id="cb1-323" title="323">+</a>
+<a class="sourceLine" id="cb1-324" title="324">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-325" title="325">+Root::set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-326" title="326">+  color_inactive_fg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-327" title="327">+}</a>
+<a class="sourceLine" id="cb1-328" title="328">+</a>
+<a class="sourceLine" id="cb1-329" title="329">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-330" title="330">+Root::get_color_inactive_bg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-331" title="331">+  <span class="kw">return</span> color_inactive_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-332" title="332">+}</a>
+<a class="sourceLine" id="cb1-333" title="333">+</a>
+<a class="sourceLine" id="cb1-334" title="334">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-335" title="335">+Root::set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-336" title="336">+  color_inactive_bg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-337" title="337">+}</a>
+<a class="sourceLine" id="cb1-338" title="338">+</a>
+<a class="sourceLine" id="cb1-339" title="339">+<span class="co">// Dead</span></a>
+<a class="sourceLine" id="cb1-340" title="340">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-341" title="341">+Root::get_color_dead_fg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-342" title="342">+  <span class="kw">return</span> color_dead_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-343" title="343">+}</a>
+<a class="sourceLine" id="cb1-344" title="344">+</a>
+<a class="sourceLine" id="cb1-345" title="345">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-346" title="346">+Root::set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-347" title="347">+  color_dead_fg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-348" title="348">+}</a>
+<a class="sourceLine" id="cb1-349" title="349">+</a>
+<a class="sourceLine" id="cb1-350" title="350">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-351" title="351">+Root::get_color_dead_bg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-352" title="352">+  <span class="kw">return</span> color_dead_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-353" title="353">+}</a>
+<a class="sourceLine" id="cb1-354" title="354">+</a>
+<a class="sourceLine" id="cb1-355" title="355">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-356" title="356">+Root::set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-357" title="357">+  color_dead_bg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-358" title="358">+}</a>
+<a class="sourceLine" id="cb1-359" title="359">+</a>
+<a class="sourceLine" id="cb1-360" title="360">+<span class="co">// Active</span></a>
+<a class="sourceLine" id="cb1-361" title="361">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-362" title="362">+Root::get_color_active_fg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-363" title="363">+  <span class="kw">return</span> color_active_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-364" title="364">+}</a>
+<a class="sourceLine" id="cb1-365" title="365">+</a>
+<a class="sourceLine" id="cb1-366" title="366">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-367" title="367">+Root::set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-368" title="368">+  color_active_fg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-369" title="369">+}</a>
+<a class="sourceLine" id="cb1-370" title="370">+</a>
+<a class="sourceLine" id="cb1-371" title="371">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-372" title="372">+Root::get_color_active_bg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-373" title="373">+  <span class="kw">return</span> color_active_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-374" title="374">+}</a>
+<a class="sourceLine" id="cb1-375" title="375">+</a>
+<a class="sourceLine" id="cb1-376" title="376">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-377" title="377">+Root::set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-378" title="378">+  color_active_bg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-379" title="379">+}</a>
+<a class="sourceLine" id="cb1-380" title="380">+</a>
+<a class="sourceLine" id="cb1-381" title="381">+<span class="co">// Finished</span></a>
+<a class="sourceLine" id="cb1-382" title="382">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-383" title="383">+Root::get_color_finished_fg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-384" title="384">+  <span class="kw">return</span> color_finished_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-385" title="385">+}</a>
+<a class="sourceLine" id="cb1-386" title="386">+</a>
+<a class="sourceLine" id="cb1-387" title="387">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-388" title="388">+Root::set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-389" title="389">+  color_finished_fg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-390" title="390">+}</a>
+<a class="sourceLine" id="cb1-391" title="391">+</a>
+<a class="sourceLine" id="cb1-392" title="392">+<span class="kw">int</span></a>
+<a class="sourceLine" id="cb1-393" title="393">+Root::get_color_finished_bg<span class="ot">()</span> {</a>
+<a class="sourceLine" id="cb1-394" title="394">+  <span class="kw">return</span> color_finished_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-395" title="395">+}</a>
+<a class="sourceLine" id="cb1-396" title="396">+</a>
+<a class="sourceLine" id="cb1-397" title="397">+<span class="kw">void</span></a>
+<a class="sourceLine" id="cb1-398" title="398">+Root::set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-399" title="399">+  color_finished_bg = color<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-400" title="400">+}</a>
+<a class="sourceLine" id="cb1-401" title="401">+</a>
+<a class="sourceLine" id="cb1-402" title="402"> }</a>
+<a class="sourceLine" id="cb1-403" title="403">diff --git a/src/ui/root.h b/src/ui/root.h</a>
+<a class="sourceLine" id="cb1-404" title="404">index cbc5ff4..a550aeb <span class="dv">100644</span></a>
+<a class="sourceLine" id="cb1-405" title="405">--- a/src/ui/root.h</a>
+<a class="sourceLine" id="cb1-406" title="406">+++ b/src/ui/root.h</a>
+<a class="sourceLine" id="cb1-407" title="407"><span class="er">@@</span> <span class="dv">-83</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">83</span><span class="ot">,</span><span class="dv">23</span> <span class="er">@@</span> <span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb1-408" title="408">   <span class="kw">void</span>                set_down_throttle_i64<span class="ot">(</span>int64_t throttle<span class="ot">)</span> { set_down_throttle<span class="ot">(</span>throttle &gt;&gt; <span class="dv">10</span><span class="ot">);</span> }</a>
+<a class="sourceLine" id="cb1-409" title="409">   <span class="kw">void</span>                set_up_throttle_i64<span class="ot">(</span>int64_t throttle<span class="ot">)</span>   { set_up_throttle<span class="ot">(</span>throttle &gt;&gt; <span class="dv">10</span><span class="ot">);</span> }</a>
+<a class="sourceLine" id="cb1-410" title="410"> </a>
+<a class="sourceLine" id="cb1-411" title="411">+  <span class="kw">int</span>                 get_color_inactive_fg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-412" title="412">+  <span class="kw">void</span>                set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-413" title="413">+  <span class="kw">int</span>                 get_color_inactive_bg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-414" title="414">+  <span class="kw">void</span>                set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-415" title="415">+  <span class="kw">int</span>                 get_color_dead_fg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-416" title="416">+  <span class="kw">void</span>                set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-417" title="417">+  <span class="kw">int</span>                 get_color_dead_bg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-418" title="418">+  <span class="kw">void</span>                set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-419" title="419">+  <span class="kw">int</span>                 get_color_active_fg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-420" title="420">+  <span class="kw">void</span>                set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-421" title="421">+  <span class="kw">int</span>                 get_color_active_bg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-422" title="422">+  <span class="kw">void</span>                set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-423" title="423">+  <span class="kw">int</span>                 get_color_finished_fg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-424" title="424">+  <span class="kw">void</span>                set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-425" title="425">+  <span class="kw">int</span>                 get_color_finished_bg<span class="ot">();</span></a>
+<a class="sourceLine" id="cb1-426" title="426">+  <span class="kw">void</span>                set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-427" title="427">+</a>
+<a class="sourceLine" id="cb1-428" title="428">   <span class="kw">void</span>                adjust_down_throttle<span class="ot">(</span><span class="kw">int</span> throttle<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-429" title="429">   <span class="kw">void</span>                adjust_up_throttle<span class="ot">(</span><span class="kw">int</span> throttle<span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-430" title="430"> </a>
+<a class="sourceLine" id="cb1-431" title="431"><span class="er">@@</span> <span class="dv">-105</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">122</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> <span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb1-432" title="432">   WStatusbar*         m_windowStatusbar<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-433" title="433"> </a>
+<a class="sourceLine" id="cb1-434" title="434">   input::Bindings     m_bindings<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-435" title="435">+</a>
+<a class="sourceLine" id="cb1-436" title="436">+  int64_t             color_inactive_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-437" title="437">+  int64_t             color_inactive_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-438" title="438">+  int64_t             color_dead_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-439" title="439">+  int64_t             color_dead_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-440" title="440">+  int64_t             color_active_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-441" title="441">+  int64_t             color_active_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-442" title="442">+  int64_t             color_finished_fg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-443" title="443">+  int64_t             color_finished_bg<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-444" title="444"> }<span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-445" title="445"> </a>
+<a class="sourceLine" id="cb1-446" title="446"> }</a></code></pre></div>
 <hr />
 </details>
 <p>Скачиваем и распаковываем исходники с официального сайта rtorrent. Нам нужна версия <code>0.9.6</code>, так как в репозитории Debian 9 именно такая версия:</p>
@@ -756,20 +779,20 @@ $ ./configure --prefix=/usr/local --with-xmlrpc-c
 </blockquote>
 <p>Теперь остаётся задать необходимые цвета в конфигурационном файле rtorrent’a <code>.rtorrent.rc</code>:</p>
 <hr />
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Colors</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Colors: 0 = black  1 = red  </span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#         2 = green  3 = yellow </span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#         4 = blue   5 = magenta </span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#         6 = cyan   7 = white</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">color_active_fg</span>   = 3</span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="ex">color_inactive_fg</span> = 2</span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="ex">color_dead_fg</span>     = 1</span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="ex">color_finished_fg</span> = 6</span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="ex">color_active_bg</span>   = 4</span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="ex">color_inactive_bg</span> = 0</span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="ex">color_dead_bg</span>     = 0</span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="ex">color_finished_bg</span> = 0</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Colors</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># Colors: 0 = black  1 = red  </span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#         2 = green  3 = yellow </span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#         4 = blue   5 = magenta </span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#         6 = cyan   7 = white</span></a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="ex">color_active_fg</span>   = 3</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="ex">color_inactive_fg</span> = 2</a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="ex">color_dead_fg</span>     = 1</a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="ex">color_finished_fg</span> = 6</a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="ex">color_active_bg</span>   = 4</a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="ex">color_inactive_bg</span> = 0</a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="ex">color_dead_bg</span>     = 0</a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="ex">color_finished_bg</span> = 0</a></code></pre></div>
 <hr />
 <p>Запускаем rtorrent и смотрим результат:</p>
 <p><img src="http://images2.imagebam.com/b9/6f/81/8fbe551008897814.png" /></p>]]></description>
@@ -802,33 +825,6 @@ ENV{ID_FS_USAGE}==&quot;filesystem|other|crypto&quot;, ENV{UDISKS_FILESYSTEM_SHA
 <p>На этом настройку монтирования можно считать законченной.</p>]]></description>
     <pubDate>Fri, 07 Sep 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-09-07-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Делаем десятичную точку вместо запятой.</title>
-    <link>https://chubaduba.github.io//posts/2018-08-06-1.html</link>
-    <description><![CDATA[<p>Раньше я уже <a href="https://chubaduba.github.io/posts/2018-06-04-1.html">упоминал</a> о том, что на своём компьютере использую калькулятор <code>calc</code>. В этом калькуляторе десятичным разделителем является точка. В тоже время, например, в <code>OpenOffice Calc</code> в качестве разделителя целой и дробной части выступает запятая. Чтобы привести всё к единому знаменателю и сделать во всей системе точку разделителем целой и дробной части, нужно внести следующие изменения:</p>
-<p>Делаем точку разделителем целой и дробной части во всей системе.<br />
-Редактируем файл <code>/usr/share/i18n/locales/ru_RU</code>. Находим строчку:</p>
-<pre><code>decimal_point &quot;&lt;U002C&gt;&quot;
-</code></pre>
-<p>меняем на строчку:</p>
-<pre><code>decimal_point &quot;&lt;U002E&gt;&quot;
-</code></pre>
-<p>После сохранения изменений в файле, необходимо переконфигурировать локаль, выполнив следующую команду в терминале:</p>
-<pre><code># dpkg-reconfigure locales
-</code></pre>
-<p>Меняем запятую на точку на цифровой клавиатуре.<br />
-Открываем на редактирование файл <code>/usr/share/X11/xkb/symbols/ru</code>. Находим строчку:</p>
-<pre><code>include &quot;kpdl(comma)&quot;
-</code></pre>
-<p>Eё нужно закомментировать следующим образом:</p>
-<pre><code>//include &quot;kpdl(comma)&quot;
-</code></pre>
-<p>Остаётся заменить запятую на точку в OpenOffice. Для этого я поменял параметр в настройках языка в “Локальные настройки” на “Английский (США)”:</p>
-<p><a href="http://www.imagebam.com/image/c2844d938023714"><img src="http://thumbs2.imagebam.com/f0/3d/df/c2844d938023714.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Mon, 06 Aug 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-08-06-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
