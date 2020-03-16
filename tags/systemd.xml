@@ -48,9 +48,9 @@ WantedBy=multi-user.target
 </code></pre>
 <p>Первое, что мы сделаем - это завернём данную команду в скрипт:</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" title="2"></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="ex">apt-get</span> update</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="ex">apt-get</span> update</span></code></pre></div>
 <hr />
 <p>Скрипт так и назовём <code>update</code> и сохраним его в <code>/opt</code>. Обязательно нужно сделать скрипт исполняемым:</p>
 <pre><code># chmod +x /opt/update

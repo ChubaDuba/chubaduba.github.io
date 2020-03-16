@@ -19,7 +19,7 @@
 <pre><code>$ alpine
 </code></pre>
 <figure>
-<img src="/images/alpine.png" alt="Alpine. Главное окно." /><figcaption>Alpine. Главное окно.</figcaption>
+<img src="/images/alpine.png" alt="" /><figcaption>Alpine. Главное окно.</figcaption>
 </figure>
 <p>Стоит отметить, что программа не имеет русского интерфейса, но это не мешает комфортно ей пользоваться. Я не буду в этом посте подробно описывать настройки и работу Alpine. Заинтересовавшимся найти эту информацию в интернете не составит труда. А вот разместить ссылку на видеоролик, в котором показано как настроить Alpine на работу с почтовым ящиком <code>Gmail</code>, думаю будет не лишним, пусть на забугорном языке, но всё очень подробно показано:</p>
 <iframe width="100%" height="240" src="https://www.youtube.com/embed/SNYLDDx4Mro" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
