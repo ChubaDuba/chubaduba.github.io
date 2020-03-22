@@ -7,8 +7,31 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/debian.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sat, 21 Sep 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 22 Mar 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Debian 9 --> Debian 10 --> CentOS 6.10.</title>
+    <link>https://chubaduba.github.io//posts/2020-03-22-1.html</link>
+    <description><![CDATA[<p>Сегодня я расскажу свою историю обновления с Debian 9 до Debian 10, и почему я его всё же снёс и поставил CentOS 6.10</p>
+<p>Скажу сразу, что Debian 9 Stretch простоял у меня на домашнем ПК полный срок. Претензий к нему не было никаких. Установил, один раз настроил и забыл.<br />
+В новогодние праздники решил обновиться до текущего стабильного релиза Debian 10 Buster, неспеша всё настроить и, в очередной раз, забыть на несколько лет. Но пошло всё не совсем так, как было задумано…</p>
+<p>Так как при установке Debian 9 я сразу подсунул ему пропатченный freetype от <code>Infinality</code>, то решил не обновляться, а ставить 10-ку начисто. Как обычно скачал <a href="https://cdimage.debian.org/images/unofficial/non-free/images-including-firmware/10.3.0+nonfree/amd64/iso-cd/">неофициальный образ диска netinstall с firmware в комплекте</a>, записал образ на болванку, подключился по LAN к интернету и приступил к установке. 20 минут и минимальный Debian Buster у меня на компьютере. Настроил подключение по Wi-Fi и приступил к установке софта.</p>
+<p>Начал с установки оконного менеджера. Установил <code>cabal</code>, собрал <code>xmonad</code> и <code>xmobar</code>. Всё прошло без запинок.</p>
+<p>Первое, что отметил для себя, это то, что хоть и завезли в 10-ку новый freetype, но из коробки отображение шрифтов, мягко говоря, печальное. Как говорится, глаза потекли сразу. Дальнейшие поиски решения этой проблемы ни к чему хорошему не привели. Да, удалось настроить чуть лучше, но совсем не так, как это было на Debian 9 с патчем от Infinality.</p>
+<blockquote>
+<p>Как всё это дело было на Debian 9 Stretch c патчем от Infinality можно посмотреть <a href="https://debianforum.ru/index.php/topic,12773.0.html">тут</a>.</p>
+</blockquote>
+<p>С софтом ситуация такая же, как и в остальных дистрибутивах Linux, полная каша из GTK2, GTK3, Qt4, Qt5, что напрочь убивает возможность сконфигурировать единообразие пользовательского интерфейса. На Debian 9 я вполне обходился только GTK2, Qt4 и консольными приложениями.</p>
+<p>Ещё одним новшеством стоит отметить то, что основной звуковой картой моего моноблока Debian Buster назначил встроенную веб камеру. Пришлось лезть в файлы конфигурации ALSA и ручками прописывать то, что мне нужно. Появились непонятные щелчки в динамиках при старте системы и при открытии некоторых приложений.</p>
+<p>Так же стоит отметить общее снижение отзывчивости полученной системы. Но тут скорее не в Debian дело, а в общем утяжелении софта. Справедливости ради, нужно сказать, что моему моноблоку скоро будет 9 лет.</p>
+<p>В течении трёх дней использования было принято решение снести Debian Buster, а вместо него поставить другой дистрибутив. У меня был пятилетний опыт использования CentOS 6.x на домашнем компьютере, поэтому, взвесив все за и против, решил вернуться на CentOS 6.10 i386. Думаю, этот дистрибутив я буду использовать точно до конца его срока поддержки, а, возможно, и больше. На мой взгляд, единственный на сегодняшний день сбалансированный в плане интерфейса дистрибутив. Все мои домашние задачи он выполняет с лихвой. А установка современного дистрибутива Linux откладывается до покупки нового железа…</p>
+<figure>
+<img src="https://images2.imagebam.com/8b/93/41/a31c4a1337823408.png" alt="" /><figcaption>CentOS 6.10 с окружением рабочего стола Gnome 2</figcaption>
+</figure>]]></description>
+    <pubDate>Sun, 22 Mar 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-03-22-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Запуск браузера Lynx через Tor.</title>
     <link>https://chubaduba.github.io//posts/2019-09-21-1.html</link>
     <description><![CDATA[<p>Если у вас в системе не установлент <code>Tor</code>, то его нужно сначала установить…</p>
@@ -703,20 +726,6 @@ $ sudo apt-get install xclip
 <p>Это избавит вас от лишних телодвижений во время установки и после. Отличие от официальных образов заключается в том, что в этих образах присутствует программное обеспечение из раздела <code>non-free</code>. Вам не нужно будет перед установкой самостоятельно готовить ещё один носитель с нужными микропрограммами для вашего оборудования, а после установки не придётся сразу редактировать <a href="https://wiki.debian.org/ru/SourcesList">sources.list</a> для того, чтобы добавить тотже раздел <code>non-free</code>.</p>]]></description>
     <pubDate>Sat, 10 Mar 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-03-10-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Debian Butterfly wallpaper</title>
-    <link>https://chubaduba.github.io//posts/2018-03-07-1.html</link>
-    <description><![CDATA[<blockquote>
-<p>Дело было вечером, делать было нечего…</p>
-</blockquote>
-<p>Для пользователей Debian, которые обожают кошек и котов.</p>
-<figure>
-<img src="/images/Debian_butterfly.jpg" alt="" /><figcaption>1600x900</figcaption>
-</figure>]]></description>
-    <pubDate>Wed, 07 Mar 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-03-07-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
