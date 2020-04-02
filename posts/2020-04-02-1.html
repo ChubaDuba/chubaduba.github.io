@@ -33,44 +33,39 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом systemd</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-04-02-1.html">Сервис systemd для noip2.</a>”
-            ‒ <span class="soft"> 2 Апреля, 2020</span><br />
-            Systemd Service for no-ip.com dynamic ip updater
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-06-15-1.html">Русская консоль (tty) в Debian 9 Stratch i386</a>”
-            ‒ <span class="soft">15 Июня, 2018</span><br />
-            Решение проблемы с отображением русских букв в консоли Debian 9 Stratch i386
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-08-1.html">Systemd. Запуск задач по расписанию.</a>”
-            ‒ <span class="soft"> 8 Апреля, 2018</span><br />
-            Использование systemd.timer
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-06-1.html">Автологин и "startx" без дисплейного менеджера - Debian 9 Stretch</a>”
-            ‒ <span class="soft"> 6 Марта, 2018</span><br />
-            Как настроить автологин и запуск графической оболочки без использования дисплейного менеджера
-        </p>
-    </li>
-    
-</ul>
+    <h1>Сервис systemd для noip2.</h1>
+<div class="soft">
+    Systemd Service for no-ip.com dynamic ip updater<br />
+    Posted in: <a href="../tags/noip2.html">noip2</a>, <a href="../tags/systemd.html">systemd</a>.
+</div>
 
+<p>Создаём в <code>/etc/systemd/system</code> сервис с именем <code>noip2.service</code>:</p>
+<hr />
+<pre><code>[Unit]
+Description=No-ip.com dynamic IP address updater
+After=network.target
+After=syslog.target
 
+[Install]
+WantedBy=multi-user.target
+Alias=noip.service
+
+[Service]
+# Start main service
+ExecStart=/usr/local/bin/noip2
+Restart=always
+Type=forking
+</code></pre>
+<hr />
+<p>Обновляем сервисы, ставим новый сервис в автозагрузку, запускаем сервис:</p>
+<pre><code>$ sudo systemctl daemon-reload
+$ sudo systemctl enable noip2
+$ sudo systemctl start noip2
+</code></pre>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/47"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>

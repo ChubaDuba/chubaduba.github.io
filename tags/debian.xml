@@ -559,7 +559,9 @@ APT::Install-Suggests &quot;0&quot;;
 $ patch -uNp1 -i rtorrent-0.9.6_color.patch
 $ sed &#39;/AM_PATH_CPPUNIT/d&#39; -i configure.ac
 $ ./autogen.sh
-$ ./configure --prefix=/usr/local --with-xmlrpc-c
+$ CPPFLAGS=&quot;-I/usr/include/ncursesw/&quot; ./configure --with-xmlrpc-c --prefix=/usr
+$ make
+$ sudo make install
 </code></pre>
 <hr />
 <blockquote>
