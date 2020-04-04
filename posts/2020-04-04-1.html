@@ -33,52 +33,36 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом bash</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-04-04-1.html">Xmobar. Мониторинг статуса подключения к сети интернет (online/offline).</a>”
-            ‒ <span class="soft"> 4 Апреля, 2020</span><br />
-            Bash скрипт для xmobar
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-23-1.html">Xmobar. Информация о текущем треке (MOC плеер).</a>”
-            ‒ <span class="soft">23 Апреля, 2018</span><br />
-            Показываем информацию о текущем треке в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-16-1.html">Вывод в xmobar информации о доступных обновлениях.</a>”
-            ‒ <span class="soft">16 Апреля, 2018</span><br />
-            Как показать в xmobar количество доступных обновлений.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-25-1.html">Xmonad+xmobar+ALSA.</a>”
-            ‒ <span class="soft">25 Марта, 2018</span><br />
-            Громкость звука. Настраиваем управление и отображение.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-15-1.html">Погода в xmobar</a>”
-            ‒ <span class="soft">15 Марта, 2018</span><br />
-            Как вывести в xmobar информацию о погоде.
-        </p>
-    </li>
-    
-</ul>
+    <h1>Xmobar. Мониторинг статуса подключения к сети интернет (online/offline).</h1>
+<div class="soft">
+    Bash скрипт для xmobar<br />
+    Posted in: <a href="../tags/bash.html">bash</a>, <a href="../tags/xmobar.html">xmobar</a>.
+</div>
 
+<p>Последнее время периодически стал отваливаться интернет. Решил автоматизировать процедуру проверки, а результат проверки вывести в <code>xmobar</code> с помощью скрипта:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="va">color1=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="va">color2=</span><span class="st">&quot;#DC8BC3&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="va">ip=</span><span class="st">&quot;8.8.8.8&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="va">count=</span>3</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="va">default_status=</span><span class="st">&quot;0%&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="va">count_loss=$(</span><span class="fu">ping</span> -c <span class="va">${count}</span> <span class="va">${ip}</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">sed</span> -e <span class="st">'$!{h;d;}'</span> -e x <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">sed</span> -r <span class="st">'s!^[^0]+!!'</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">sed</span> <span class="st">'s/^\(..\).*/\1/'</span><span class="va">)</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">if [[</span> <span class="va">$count_loss</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$default_status</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>	<span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$color1</span><span class="st">&gt;online&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">else</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>	<span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$color2</span><span class="st">&gt;offline&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="kw">fi</span></span></code></pre></div>
+<p><a href="http://www.imagebam.com/image/aa0d2a1339159850" target="_blank"><img src="https://thumbs2.imagebam.com/10/32/19/aa0d2a1339159850.jpg" alt="ImageBam image upload"></a></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/48"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>

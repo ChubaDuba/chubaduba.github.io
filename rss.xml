@@ -7,8 +7,35 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Thu, 02 Apr 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sat, 04 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmobar. Мониторинг статуса подключения к сети интернет (online/offline).</title>
+    <link>https://chubaduba.github.io//posts/2020-04-04-1.html</link>
+    <description><![CDATA[<p>Последнее время периодически стал отваливаться интернет. Решил автоматизировать процедуру проверки, а результат проверки вывести в <code>xmobar</code> с помощью скрипта:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="va">color1=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="va">color2=</span><span class="st">&quot;#DC8BC3&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="va">ip=</span><span class="st">&quot;8.8.8.8&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="va">count=</span>3</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="va">default_status=</span><span class="st">&quot;0%&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="va">count_loss=$(</span><span class="fu">ping</span> -c <span class="va">${count}</span> <span class="va">${ip}</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">sed</span> -e <span class="st">&#39;$!{h;d;}&#39;</span> -e x <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">sed</span> -r <span class="st">&#39;s!^[^0]+!!&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">sed</span> <span class="st">&#39;s/^\(..\).*/\1/&#39;</span><span class="va">)</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">if [[</span> <span class="va">$count_loss</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$default_status</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>	<span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$color1</span><span class="st">&gt;online&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">else</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>	<span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$color2</span><span class="st">&gt;offline&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="kw">fi</span></span></code></pre></div>
+<p><a href="http://www.imagebam.com/image/aa0d2a1339159850" target="_blank"><img src="https://thumbs2.imagebam.com/10/32/19/aa0d2a1339159850.jpg" alt="ImageBam image upload"></a></p>]]></description>
+    <pubDate>Sat, 04 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-04-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Сервис systemd для noip2.</title>
     <link>https://chubaduba.github.io//posts/2020-04-02-1.html</link>
     <description><![CDATA[<p>Создаём в <code>/etc/systemd/system</code> сервис с именем <code>noip2.service</code>:</p>
@@ -248,81 +275,6 @@ APT::Install-Suggests &quot;0&quot;;
 </code></pre>]]></description>
     <pubDate>Fri, 01 Feb 2019 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2019-02-01-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Тема Zenburn для WeeСhat.</title>
-    <link>https://chubaduba.github.io//posts/2019-01-29-1.html</link>
-    <description><![CDATA[<p><code>~/.weechat/weechat.conf</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a>[color]</span>
-<span id="cb1-2"><a href="#cb1-2"></a>bar_more = lightmagenta</span>
-<span id="cb1-3"><a href="#cb1-3"></a>chat = default</span>
-<span id="cb1-4"><a href="#cb1-4"></a>chat_bg = default</span>
-<span id="cb1-5"><a href="#cb1-5"></a>chat_buffer = white</span>
-<span id="cb1-6"><a href="#cb1-6"></a>chat_channel = white</span>
-<span id="cb1-7"><a href="#cb1-7"></a>chat_day_change = cyan</span>
-<span id="cb1-8"><a href="#cb1-8"></a>chat_delimiters = green</span>
-<span id="cb1-9"><a href="#cb1-9"></a>chat_highlight = red</span>
-<span id="cb1-10"><a href="#cb1-10"></a>chat_highlight_bg = default</span>
-<span id="cb1-11"><a href="#cb1-11"></a>chat_host = cyan</span>
-<span id="cb1-12"><a href="#cb1-12"></a>chat_inactive_buffer = default</span>
-<span id="cb1-13"><a href="#cb1-13"></a>chat_inactive_window = default</span>
-<span id="cb1-14"><a href="#cb1-14"></a>chat_nick = lightcyan</span>
-<span id="cb1-15"><a href="#cb1-15"></a>chat_nick_colors = &quot;lighblue,cyan,default,lightblue&quot;</span>
-<span id="cb1-16"><a href="#cb1-16"></a>chat_nick_offline = default</span>
-<span id="cb1-17"><a href="#cb1-17"></a>chat_nick_offline_highlight = default</span>
-<span id="cb1-18"><a href="#cb1-18"></a>chat_nick_offline_highlight_bg = blue</span>
-<span id="cb1-19"><a href="#cb1-19"></a>chat_nick_other = cyan</span>
-<span id="cb1-20"><a href="#cb1-20"></a>chat_nick_prefix = green</span>
-<span id="cb1-21"><a href="#cb1-21"></a>chat_nick_self = white</span>
-<span id="cb1-22"><a href="#cb1-22"></a>chat_nick_suffix = green</span>
-<span id="cb1-23"><a href="#cb1-23"></a>chat_prefix_action = white</span>
-<span id="cb1-24"><a href="#cb1-24"></a>chat_prefix_buffer = brown</span>
-<span id="cb1-25"><a href="#cb1-25"></a>chat_prefix_buffer_inactive_buffer = default</span>
-<span id="cb1-26"><a href="#cb1-26"></a>chat_prefix_error = yellow</span>
-<span id="cb1-27"><a href="#cb1-27"></a>chat_prefix_join = lightgreen</span>
-<span id="cb1-28"><a href="#cb1-28"></a>chat_prefix_more = lightmagenta</span>
-<span id="cb1-29"><a href="#cb1-29"></a>chat_prefix_network = magenta</span>
-<span id="cb1-30"><a href="#cb1-30"></a>chat_prefix_quit = lightred</span>
-<span id="cb1-31"><a href="#cb1-31"></a>chat_prefix_suffix = green</span>
-<span id="cb1-32"><a href="#cb1-32"></a>chat_read_marker = magenta</span>
-<span id="cb1-33"><a href="#cb1-33"></a>chat_read_marker_bg = default</span>
-<span id="cb1-34"><a href="#cb1-34"></a>chat_server = brown</span>
-<span id="cb1-35"><a href="#cb1-35"></a>chat_tags = red</span>
-<span id="cb1-36"><a href="#cb1-36"></a>chat_text_found = cyan</span>
-<span id="cb1-37"><a href="#cb1-37"></a>chat_text_found_bg = lightmagenta</span>
-<span id="cb1-38"><a href="#cb1-38"></a>chat_time = default</span>
-<span id="cb1-39"><a href="#cb1-39"></a>chat_time_delimiters = brown</span>
-<span id="cb1-40"><a href="#cb1-40"></a>chat_value = cyan</span>
-<span id="cb1-41"><a href="#cb1-41"></a>chat_value_null = blue</span>
-<span id="cb1-42"><a href="#cb1-42"></a>emphasized = yellow</span>
-<span id="cb1-43"><a href="#cb1-43"></a>emphasized_bg = magenta</span>
-<span id="cb1-44"><a href="#cb1-44"></a>input_actions = lightgreen</span>
-<span id="cb1-45"><a href="#cb1-45"></a>input_text_not_found = red</span>
-<span id="cb1-46"><a href="#cb1-46"></a>item_away = yellow</span>
-<span id="cb1-47"><a href="#cb1-47"></a>nicklist_away = cyan</span>
-<span id="cb1-48"><a href="#cb1-48"></a>nicklist_group = green</span>
-<span id="cb1-49"><a href="#cb1-49"></a>separator = blue</span>
-<span id="cb1-50"><a href="#cb1-50"></a>status_count_highlight = magenta</span>
-<span id="cb1-51"><a href="#cb1-51"></a>status_count_msg = brown</span>
-<span id="cb1-52"><a href="#cb1-52"></a>status_count_other = default</span>
-<span id="cb1-53"><a href="#cb1-53"></a>status_count_private = green</span>
-<span id="cb1-54"><a href="#cb1-54"></a>status_data_highlight = lightmagenta</span>
-<span id="cb1-55"><a href="#cb1-55"></a>status_data_msg = yellow</span>
-<span id="cb1-56"><a href="#cb1-56"></a>status_data_other = default</span>
-<span id="cb1-57"><a href="#cb1-57"></a>status_data_private = lightgreen</span>
-<span id="cb1-58"><a href="#cb1-58"></a>status_filter = green</span>
-<span id="cb1-59"><a href="#cb1-59"></a>status_more = yellow</span>
-<span id="cb1-60"><a href="#cb1-60"></a>status_mouse = green</span>
-<span id="cb1-61"><a href="#cb1-61"></a>status_name = white</span>
-<span id="cb1-62"><a href="#cb1-62"></a>status_name_ssl = lightgreen</span>
-<span id="cb1-63"><a href="#cb1-63"></a>status_nicklist_count = default</span>
-<span id="cb1-64"><a href="#cb1-64"></a>status_number = yellow</span>
-<span id="cb1-65"><a href="#cb1-65"></a>status_time = default</span></code></pre></div>
-<p>О настройках цветовой схемы <code>Zenburn</code> в терминале можно прочитать <a href="https://chubaduba.github.io/posts/2018-02-23-1.html">тут</a>.</p>
-<p><a href="http://www.imagebam.com/image/6a8fca1106277554"><img src="http://thumbs2.imagebam.com/9d/a8/c3/6a8fca1106277554.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Tue, 29 Jan 2019 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2019-01-29-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
