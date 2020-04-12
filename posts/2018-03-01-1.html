@@ -16,8 +16,7 @@
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
 
         <!-- Metadata. -->
-        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
-                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
         <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
     
                  
@@ -26,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -49,21 +49,21 @@
 </code></pre>
 <p>Вносим изменения в <code>xmonad.hs</code>. Добавляем модуль <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-FadeInactive.html">XMonad.Hooks.FadeInactive</a>, удаляем границу у окон и устанавливаем степень непрозрачности:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Hooks.FadeInactive</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">myConfig <span class="fu">=</span> <span class="fu">....</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">          {<span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">          <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">          , borderWidth <span class="fu">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">          , logHook <span class="fu">=</span> fadeInactiveLogHook <span class="fl">0.8</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">          <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">          }</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">...</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">import</span> <span class="dt">XMonad.Hooks.FadeInactive</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="op">...</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>myConfig <span class="ot">=</span> <span class="op">....</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>          {<span class="op">...</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>          <span class="op">...</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>          , borderWidth <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>          , logHook <span class="ot">=</span> fadeInactiveLogHook <span class="fl">0.8</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>          <span class="op">...</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>          }</span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="op">...</span></span></code></pre></div>
 <hr />
 <p>Со значением степени непрозрачности можно поиграться и выбрать оптимальное для себя.</p>
 <figure>
-<img src="../images/2018-03-01-1.jpg" alt="calc - активное окно, writer - неактивное окно." /><figcaption>calc - активное окно, writer - неактивное окно.</figcaption>
+<img src="../images/2018-03-01-1.jpg" alt /><figcaption>calc - активное окно, writer - неактивное окно.</figcaption>
 </figure>
 
 <div id="comment">

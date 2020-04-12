@@ -25,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -46,20 +47,20 @@
 <p>поэтому и добавил функционал только для них.</p>
 <p>Чтобы всё это у нас заработало, первым делом добавим модуль <code>XMonad.Actions.Search</code> в наш файл конфигурации <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></span></code></pre></div>
 <hr />
 <p>Второе, что необходимо сделать - это сконфигурировать окно, в которое мы будем вводить поисковый запрос. Добавляем в <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Search Prompt</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">mySearchConfig <span class="fu">=</span> def</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">        { font                <span class="fu">=</span> myFont</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">        , bgColor             <span class="fu">=</span> <span class="st">&quot;#1E2320&quot;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        , fgColor             <span class="fu">=</span> <span class="st">&quot;#E0AF8F&quot;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">        , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">        , position            <span class="fu">=</span> <span class="dt">Top</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        , historySize         <span class="fu">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        , historyFilter       <span class="fu">=</span> deleteConsecutive</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">        }</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">-- Search Prompt</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>mySearchConfig <span class="ot">=</span> def</span>
+<span id="cb2-3"><a href="#cb2-3"></a>        { font                <span class="ot">=</span> myFont</span>
+<span id="cb2-4"><a href="#cb2-4"></a>        , bgColor             <span class="ot">=</span> <span class="st">&quot;#1E2320&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>        , fgColor             <span class="ot">=</span> <span class="st">&quot;#E0AF8F&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>        , promptBorderWidth   <span class="ot">=</span> <span class="dv">0</span> </span>
+<span id="cb2-7"><a href="#cb2-7"></a>        , position            <span class="ot">=</span> <span class="dt">Top</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>        , historySize         <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>        , historyFilter       <span class="ot">=</span> deleteConsecutive</span>
+<span id="cb2-10"><a href="#cb2-10"></a>        }</span></code></pre></div>
 <hr />
 <p>Здесь ничего объяснять, думаю, не нужно. Все параметры задаются в зависимости от личных предпочтений пользователя.</p>
 <p>И последнее, что нужно сделать - это добавить в конфигурационный файл сочетания горячих клавиш для каждого поискового движка.<br />
@@ -69,16 +70,16 @@
 <code>youtube</code> - mod4 + Shift + y.</p>
 <p>Соответственно добавляем в конфиг:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">-- Search prompt</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">, ((mod4Mask <span class="fu">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">-- Search prompt</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</span></code></pre></div>
 <hr />
 <p>где</p>
 <p><code>mySearchConfig</code> - имя нашего окна, которое мы сконфигурировали ранее; <code>myBrowser</code> - браузер используемый по умолчанию.</p>
-<p>Я пользуюсь браузером <code>Chromium</code> поэтому в <code>xmonad.hs</code> прописал константу:</p>
+<p>Я пользуюсь браузером <code>Chromium</code> поэтому в <code>hmonad.hs</code> прописал константу:</p>
 <hr />
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">myBrowser <span class="fu">=</span> <span class="st">&quot;chromium&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>myBrowser <span class="ot">=</span> <span class="st">&quot;chromium&quot;</span></span></code></pre></div>
 <hr />
 <blockquote>
 <p>Если вы используете несколько браузеров, то вместо <code>myBrowser</code> можно прописать имя конкретного браузера. Тогда результаты поискового запроса для каждого движка будут открываться в разных браузерах, согласно тому, что вы указали.</p>

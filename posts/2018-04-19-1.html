@@ -16,8 +16,7 @@
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
 
         <!-- Metadata. -->
-        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
-                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
         <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
     
                  
@@ -26,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -41,38 +41,38 @@
 </div>
 
 <p>Сегодня расскажу об очень удобной, на мой взгляд, фишке, которой я постоянно пользуюсь при использовании xmonad. Речь пойдёт о <font color="#92E0E2"><em>строке ввода команд</em></font>. Реализуется это двумя модулями <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Prompt.html">XMonad.Prompt</a> и <a href="http://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Prompt-Shell.html">XMonad.Prompt.Shell</a>. Добавляем эти модули в наш <code>xmonad.hs</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Prompt</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">XMonad.Prompt.Shell</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Prompt</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">import</span> <span class="dt">XMonad.Prompt.Shell</span></span></code></pre></div>
 <p>Ну и, конечно, нужно задать комбинацию клавиш, при нажатии которой будет открываться строка ввода. Для себя я выбрал комбинацию <code>mod4Mask+p</code>. Добавляем её в наш конфиг:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1">, ((mod4Mask,   xK_p), shellPrompt defaultXPConfig)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a>, ((mod4Mask,   xK_p), shellPrompt defaultXPConfig)</span></code></pre></div>
 <p>После внесения всех этих изменений, при нажатии выбранной комбинации в нижней части экрана будет появляться строка ввода. Закрыть её можно нажав клавишу <code>Esc</code>:</p>
 <p><a href="http://www.imagebam.com/image/b83a7b825534583"><img src="http://thumbs2.imagebam.com/bf/b6/b7/b83a7b825534583.jpg" alt="ImageBam image upload"></a></p>
 <p>Мне не понравилось то, что строка открывается внизу экрана, имеет очень мелкий шрифт, и её цветовое оформление не сочетается с моими настройками. Чтобы всё это изменить, я добавил в <code>xmonad.hs</code> свою конфигурацию окна строки ввода <code>myXPConfig</code>, в которой указал нужные мне параметры:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"> <span class="co">-- Prompt</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">myXPConfig <span class="fu">=</span> defaultXPConfig</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">         { font                <span class="fu">=</span> myFont</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">         , bgColor             <span class="fu">=</span> <span class="st">&quot;#2F2F2F&quot;</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">         , fgColor             <span class="fu">=</span> <span class="st">&quot;#709180&quot;</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">         , bgHLight            <span class="fu">=</span> <span class="st">&quot;#2F2F2F&quot;</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">         , fgHLight            <span class="fu">=</span> <span class="st">&quot;#F0E0AF&quot;</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">         , promptBorderWidth   <span class="fu">=</span> <span class="dv">0</span> </a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">         , position            <span class="fu">=</span> <span class="dt">Top</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">         , height              <span class="fu">=</span> <span class="dv">20</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">         , historySize         <span class="fu">=</span> <span class="dv">100</span> </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">         , historyFilter       <span class="fu">=</span> deleteConsecutive</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">         }</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a> <span class="co">-- Prompt</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>myXPConfig <span class="ot">=</span> defaultXPConfig</span>
+<span id="cb3-4"><a href="#cb3-4"></a>         { font                <span class="ot">=</span> myFont</span>
+<span id="cb3-5"><a href="#cb3-5"></a>         , bgColor             <span class="ot">=</span> <span class="st">&quot;#2F2F2F&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>         , fgColor             <span class="ot">=</span> <span class="st">&quot;#709180&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>         , bgHLight            <span class="ot">=</span> <span class="st">&quot;#2F2F2F&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>         , fgHLight            <span class="ot">=</span> <span class="st">&quot;#F0E0AF&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>         , promptBorderWidth   <span class="ot">=</span> <span class="dv">0</span> </span>
+<span id="cb3-10"><a href="#cb3-10"></a>         , position            <span class="ot">=</span> <span class="dt">Top</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>         , height              <span class="ot">=</span> <span class="dv">20</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>         , historySize         <span class="ot">=</span> <span class="dv">100</span> </span>
+<span id="cb3-13"><a href="#cb3-13"></a>         , historyFilter       <span class="ot">=</span> deleteConsecutive</span>
+<span id="cb3-14"><a href="#cb3-14"></a>         }</span></code></pre></div>
 <p>Соответственно, внёс изменения для комбинации клавиш, заменив <code>defaultXPConfig</code> на <code>myXPConfig</code>. Теперь строчка в конфиге будет иметь вот такой вид:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">, ((mod4Mask,   xK_p), shellPrompt myXPConfig)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>, ((mod4Mask,   xK_p), shellPrompt myXPConfig)</span></code></pre></div>
 <p>После этих изменений всё стало так, как нужно мне:</p>
 <p><a href="http://www.imagebam.com/image/fb0f65825574363"><img src="http://thumbs2.imagebam.com/6a/e0/07/fb0f65825574363.jpg" alt="ImageBam image upload"></a></p>
 <p><a href="http://www.imagebam.com/image/55a8e6825581853"><img src="http://thumbs2.imagebam.com/00/71/42/55a8e6825581853.jpg" alt="ImageBam image upload"></a></p>
 <p>Чтобы каждый раз не вводить в строку однотипные команды, например, команду <code>urxvt -e</code> для открытия консольного приложения в новом окне терминала, эту команду можно прописать в <code>myXPConfig</code> следующим образом:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1">myXPConfig <span class="fu">=</span> defaultXPConfig</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">         { <span class="fu">...</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">         , defaultText <span class="fu">=</span> <span class="st">&quot;urxvt -e&quot;</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">         }</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1"></a>myXPConfig <span class="ot">=</span> defaultXPConfig</span>
+<span id="cb5-2"><a href="#cb5-2"></a>         { <span class="op">...</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>         , defaultText <span class="ot">=</span> <span class="st">&quot;urxvt -e&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>         <span class="op">...</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>         }</span></code></pre></div>
 <p>Теперь при запуске строка ввода будет иметь такой вид:</p>
 <p><img src="http://images2.imagebam.com/96/25/02/88856e825632023.png" /></p>
 <p>На этом сегодня всё. О других способах использования строки ввода <code>XMonad.Prompt</code> я обязательно расскажу позднее.</p>

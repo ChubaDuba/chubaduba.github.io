@@ -7,8 +7,638 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/soft.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 22 Jul 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 12 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>FFmpeg + Winff. Как перекодировать аудио дорожку видеофайла в формат MP3.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-12-1.html</link>
+    <description><![CDATA[<p>Я, как и многие, в связи с переходом на цифровое телевидение, купил для своих старых телеков ТВ приставки. При выборе делал упор на качество сигнала, а на другие “навороты” особо не смотрел. Как известно, практически во всех этих приставках есть видео плеер, который позволяет смотреть видео с USB носителей. Но не все приставки умеют проигрывать видеофайлы, у которых звук записан в формате не <code>mp3</code>. Т.е. картинка есть, а звука нет.</p>
+<p>Как же перекодировать в Debian отдельно аудио дорожку в формат mp3, а формат видео оставить без изменений?</p>
+<p>Я попробовал два варианта. Первый - это программа <a href="http://avidemux.sourceforge.net/">Avidemux</a>. В Debian её можно найти, если подключить репозиторий <a href="http://www.deb-multimedia.org/">deb-multimedia</a>. Скажу сразу, что именно с моей задачей она справлялась нелучшим образом, а может я просто не осилил её. В готовом файле звук постоянно или отставал от видео, или наоборот - опережал. В настройках есть пункт, в котором можно указать в милисекундах время синхронизации. Но от чего это время зависит, я так и не понял. А если перекодировать многосерийный сериал и для каждого файла подбирать этот параметр, то это становится жутко не удобно.</p>
+<p>Поэтому для себя я остановился на втором варианте - это <a href="https://packages.debian.org/stretch/ffmpeg">ffmpeg</a> и графическая оболочка для него <a href="https://packages.debian.org/stretch/winff">winff</a>. В репозитории есть два варианта оболочки: для <code>Qt</code> и <code>GTK2</code>. Я буду использовать второй. Устанавливаем:</p>
+<hr />
+<pre><code>$ sudo apt-get install winff-gtk2
+</code></pre>
+<hr />
+<blockquote>
+<p>Для работы с разными кодеками, они долны быть установлены у вас в системе. Например, для кодирования аудио в формат <code>mp3</code> должен быть установлен пакет <a href="https://packages.debian.org/stretch/lame">lame</a>.</p>
+</blockquote>
+<p>Запускаем редактор командой:</p>
+<pre><code>winff-gtk2
+</code></pre>
+<figure>
+<img src="https://images2.imagebam.com/19/16/ea/5c06ce1339910329.png" alt="" /><figcaption>Главное окно видео редактора Winnf</figcaption>
+</figure>
+<p>Чтобы при использовании редактора постоянно не вводить мудрёные команды для <code>ffmpeg</code>, существуют готовые настройки, так называемые <code>пресеты</code>, которые можно редактировать в соответствии с вашими задачами:</p>
+<p><img src="https://images2.imagebam.com/9b/09/65/d79ed41339876707.png" /></p>
+<figure>
+<img src="https://images2.imagebam.com/dd/80/b4/be1a6a1339911770.png" alt="" /><figcaption>Окно редактирования пресетов</figcaption>
+</figure>
+<p>В категорию <code>Audio</code> я добавил два пресета: <code>AVI with MP3 audio</code> и <code>MKV with MP3 audio</code>:</p>
+<p><img src="https://images2.imagebam.com/d5/52/01/795af61339912978.png" /></p>
+<p>Отличаются они друг от друга только параметром <code>Расширение  выходного файла</code>, а параметр <code>Командная строка</code> у них одинаковый и имеет такой вид:</p>
+<hr />
+<pre><code>-vcodec copy -acodec libmp3lame -ar 44100 -ac 2 -ab 192k
+</code></pre>
+<hr />
+<figure>
+<img src="https://images2.imagebam.com/58/7e/4a/c25f501339914927.png" alt="" /><figcaption>Пресет “AVI with MP3 audio”</figcaption>
+</figure>
+<figure>
+<img src="https://images2.imagebam.com/86/0f/ec/8e7da81339915463.png" alt="" /><figcaption>Пресет “MKV with MP3 audio”</figcaption>
+</figure>
+<p>Пресеты готовы, можно приступать к кодированию. Добавляем файл и в соответствии с его расширением выбераем пресет:</p>
+<p><img src="https://images2.imagebam.com/58/c8/9b/44d7f31339917943.png" /></p>
+<p>Ради интереса посмотрим в терминале какую звуковую дорожку имеет этот файл:</p>
+<pre><code>chubaduba:~$ mediainfo video_1.mkv | sed -n &#39;/Audio/,$p&#39;
+Audio
+ID                      : 2
+Format                  : AAC
+Format/Info             : Advanced Audio Codec
+Format profile          : LC
+Codec ID                : A_AAC
+Duration                : 49 min 23 s
+Channel(s)              : 2 channels
+Channel positions       : Front: L R
+Sampling rate           : 48.0 kHz
+Frame rate              : 46.875 FPS (1024 spf)
+Compression mode        : Lossy
+Delay relative to video : 9 ms
+Default                 : Yes
+Forced                  : No
+ </code></pre>
+<p>Нажимаем кнопку <code>Преобразовать</code> и ждём результат… В настройках можно выбрать с каким приоритетом будет проходить процесс кодирования. Отмечу, что при выбранном приоритете “Нормальный” <code>Winff</code> справляется с задачей быстрее, чем <code>Avidemux</code>.</p>
+<p>Посмотрим характеристики аудио новоиспечённого файла:</p>
+<pre><code>chubaduba:~/temp$ mediainfo video_1.mkv | sed -n &#39;/Audio/,$p&#39;
+Audio
+ID                      : 2
+Format                  : MPEG Audio
+Format version          : Version 1
+Format profile          : Layer 3
+Mode                    : Joint stereo
+Mode extension          : MS Stereo
+Codec ID                : A_MPEG/L3
+Codec ID/Hint           : MP3
+Duration                : 49 min 23 s
+Bit rate mode           : Constant
+Bit rate                : 192 kb/s
+Channel(s)              : 2 channels
+Sampling rate           : 44.1 kHz
+Compression mode        : Lossy
+Stream size             : 67.8 MiB (11%)
+Writing library         : Lavc57.64.101 libmp3lame
+Default                 : Yes
+Forced                  : No
+DURATION                : 00:49:23.843000000
+</code></pre>
+<p>Остаётся записать файл на флешку, воткнуть её в приставку, развалиться на диване и посмотреть наше видео :)</p>]]></description>
+    <pubDate>Sun, 12 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-12-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Сервис systemd для noip2.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-02-1.html</link>
+    <description><![CDATA[<p>Создаём в <code>/etc/systemd/system</code> сервис с именем <code>noip2.service</code>:</p>
+<hr />
+<pre><code>[Unit]
+Description=No-ip.com dynamic IP address updater
+After=network.target
+After=syslog.target
+
+[Install]
+WantedBy=multi-user.target
+Alias=noip.service
+
+[Service]
+# Start main service
+ExecStart=/usr/local/bin/noip2
+Restart=always
+Type=forking
+</code></pre>
+<hr />
+<p>Обновляем сервисы, ставим новый сервис в автозагрузку, запускаем сервис:</p>
+<pre><code>$ sudo systemctl daemon-reload
+$ sudo systemctl enable noip2
+$ sudo systemctl start noip2
+</code></pre>]]></description>
+    <pubDate>Thu, 02 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-02-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Audacious Winamp v.1.x skin.</title>
+    <link>https://chubaduba.github.io//posts/2020-03-16-1.html</link>
+    <description><![CDATA[<p>Для любителей олдскульного интерфейса скин для аудио проигрывателя <code>Audacious</code> на основе скина Winamp v.1.x.<br />
+Забрать можно <a href="https://www.dropbox.com/s/dqdtikyt0ir6qyh/winamp1_rus.tar.gz?dl=0">тут</a><br />
+P.S. Использую на Audacious v.3.2 (GTK2)</p>
+<p><img src="https://images2.imagebam.com/13/db/1f/a064521337266800.png" /></p>]]></description>
+    <pubDate>Mon, 16 Mar 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-03-16-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Rtorrent color patch.</title>
+    <link>https://chubaduba.github.io//posts/2018-11-11-1.html</link>
+    <description><![CDATA[<p>Патч, который будет описан ниже позволяет rtorrent’у отображать раздачи разными цветами, в зависимости от их статуса.</p>
+<blockquote>
+<p>Патч старый как г..но мамонта. Почему разработчики rtorrent’а не сделают это фишкой по умолчанию, остаётся загадкой.</p>
+</blockquote>
+<p>Непосредственно сам патч:</p>
+<details>
+<p><summary><code>rtorrent-0.9.6_color.patch</code></summary></p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1"></a>diff --git a/src/command_network.cc b/src/command_network.cc</span>
+<span id="cb1-2"><a href="#cb1-2"></a>index c445c38..24ad5c0 <span class="dv">100644</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>--- a/src/command_network.cc</span>
+<span id="cb1-4"><a href="#cb1-4"></a>+++ b/src/command_network.cc</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="er">@@</span> <span class="dv">-241</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">241</span><span class="ot">,</span><span class="dv">26</span> <span class="er">@@</span> initialize_command_network<span class="ot">()</span> {</span>
+<span id="cb1-6"><a href="#cb1-6"></a>   <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;strings.connection_type&quot;</span><span class="ot">,</span> tr1::bind<span class="ot">(</span>&amp;torrent::option_list_strings<span class="ot">,</span> torrent::<span class="kw">OPTION_CONNECTION_TYPE</span><span class="ot">));</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>   <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;strings.encryption&quot;</span><span class="ot">,</span>      tr1::bind<span class="ot">(</span>&amp;torrent::option_list_strings<span class="ot">,</span> torrent::<span class="kw">OPTION_ENCRYPTION</span><span class="ot">));</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a> </span>
+<span id="cb1-9"><a href="#cb1-9"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_inactive_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_inactive_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_inactive_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_inactive_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_inactive_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_inactive_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_inactive_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_inactive_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>+  </span>
+<span id="cb1-14"><a href="#cb1-14"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_dead_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_dead_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_dead_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_dead_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_dead_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_dead_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_dead_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_dead_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>+</span>
+<span id="cb1-19"><a href="#cb1-19"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_active_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_active_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_active_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_active_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_active_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_active_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_active_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_active_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>+</span>
+<span id="cb1-24"><a href="#cb1-24"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_finished_fg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_finished_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_finished_fg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_finished_fg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>+  <span class="kw">CMD2_ANY</span>         <span class="ot">(</span><span class="st">&quot;colors.color_finished_bg&quot;</span><span class="ot">,</span>       tr1::bind<span class="ot">(</span>&amp;ui::Root::get_color_finished_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">()));</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>+  <span class="kw">CMD2_ANY_VALUE_V</span> <span class="ot">(</span><span class="st">&quot;colors.color_finished_bg.set&quot;</span><span class="ot">,</span>   tr1::bind<span class="ot">(</span>&amp;ui::Root::set_color_finished_bg<span class="ot">,</span>   control-&gt;ui<span class="ot">(),</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>+</span>
+<span id="cb1-29"><a href="#cb1-29"></a>   <span class="co">// CMD2_ANY_STRING  (&quot;encoding_list&quot;,    tr1::bind(&amp;apply_encoding_list, tr1::placeholders::_2));</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>   <span class="kw">CMD2_ANY_STRING</span>  <span class="ot">(</span><span class="st">&quot;encoding.add&quot;</span><span class="ot">,</span> tr1::bind<span class="ot">(</span>&amp;apply_encoding_list<span class="ot">,</span> tr1::placeholders::_2<span class="ot">));</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a> </span>
+<span id="cb1-32"><a href="#cb1-32"></a>diff --git a/src/display/canvas.cc b/src/display/canvas.cc</span>
+<span id="cb1-33"><a href="#cb1-33"></a>index 31db4ad..<span class="fl">255e7</span>c3 <span class="dv">100644</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>--- a/src/display/canvas.cc</span>
+<span id="cb1-35"><a href="#cb1-35"></a>+++ b/src/display/canvas.cc</span>
+<span id="cb1-36"><a href="#cb1-36"></a><span class="er">@@</span> <span class="dv">-99</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">99</span><span class="ot">,</span><span class="dv">12</span> <span class="er">@@</span> Canvas::initialize<span class="ot">()</span> {</span>
+<span id="cb1-37"><a href="#cb1-37"></a>   m_isInitialized = <span class="kw">true</span><span class="ot">;</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a> </span>
+<span id="cb1-39"><a href="#cb1-39"></a>   initscr<span class="ot">();</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a>+  start_color<span class="ot">();</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a>+  use_default_colors<span class="ot">();</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a>+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
+<span id="cb1-45"><a href="#cb1-45"></a>+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">,</span> <span class="dv">-1</span><span class="ot">);</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a>   raw<span class="ot">();</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>   noecho<span class="ot">();</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a>   nodelay<span class="ot">(</span>stdscr<span class="ot">,</span> <span class="kw">TRUE</span><span class="ot">);</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a>diff --git a/src/display/window_download_list.cc b/src/display/window_download_list.cc</span>
+<span id="cb1-50"><a href="#cb1-50"></a>index ead4ddd..ffd79c9 <span class="dv">100644</span></span>
+<span id="cb1-51"><a href="#cb1-51"></a>--- a/src/display/window_download_list.cc</span>
+<span id="cb1-52"><a href="#cb1-52"></a>+++ b/src/display/window_download_list.cc</span>
+<span id="cb1-53"><a href="#cb1-53"></a><span class="er">@@</span> <span class="dv">-37</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">37</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a> <span class="co">#include &quot;config.h&quot;</span></span>
+<span id="cb1-55"><a href="#cb1-55"></a> </span>
+<span id="cb1-56"><a href="#cb1-56"></a> <span class="co">#include &lt;rak/algorithm.h&gt;</span></span>
+<span id="cb1-57"><a href="#cb1-57"></a>+<span class="co">#include &lt;torrent/rate.h&gt;</span></span>
+<span id="cb1-58"><a href="#cb1-58"></a> </span>
+<span id="cb1-59"><a href="#cb1-59"></a> <span class="co">#include &quot;core/download.h&quot;</span></span>
+<span id="cb1-60"><a href="#cb1-60"></a> <span class="co">#include &quot;core/view.h&quot;</span></span>
+<span id="cb1-61"><a href="#cb1-61"></a><span class="er">@@</span> <span class="dv">-104</span><span class="ot">,</span><span class="dv">9</span> +<span class="dv">105</span><span class="ot">,</span><span class="dv">41</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</span>
+<span id="cb1-62"><a href="#cb1-62"></a>     char buffer<span class="ot">[</span>m_canvas-&gt;width<span class="ot">()</span> + <span class="dv">1</span><span class="ot">];</span></span>
+<span id="cb1-63"><a href="#cb1-63"></a>     char* last = buffer + m_canvas-&gt;width<span class="ot">()</span> - <span class="dv">2</span> + <span class="dv">1</span><span class="ot">;</span></span>
+<span id="cb1-64"><a href="#cb1-64"></a> </span>
+<span id="cb1-65"><a href="#cb1-65"></a>+    <span class="co">/*</span></span>
+<span id="cb1-66"><a href="#cb1-66"></a><span class="co">+    There are four states where colors are applied:</span></span>
+<span id="cb1-67"><a href="#cb1-67"></a><span class="co">+    1 inactive  # If inactive, e.g. user stopped down/upload</span></span>
+<span id="cb1-68"><a href="#cb1-68"></a><span class="co">+    2 dead      # If active but no down/upload</span></span>
+<span id="cb1-69"><a href="#cb1-69"></a><span class="co">+    3 active    # If active and download</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a><span class="co">+    4 finished  # If finished</span></span>
+<span id="cb1-71"><a href="#cb1-71"></a><span class="co">+    */</span></span>
+<span id="cb1-72"><a href="#cb1-72"></a>+</span>
+<span id="cb1-73"><a href="#cb1-73"></a>     print_download_title<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></span>
+<span id="cb1-74"><a href="#cb1-74"></a>-    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
+<span id="cb1-75"><a href="#cb1-75"></a>-    </span>
+<span id="cb1-76"><a href="#cb1-76"></a>+    m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
+<span id="cb1-77"><a href="#cb1-77"></a>+    <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_done<span class="ot">()</span> <span class="ot">)</span> {</span>
+<span id="cb1-78"><a href="#cb1-78"></a>+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
+<span id="cb1-79"><a href="#cb1-79"></a>+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>       <span class="co">// Finished and uploading</span></span>
+<span id="cb1-80"><a href="#cb1-80"></a>+      } <span class="kw">else</span> {</span>
+<span id="cb1-81"><a href="#cb1-81"></a>+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">4</span><span class="ot">);</span>     <span class="co">// Finished</span></span>
+<span id="cb1-82"><a href="#cb1-82"></a>+      }</span>
+<span id="cb1-83"><a href="#cb1-83"></a>+    } <span class="kw">else</span> <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;is_active<span class="ot">()</span> <span class="ot">)</span> {</span>
+<span id="cb1-84"><a href="#cb1-84"></a>+      <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;down_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
+<span id="cb1-85"><a href="#cb1-85"></a>+        <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
+<span id="cb1-86"><a href="#cb1-86"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">);</span>     <span class="co">// Active and uploading</span></span>
+<span id="cb1-87"><a href="#cb1-87"></a>+        } <span class="kw">else</span> {</span>
+<span id="cb1-88"><a href="#cb1-88"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">);</span>   <span class="co">// Active</span></span>
+<span id="cb1-89"><a href="#cb1-89"></a>+        }</span>
+<span id="cb1-90"><a href="#cb1-90"></a>+      } <span class="kw">else</span> {</span>
+<span id="cb1-91"><a href="#cb1-91"></a>+        <span class="kw">if</span><span class="ot">(</span> <span class="ot">(</span>*<span class="fu">range</span>.first<span class="ot">)</span>-&gt;download<span class="ot">()</span>-&gt;info<span class="ot">()</span>-&gt;up_rate<span class="ot">()</span>-&gt;rate<span class="ot">()</span> != <span class="dv">0</span> <span class="ot">)</span> {</span>
+<span id="cb1-92"><a href="#cb1-92"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_BOLD</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">);</span>     <span class="co">// Dead but still uploading</span></span>
+<span id="cb1-93"><a href="#cb1-93"></a>+        } <span class="kw">else</span> {</span>
+<span id="cb1-94"><a href="#cb1-94"></a>+          m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">);</span>   <span class="co">// Dead</span></span>
+<span id="cb1-95"><a href="#cb1-95"></a>+        }</span>
+<span id="cb1-96"><a href="#cb1-96"></a>+      }</span>
+<span id="cb1-97"><a href="#cb1-97"></a>+    } <span class="kw">else</span> {</span>
+<span id="cb1-98"><a href="#cb1-98"></a>+      m_canvas-&gt;set_attr<span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span><span class="ot">,</span> m_canvas-&gt;width<span class="ot">()</span>-<span class="dv">1</span><span class="ot">,</span> <span class="kw">A_NORMAL</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">);</span>     <span class="co">// Inactive</span></span>
+<span id="cb1-99"><a href="#cb1-99"></a>+    }</span>
+<span id="cb1-100"><a href="#cb1-100"></a>+    <span class="fu">pos</span>++<span class="ot">;</span></span>
+<span id="cb1-101"><a href="#cb1-101"></a>+</span>
+<span id="cb1-102"><a href="#cb1-102"></a>     print_download_info<span class="ot">(</span>buffer<span class="ot">,</span> last<span class="ot">,</span> *<span class="fu">range</span>.first<span class="ot">);</span></span>
+<span id="cb1-103"><a href="#cb1-103"></a>     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
+<span id="cb1-104"><a href="#cb1-104"></a> </span>
+<span id="cb1-105"><a href="#cb1-105"></a><span class="er">@@</span> <span class="dv">-114</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">147</span><span class="ot">,</span><span class="dv">83</span> <span class="er">@@</span> WindowDownloadList::redraw<span class="ot">()</span> {</span>
+<span id="cb1-106"><a href="#cb1-106"></a>     m_canvas-&gt;<span class="kw">print</span><span class="ot">(</span><span class="dv">0</span><span class="ot">,</span> <span class="fu">pos</span>++<span class="ot">,</span> <span class="st">&quot;%c %s&quot;</span><span class="ot">,</span> <span class="fu">range</span>.first == m_view-&gt;focus<span class="ot">()</span> <span class="ot">?</span> <span class="st">&#39;*&#39;</span> <span class="ot">:</span> <span class="st">&#39; &#39;</span><span class="ot">,</span> buffer<span class="ot">);</span></span>
+<span id="cb1-107"><a href="#cb1-107"></a> </span>
+<span id="cb1-108"><a href="#cb1-108"></a>     ++<span class="fu">range</span>.first<span class="ot">;</span></span>
+<span id="cb1-109"><a href="#cb1-109"></a>-  }    </span>
+<span id="cb1-110"><a href="#cb1-110"></a>+  }</span>
+<span id="cb1-111"><a href="#cb1-111"></a>+}</span>
+<span id="cb1-112"><a href="#cb1-112"></a>+</span>
+<span id="cb1-113"><a href="#cb1-113"></a>+<span class="co">// Inactive</span></span>
+<span id="cb1-114"><a href="#cb1-114"></a>+<span class="kw">void</span></span>
+<span id="cb1-115"><a href="#cb1-115"></a>+WindowDownloadList::set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-116"><a href="#cb1-116"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-117"><a href="#cb1-117"></a>+  pair_content<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-118"><a href="#cb1-118"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-119"><a href="#cb1-119"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-120"><a href="#cb1-120"></a>+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
+<span id="cb1-121"><a href="#cb1-121"></a>+}</span>
+<span id="cb1-122"><a href="#cb1-122"></a>+</span>
+<span id="cb1-123"><a href="#cb1-123"></a>+<span class="kw">void</span></span>
+<span id="cb1-124"><a href="#cb1-124"></a>+WindowDownloadList::set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-125"><a href="#cb1-125"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-126"><a href="#cb1-126"></a>+  pair_content<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-127"><a href="#cb1-127"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-128"><a href="#cb1-128"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-129"><a href="#cb1-129"></a>+  init_pair<span class="ot">(</span><span class="dv">1</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
+<span id="cb1-130"><a href="#cb1-130"></a>+}</span>
+<span id="cb1-131"><a href="#cb1-131"></a>+</span>
+<span id="cb1-132"><a href="#cb1-132"></a>+<span class="co">// Dead</span></span>
+<span id="cb1-133"><a href="#cb1-133"></a>+<span class="kw">void</span></span>
+<span id="cb1-134"><a href="#cb1-134"></a>+WindowDownloadList::set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-135"><a href="#cb1-135"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-136"><a href="#cb1-136"></a>+  pair_content<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-137"><a href="#cb1-137"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-138"><a href="#cb1-138"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-139"><a href="#cb1-139"></a>+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
+<span id="cb1-140"><a href="#cb1-140"></a>+}</span>
+<span id="cb1-141"><a href="#cb1-141"></a>+</span>
+<span id="cb1-142"><a href="#cb1-142"></a>+<span class="kw">void</span></span>
+<span id="cb1-143"><a href="#cb1-143"></a>+WindowDownloadList::set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-144"><a href="#cb1-144"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-145"><a href="#cb1-145"></a>+  pair_content<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-146"><a href="#cb1-146"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-147"><a href="#cb1-147"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-148"><a href="#cb1-148"></a>+  init_pair<span class="ot">(</span><span class="dv">2</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
+<span id="cb1-149"><a href="#cb1-149"></a>+}</span>
+<span id="cb1-150"><a href="#cb1-150"></a>+</span>
+<span id="cb1-151"><a href="#cb1-151"></a>+<span class="co">// Active</span></span>
+<span id="cb1-152"><a href="#cb1-152"></a>+<span class="kw">void</span></span>
+<span id="cb1-153"><a href="#cb1-153"></a>+WindowDownloadList::set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-154"><a href="#cb1-154"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-155"><a href="#cb1-155"></a>+  pair_content<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-156"><a href="#cb1-156"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-157"><a href="#cb1-157"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-158"><a href="#cb1-158"></a>+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
+<span id="cb1-159"><a href="#cb1-159"></a>+}</span>
+<span id="cb1-160"><a href="#cb1-160"></a>+</span>
+<span id="cb1-161"><a href="#cb1-161"></a>+<span class="kw">void</span></span>
+<span id="cb1-162"><a href="#cb1-162"></a>+WindowDownloadList::set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-163"><a href="#cb1-163"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-164"><a href="#cb1-164"></a>+  pair_content<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-165"><a href="#cb1-165"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-166"><a href="#cb1-166"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-167"><a href="#cb1-167"></a>+  init_pair<span class="ot">(</span><span class="dv">3</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
+<span id="cb1-168"><a href="#cb1-168"></a>+}</span>
+<span id="cb1-169"><a href="#cb1-169"></a>+</span>
+<span id="cb1-170"><a href="#cb1-170"></a>+<span class="co">// Finished</span></span>
+<span id="cb1-171"><a href="#cb1-171"></a>+<span class="kw">void</span></span>
+<span id="cb1-172"><a href="#cb1-172"></a>+WindowDownloadList::set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-173"><a href="#cb1-173"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-174"><a href="#cb1-174"></a>+  pair_content<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-175"><a href="#cb1-175"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-176"><a href="#cb1-176"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-177"><a href="#cb1-177"></a>+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">,</span> bg<span class="ot">);</span></span>
+<span id="cb1-178"><a href="#cb1-178"></a>+}</span>
+<span id="cb1-179"><a href="#cb1-179"></a>+</span>
+<span id="cb1-180"><a href="#cb1-180"></a>+<span class="kw">void</span></span>
+<span id="cb1-181"><a href="#cb1-181"></a>+WindowDownloadList::set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-182"><a href="#cb1-182"></a>+  short fg<span class="ot">,</span> bg<span class="ot">;</span></span>
+<span id="cb1-183"><a href="#cb1-183"></a>+  pair_content<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> &amp;fg<span class="ot">,</span> &amp;bg<span class="ot">);</span></span>
+<span id="cb1-184"><a href="#cb1-184"></a>+  <span class="kw">if</span><span class="ot">(</span> color &lt; <span class="dv">0</span> <span class="ot">)</span> color = <span class="dv">-1</span><span class="ot">;</span></span>
+<span id="cb1-185"><a href="#cb1-185"></a>+  color = color % <span class="dv">8</span><span class="ot">;</span></span>
+<span id="cb1-186"><a href="#cb1-186"></a>+  init_pair<span class="ot">(</span><span class="dv">4</span><span class="ot">,</span> fg<span class="ot">,</span> <span class="ot">(</span>short<span class="ot">)</span>color<span class="ot">);</span></span>
+<span id="cb1-187"><a href="#cb1-187"></a> }</span>
+<span id="cb1-188"><a href="#cb1-188"></a> </span>
+<span id="cb1-189"><a href="#cb1-189"></a> }</span>
+<span id="cb1-190"><a href="#cb1-190"></a>diff --git a/src/display/window_download_list.h b/src/display/window_download_list.h</span>
+<span id="cb1-191"><a href="#cb1-191"></a>index <span class="fl">8e15</span>cac..4551a47 <span class="dv">100644</span></span>
+<span id="cb1-192"><a href="#cb1-192"></a>--- a/src/display/window_download_list.h</span>
+<span id="cb1-193"><a href="#cb1-193"></a>+++ b/src/display/window_download_list.h</span>
+<span id="cb1-194"><a href="#cb1-194"></a><span class="er">@@</span> <span class="dv">-55</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">55</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
+<span id="cb1-195"><a href="#cb1-195"></a> </span>
+<span id="cb1-196"><a href="#cb1-196"></a>   <span class="kw">void</span>                set_view<span class="ot">(</span>core::View* l<span class="ot">);</span></span>
+<span id="cb1-197"><a href="#cb1-197"></a> </span>
+<span id="cb1-198"><a href="#cb1-198"></a>+  <span class="kw">void</span>                set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-199"><a href="#cb1-199"></a>+  <span class="kw">void</span>                set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-200"><a href="#cb1-200"></a>+  <span class="kw">void</span>                set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-201"><a href="#cb1-201"></a>+  <span class="kw">void</span>                set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-202"><a href="#cb1-202"></a>+  <span class="kw">void</span>                set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-203"><a href="#cb1-203"></a>+  <span class="kw">void</span>                set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-204"><a href="#cb1-204"></a>+  <span class="kw">void</span>                set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-205"><a href="#cb1-205"></a>+  <span class="kw">void</span>                set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-206"><a href="#cb1-206"></a>+</span>
+<span id="cb1-207"><a href="#cb1-207"></a> <span class="kw">private</span>:</span>
+<span id="cb1-208"><a href="#cb1-208"></a>   core::View*         m_view<span class="ot">;</span></span>
+<span id="cb1-209"><a href="#cb1-209"></a> </span>
+<span id="cb1-210"><a href="#cb1-210"></a>diff --git a/src/main.cc b/src/main.cc</span>
+<span id="cb1-211"><a href="#cb1-211"></a>index <span class="fl">5e826</span>bb..44faa21 <span class="dv">100644</span></span>
+<span id="cb1-212"><a href="#cb1-212"></a>--- a/src/main.cc</span>
+<span id="cb1-213"><a href="#cb1-213"></a>+++ b/src/main.cc</span>
+<span id="cb1-214"><a href="#cb1-214"></a><span class="er">@@</span> <span class="dv">-388</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">388</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> main<span class="ot">(</span><span class="kw">int</span> argc<span class="ot">,</span> char** argv<span class="ot">)</span> {</span>
+<span id="cb1-215"><a href="#cb1-215"></a>     <span class="kw">CMD2_REDIRECT</span>        <span class="ot">(</span><span class="st">&quot;ip&quot;</span><span class="ot">,</span>         <span class="st">&quot;network.local_address.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-216"><a href="#cb1-216"></a>     <span class="kw">CMD2_REDIRECT</span>        <span class="ot">(</span><span class="st">&quot;port_range&quot;</span><span class="ot">,</span> <span class="st">&quot;network.port_range.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-217"><a href="#cb1-217"></a> </span>
+<span id="cb1-218"><a href="#cb1-218"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_inactive_fg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_inactive_fg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-219"><a href="#cb1-219"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_inactive_bg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_inactive_bg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-220"><a href="#cb1-220"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_dead_fg&quot;</span><span class="ot">,</span>     <span class="st">&quot;colors.color_dead_fg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-221"><a href="#cb1-221"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_dead_bg&quot;</span><span class="ot">,</span>     <span class="st">&quot;colors.color_dead_bg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-222"><a href="#cb1-222"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_active_fg&quot;</span><span class="ot">,</span>   <span class="st">&quot;colors.color_active_fg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-223"><a href="#cb1-223"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_active_bg&quot;</span><span class="ot">,</span>   <span class="st">&quot;colors.color_active_bg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-224"><a href="#cb1-224"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_finished_fg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_finished_fg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-225"><a href="#cb1-225"></a>+    <span class="kw">CMD2_REDIRECT</span>       <span class="ot">(</span><span class="st">&quot;color_finished_bg&quot;</span><span class="ot">,</span> <span class="st">&quot;colors.color_finished_bg.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-226"><a href="#cb1-226"></a>+</span>
+<span id="cb1-227"><a href="#cb1-227"></a>     <span class="kw">CMD2_REDIRECT_GENERIC</span><span class="ot">(</span><span class="st">&quot;dht&quot;</span><span class="ot">,</span>      <span class="st">&quot;dht.mode.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-228"><a href="#cb1-228"></a>     <span class="kw">CMD2_REDIRECT_GENERIC</span><span class="ot">(</span><span class="st">&quot;dht_port&quot;</span><span class="ot">,</span> <span class="st">&quot;dht.port.set&quot;</span><span class="ot">);</span></span>
+<span id="cb1-229"><a href="#cb1-229"></a> </span>
+<span id="cb1-230"><a href="#cb1-230"></a>diff --git a/src/ui/download_list.cc b/src/ui/download_list.cc</span>
+<span id="cb1-231"><a href="#cb1-231"></a>index e3abc9a..7dc7469 <span class="dv">100644</span></span>
+<span id="cb1-232"><a href="#cb1-232"></a>--- a/src/ui/download_list.cc</span>
+<span id="cb1-233"><a href="#cb1-233"></a>+++ b/src/ui/download_list.cc</span>
+<span id="cb1-234"><a href="#cb1-234"></a><span class="er">@@</span> <span class="dv">-136</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">136</span><span class="ot">,</span><span class="dv">11</span> <span class="er">@@</span> DownloadList::unfocus_download<span class="ot">(</span>core::Download* d<span class="ot">)</span> {</span>
+<span id="cb1-235"><a href="#cb1-235"></a>   current_view<span class="ot">()</span>-&gt;next_focus<span class="ot">();</span></span>
+<span id="cb1-236"><a href="#cb1-236"></a> }</span>
+<span id="cb1-237"><a href="#cb1-237"></a> </span>
+<span id="cb1-238"><a href="#cb1-238"></a>+display::WindowDownloadList*</span>
+<span id="cb1-239"><a href="#cb1-239"></a>+DownloadList::current_window_list<span class="ot">()</span> {</span>
+<span id="cb1-240"><a href="#cb1-240"></a>+  <span class="kw">return</span> dynamic_cast&lt;ElementDownloadList*&gt;<span class="ot">(</span>m_uiArray<span class="ot">[</span><span class="kw">DISPLAY_DOWNLOAD_LIST</span><span class="ot">])</span>-&gt;window<span class="ot">();</span></span>
+<span id="cb1-241"><a href="#cb1-241"></a>+}</span>
+<span id="cb1-242"><a href="#cb1-242"></a>+</span>
+<span id="cb1-243"><a href="#cb1-243"></a> <span class="kw">void</span></span>
+<span id="cb1-244"><a href="#cb1-244"></a> DownloadList::activate_display<span class="ot">(</span>Display displayType<span class="ot">)</span> {</span>
+<span id="cb1-245"><a href="#cb1-245"></a>   <span class="kw">if</span> <span class="ot">(</span>!is_active<span class="ot">())</span></span>
+<span id="cb1-246"><a href="#cb1-246"></a>diff --git a/src/ui/download_list.h b/src/ui/download_list.h</span>
+<span id="cb1-247"><a href="#cb1-247"></a>index 3712e36..7810f65 <span class="dv">100644</span></span>
+<span id="cb1-248"><a href="#cb1-248"></a>--- a/src/ui/download_list.h</span>
+<span id="cb1-249"><a href="#cb1-249"></a>+++ b/src/ui/download_list.h</span>
+<span id="cb1-250"><a href="#cb1-250"></a><span class="er">@@</span> <span class="dv">-98</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">98</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
+<span id="cb1-251"><a href="#cb1-251"></a>   <span class="kw">void</span>                activate_display<span class="ot">(</span>Display d<span class="ot">);</span></span>
+<span id="cb1-252"><a href="#cb1-252"></a> </span>
+<span id="cb1-253"><a href="#cb1-253"></a>   core::View*         current_view<span class="ot">();</span></span>
+<span id="cb1-254"><a href="#cb1-254"></a>+  display::WindowDownloadList* current_window_list<span class="ot">();</span></span>
+<span id="cb1-255"><a href="#cb1-255"></a>   <span class="kw">void</span>                set_current_view<span class="ot">(</span><span class="kw">const</span> std::<span class="kw">string</span>&amp; name<span class="ot">);</span></span>
+<span id="cb1-256"><a href="#cb1-256"></a> </span>
+<span id="cb1-257"><a href="#cb1-257"></a>   <span class="kw">void</span>                slot_open_uri<span class="ot">(</span>slot_string s<span class="ot">)</span> { m_slot_open_uri = s<span class="ot">;</span> }</span>
+<span id="cb1-258"><a href="#cb1-258"></a>diff --git a/src/ui/element_download_list.h b/src/ui/element_download_list.h</span>
+<span id="cb1-259"><a href="#cb1-259"></a>index 20185b5..00ef880 <span class="dv">100644</span></span>
+<span id="cb1-260"><a href="#cb1-260"></a>--- a/src/ui/element_download_list.h</span>
+<span id="cb1-261"><a href="#cb1-261"></a>+++ b/src/ui/element_download_list.h</span>
+<span id="cb1-262"><a href="#cb1-262"></a><span class="er">@@</span> <span class="dv">-60</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">60</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
+<span id="cb1-263"><a href="#cb1-263"></a>   <span class="kw">void</span>                disable<span class="ot">();</span></span>
+<span id="cb1-264"><a href="#cb1-264"></a> </span>
+<span id="cb1-265"><a href="#cb1-265"></a>   core::View*         view<span class="ot">()</span> { <span class="kw">return</span> m_view<span class="ot">;</span> }</span>
+<span id="cb1-266"><a href="#cb1-266"></a>+  WDownloadList*      window<span class="ot">()</span> { <span class="kw">return</span> m_window<span class="ot">;</span> }</span>
+<span id="cb1-267"><a href="#cb1-267"></a>   <span class="kw">void</span>                set_view<span class="ot">(</span>core::View* l<span class="ot">);</span></span>
+<span id="cb1-268"><a href="#cb1-268"></a> </span>
+<span id="cb1-269"><a href="#cb1-269"></a>   <span class="kw">void</span>                receive_command<span class="ot">(</span><span class="kw">const</span> char* cmd<span class="ot">);</span></span>
+<span id="cb1-270"><a href="#cb1-270"></a>diff --git a/src/ui/root.cc b/src/ui/root.cc</span>
+<span id="cb1-271"><a href="#cb1-271"></a>index 981fcc2..2df0f5a <span class="dv">100644</span></span>
+<span id="cb1-272"><a href="#cb1-272"></a>--- a/src/ui/root.cc</span>
+<span id="cb1-273"><a href="#cb1-273"></a>+++ b/src/ui/root.cc</span>
+<span id="cb1-274"><a href="#cb1-274"></a><span class="er">@@</span> <span class="dv">-44</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">44</span><span class="ot">,</span><span class="dv">7</span> <span class="er">@@</span></span>
+<span id="cb1-275"><a href="#cb1-275"></a> </span>
+<span id="cb1-276"><a href="#cb1-276"></a> <span class="co">#include &quot;core/manager.h&quot;</span></span>
+<span id="cb1-277"><a href="#cb1-277"></a> <span class="co">#include &quot;display/frame.h&quot;</span></span>
+<span id="cb1-278"><a href="#cb1-278"></a>+<span class="co">#include &quot;display/window_download_list.h&quot;</span></span>
+<span id="cb1-279"><a href="#cb1-279"></a> <span class="co">#include &quot;display/window_http_queue.h&quot;</span></span>
+<span id="cb1-280"><a href="#cb1-280"></a> <span class="co">#include &quot;display/window_title.h&quot;</span></span>
+<span id="cb1-281"><a href="#cb1-281"></a> <span class="co">#include &quot;display/window_input.h&quot;</span></span>
+<span id="cb1-282"><a href="#cb1-282"></a><span class="er">@@</span> <span class="dv">-65</span><span class="ot">,</span><span class="dv">7</span> +<span class="dv">66</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> Root::Root<span class="ot">()</span> :</span>
+<span id="cb1-283"><a href="#cb1-283"></a>   m_windowTitle<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
+<span id="cb1-284"><a href="#cb1-284"></a>   m_windowHttpQueue<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
+<span id="cb1-285"><a href="#cb1-285"></a>   m_windowInput<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
+<span id="cb1-286"><a href="#cb1-286"></a>-  m_windowStatusbar<span class="ot">(</span><span class="kw">NULL</span><span class="ot">)</span> {</span>
+<span id="cb1-287"><a href="#cb1-287"></a>+  m_windowStatusbar<span class="ot">(</span><span class="kw">NULL</span><span class="ot">),</span></span>
+<span id="cb1-288"><a href="#cb1-288"></a>+  color_inactive_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-289"><a href="#cb1-289"></a>+  color_inactive_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-290"><a href="#cb1-290"></a>+  color_dead_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-291"><a href="#cb1-291"></a>+  color_dead_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-292"><a href="#cb1-292"></a>+  color_active_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-293"><a href="#cb1-293"></a>+  color_active_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-294"><a href="#cb1-294"></a>+  color_finished_fg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">),</span></span>
+<span id="cb1-295"><a href="#cb1-295"></a>+  color_finished_bg<span class="ot">(</span>-<span class="dv">1</span><span class="ot">)</span> {</span>
+<span id="cb1-296"><a href="#cb1-296"></a> }</span>
+<span id="cb1-297"><a href="#cb1-297"></a> </span>
+<span id="cb1-298"><a href="#cb1-298"></a> <span class="kw">void</span></span>
+<span id="cb1-299"><a href="#cb1-299"></a><span class="er">@@</span> <span class="dv">-97</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">106</span><span class="ot">,</span><span class="dv">14</span> <span class="er">@@</span> Root::init<span class="ot">(</span>Control* c<span class="ot">)</span> {</span>
+<span id="cb1-300"><a href="#cb1-300"></a>   setup_keys<span class="ot">();</span></span>
+<span id="cb1-301"><a href="#cb1-301"></a> </span>
+<span id="cb1-302"><a href="#cb1-302"></a>   m_downloadList-&gt;activate<span class="ot">(</span>rootFrame-&gt;frame<span class="ot">(</span><span class="dv">1</span><span class="ot">));</span></span>
+<span id="cb1-303"><a href="#cb1-303"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_inactive_fg<span class="ot">(</span>color_inactive_fg<span class="ot">);</span></span>
+<span id="cb1-304"><a href="#cb1-304"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_inactive_bg<span class="ot">(</span>color_inactive_bg<span class="ot">);</span></span>
+<span id="cb1-305"><a href="#cb1-305"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_dead_fg<span class="ot">(</span>color_dead_fg<span class="ot">);</span></span>
+<span id="cb1-306"><a href="#cb1-306"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_dead_bg<span class="ot">(</span>color_dead_bg<span class="ot">);</span></span>
+<span id="cb1-307"><a href="#cb1-307"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_active_fg<span class="ot">(</span>color_active_fg<span class="ot">);</span></span>
+<span id="cb1-308"><a href="#cb1-308"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_active_bg<span class="ot">(</span>color_active_bg<span class="ot">);</span></span>
+<span id="cb1-309"><a href="#cb1-309"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_finished_fg<span class="ot">(</span>color_finished_fg<span class="ot">);</span></span>
+<span id="cb1-310"><a href="#cb1-310"></a>+  m_downloadList-&gt;current_window_list<span class="ot">()</span>-&gt;set_color_finished_bg<span class="ot">(</span>color_finished_bg<span class="ot">);</span></span>
+<span id="cb1-311"><a href="#cb1-311"></a> }</span>
+<span id="cb1-312"><a href="#cb1-312"></a> </span>
+<span id="cb1-313"><a href="#cb1-313"></a> <span class="kw">void</span></span>
+<span id="cb1-314"><a href="#cb1-314"></a><span class="er">@@</span> <span class="dv">-272</span><span class="ot">,</span><span class="dv">4</span> +<span class="dv">289</span><span class="ot">,</span><span class="dv">88</span> <span class="er">@@</span> Root::current_input<span class="ot">()</span> {</span>
+<span id="cb1-315"><a href="#cb1-315"></a>   <span class="kw">return</span> m_windowInput-&gt;input<span class="ot">();</span></span>
+<span id="cb1-316"><a href="#cb1-316"></a> }</span>
+<span id="cb1-317"><a href="#cb1-317"></a> </span>
+<span id="cb1-318"><a href="#cb1-318"></a>+<span class="co">// Inactive</span></span>
+<span id="cb1-319"><a href="#cb1-319"></a>+<span class="kw">int</span></span>
+<span id="cb1-320"><a href="#cb1-320"></a>+Root::get_color_inactive_fg<span class="ot">()</span> {</span>
+<span id="cb1-321"><a href="#cb1-321"></a>+  <span class="kw">return</span> color_inactive_fg<span class="ot">;</span></span>
+<span id="cb1-322"><a href="#cb1-322"></a>+}</span>
+<span id="cb1-323"><a href="#cb1-323"></a>+</span>
+<span id="cb1-324"><a href="#cb1-324"></a>+<span class="kw">void</span></span>
+<span id="cb1-325"><a href="#cb1-325"></a>+Root::set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-326"><a href="#cb1-326"></a>+  color_inactive_fg = color<span class="ot">;</span></span>
+<span id="cb1-327"><a href="#cb1-327"></a>+}</span>
+<span id="cb1-328"><a href="#cb1-328"></a>+</span>
+<span id="cb1-329"><a href="#cb1-329"></a>+<span class="kw">int</span></span>
+<span id="cb1-330"><a href="#cb1-330"></a>+Root::get_color_inactive_bg<span class="ot">()</span> {</span>
+<span id="cb1-331"><a href="#cb1-331"></a>+  <span class="kw">return</span> color_inactive_bg<span class="ot">;</span></span>
+<span id="cb1-332"><a href="#cb1-332"></a>+}</span>
+<span id="cb1-333"><a href="#cb1-333"></a>+</span>
+<span id="cb1-334"><a href="#cb1-334"></a>+<span class="kw">void</span></span>
+<span id="cb1-335"><a href="#cb1-335"></a>+Root::set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-336"><a href="#cb1-336"></a>+  color_inactive_bg = color<span class="ot">;</span></span>
+<span id="cb1-337"><a href="#cb1-337"></a>+}</span>
+<span id="cb1-338"><a href="#cb1-338"></a>+</span>
+<span id="cb1-339"><a href="#cb1-339"></a>+<span class="co">// Dead</span></span>
+<span id="cb1-340"><a href="#cb1-340"></a>+<span class="kw">int</span></span>
+<span id="cb1-341"><a href="#cb1-341"></a>+Root::get_color_dead_fg<span class="ot">()</span> {</span>
+<span id="cb1-342"><a href="#cb1-342"></a>+  <span class="kw">return</span> color_dead_fg<span class="ot">;</span></span>
+<span id="cb1-343"><a href="#cb1-343"></a>+}</span>
+<span id="cb1-344"><a href="#cb1-344"></a>+</span>
+<span id="cb1-345"><a href="#cb1-345"></a>+<span class="kw">void</span></span>
+<span id="cb1-346"><a href="#cb1-346"></a>+Root::set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-347"><a href="#cb1-347"></a>+  color_dead_fg = color<span class="ot">;</span></span>
+<span id="cb1-348"><a href="#cb1-348"></a>+}</span>
+<span id="cb1-349"><a href="#cb1-349"></a>+</span>
+<span id="cb1-350"><a href="#cb1-350"></a>+<span class="kw">int</span></span>
+<span id="cb1-351"><a href="#cb1-351"></a>+Root::get_color_dead_bg<span class="ot">()</span> {</span>
+<span id="cb1-352"><a href="#cb1-352"></a>+  <span class="kw">return</span> color_dead_bg<span class="ot">;</span></span>
+<span id="cb1-353"><a href="#cb1-353"></a>+}</span>
+<span id="cb1-354"><a href="#cb1-354"></a>+</span>
+<span id="cb1-355"><a href="#cb1-355"></a>+<span class="kw">void</span></span>
+<span id="cb1-356"><a href="#cb1-356"></a>+Root::set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-357"><a href="#cb1-357"></a>+  color_dead_bg = color<span class="ot">;</span></span>
+<span id="cb1-358"><a href="#cb1-358"></a>+}</span>
+<span id="cb1-359"><a href="#cb1-359"></a>+</span>
+<span id="cb1-360"><a href="#cb1-360"></a>+<span class="co">// Active</span></span>
+<span id="cb1-361"><a href="#cb1-361"></a>+<span class="kw">int</span></span>
+<span id="cb1-362"><a href="#cb1-362"></a>+Root::get_color_active_fg<span class="ot">()</span> {</span>
+<span id="cb1-363"><a href="#cb1-363"></a>+  <span class="kw">return</span> color_active_fg<span class="ot">;</span></span>
+<span id="cb1-364"><a href="#cb1-364"></a>+}</span>
+<span id="cb1-365"><a href="#cb1-365"></a>+</span>
+<span id="cb1-366"><a href="#cb1-366"></a>+<span class="kw">void</span></span>
+<span id="cb1-367"><a href="#cb1-367"></a>+Root::set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-368"><a href="#cb1-368"></a>+  color_active_fg = color<span class="ot">;</span></span>
+<span id="cb1-369"><a href="#cb1-369"></a>+}</span>
+<span id="cb1-370"><a href="#cb1-370"></a>+</span>
+<span id="cb1-371"><a href="#cb1-371"></a>+<span class="kw">int</span></span>
+<span id="cb1-372"><a href="#cb1-372"></a>+Root::get_color_active_bg<span class="ot">()</span> {</span>
+<span id="cb1-373"><a href="#cb1-373"></a>+  <span class="kw">return</span> color_active_bg<span class="ot">;</span></span>
+<span id="cb1-374"><a href="#cb1-374"></a>+}</span>
+<span id="cb1-375"><a href="#cb1-375"></a>+</span>
+<span id="cb1-376"><a href="#cb1-376"></a>+<span class="kw">void</span></span>
+<span id="cb1-377"><a href="#cb1-377"></a>+Root::set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-378"><a href="#cb1-378"></a>+  color_active_bg = color<span class="ot">;</span></span>
+<span id="cb1-379"><a href="#cb1-379"></a>+}</span>
+<span id="cb1-380"><a href="#cb1-380"></a>+</span>
+<span id="cb1-381"><a href="#cb1-381"></a>+<span class="co">// Finished</span></span>
+<span id="cb1-382"><a href="#cb1-382"></a>+<span class="kw">int</span></span>
+<span id="cb1-383"><a href="#cb1-383"></a>+Root::get_color_finished_fg<span class="ot">()</span> {</span>
+<span id="cb1-384"><a href="#cb1-384"></a>+  <span class="kw">return</span> color_finished_fg<span class="ot">;</span></span>
+<span id="cb1-385"><a href="#cb1-385"></a>+}</span>
+<span id="cb1-386"><a href="#cb1-386"></a>+</span>
+<span id="cb1-387"><a href="#cb1-387"></a>+<span class="kw">void</span></span>
+<span id="cb1-388"><a href="#cb1-388"></a>+Root::set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-389"><a href="#cb1-389"></a>+  color_finished_fg = color<span class="ot">;</span></span>
+<span id="cb1-390"><a href="#cb1-390"></a>+}</span>
+<span id="cb1-391"><a href="#cb1-391"></a>+</span>
+<span id="cb1-392"><a href="#cb1-392"></a>+<span class="kw">int</span></span>
+<span id="cb1-393"><a href="#cb1-393"></a>+Root::get_color_finished_bg<span class="ot">()</span> {</span>
+<span id="cb1-394"><a href="#cb1-394"></a>+  <span class="kw">return</span> color_finished_bg<span class="ot">;</span></span>
+<span id="cb1-395"><a href="#cb1-395"></a>+}</span>
+<span id="cb1-396"><a href="#cb1-396"></a>+</span>
+<span id="cb1-397"><a href="#cb1-397"></a>+<span class="kw">void</span></span>
+<span id="cb1-398"><a href="#cb1-398"></a>+Root::set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">)</span> {</span>
+<span id="cb1-399"><a href="#cb1-399"></a>+  color_finished_bg = color<span class="ot">;</span></span>
+<span id="cb1-400"><a href="#cb1-400"></a>+}</span>
+<span id="cb1-401"><a href="#cb1-401"></a>+</span>
+<span id="cb1-402"><a href="#cb1-402"></a> }</span>
+<span id="cb1-403"><a href="#cb1-403"></a>diff --git a/src/ui/root.h b/src/ui/root.h</span>
+<span id="cb1-404"><a href="#cb1-404"></a>index cbc5ff4..a550aeb <span class="dv">100644</span></span>
+<span id="cb1-405"><a href="#cb1-405"></a>--- a/src/ui/root.h</span>
+<span id="cb1-406"><a href="#cb1-406"></a>+++ b/src/ui/root.h</span>
+<span id="cb1-407"><a href="#cb1-407"></a><span class="er">@@</span> <span class="dv">-83</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">83</span><span class="ot">,</span><span class="dv">23</span> <span class="er">@@</span> <span class="kw">public</span>:</span>
+<span id="cb1-408"><a href="#cb1-408"></a>   <span class="kw">void</span>                set_down_throttle_i64<span class="ot">(</span>int64_t throttle<span class="ot">)</span> { set_down_throttle<span class="ot">(</span>throttle &gt;&gt; <span class="dv">10</span><span class="ot">);</span> }</span>
+<span id="cb1-409"><a href="#cb1-409"></a>   <span class="kw">void</span>                set_up_throttle_i64<span class="ot">(</span>int64_t throttle<span class="ot">)</span>   { set_up_throttle<span class="ot">(</span>throttle &gt;&gt; <span class="dv">10</span><span class="ot">);</span> }</span>
+<span id="cb1-410"><a href="#cb1-410"></a> </span>
+<span id="cb1-411"><a href="#cb1-411"></a>+  <span class="kw">int</span>                 get_color_inactive_fg<span class="ot">();</span></span>
+<span id="cb1-412"><a href="#cb1-412"></a>+  <span class="kw">void</span>                set_color_inactive_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-413"><a href="#cb1-413"></a>+  <span class="kw">int</span>                 get_color_inactive_bg<span class="ot">();</span></span>
+<span id="cb1-414"><a href="#cb1-414"></a>+  <span class="kw">void</span>                set_color_inactive_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-415"><a href="#cb1-415"></a>+  <span class="kw">int</span>                 get_color_dead_fg<span class="ot">();</span></span>
+<span id="cb1-416"><a href="#cb1-416"></a>+  <span class="kw">void</span>                set_color_dead_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-417"><a href="#cb1-417"></a>+  <span class="kw">int</span>                 get_color_dead_bg<span class="ot">();</span></span>
+<span id="cb1-418"><a href="#cb1-418"></a>+  <span class="kw">void</span>                set_color_dead_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-419"><a href="#cb1-419"></a>+  <span class="kw">int</span>                 get_color_active_fg<span class="ot">();</span></span>
+<span id="cb1-420"><a href="#cb1-420"></a>+  <span class="kw">void</span>                set_color_active_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-421"><a href="#cb1-421"></a>+  <span class="kw">int</span>                 get_color_active_bg<span class="ot">();</span></span>
+<span id="cb1-422"><a href="#cb1-422"></a>+  <span class="kw">void</span>                set_color_active_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-423"><a href="#cb1-423"></a>+  <span class="kw">int</span>                 get_color_finished_fg<span class="ot">();</span></span>
+<span id="cb1-424"><a href="#cb1-424"></a>+  <span class="kw">void</span>                set_color_finished_fg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-425"><a href="#cb1-425"></a>+  <span class="kw">int</span>                 get_color_finished_bg<span class="ot">();</span></span>
+<span id="cb1-426"><a href="#cb1-426"></a>+  <span class="kw">void</span>                set_color_finished_bg<span class="ot">(</span>int64_t color<span class="ot">);</span></span>
+<span id="cb1-427"><a href="#cb1-427"></a>+</span>
+<span id="cb1-428"><a href="#cb1-428"></a>   <span class="kw">void</span>                adjust_down_throttle<span class="ot">(</span><span class="kw">int</span> throttle<span class="ot">);</span></span>
+<span id="cb1-429"><a href="#cb1-429"></a>   <span class="kw">void</span>                adjust_up_throttle<span class="ot">(</span><span class="kw">int</span> throttle<span class="ot">);</span></span>
+<span id="cb1-430"><a href="#cb1-430"></a> </span>
+<span id="cb1-431"><a href="#cb1-431"></a><span class="er">@@</span> <span class="dv">-105</span><span class="ot">,</span><span class="dv">6</span> +<span class="dv">122</span><span class="ot">,</span><span class="dv">15</span> <span class="er">@@</span> <span class="kw">private</span>:</span>
+<span id="cb1-432"><a href="#cb1-432"></a>   WStatusbar*         m_windowStatusbar<span class="ot">;</span></span>
+<span id="cb1-433"><a href="#cb1-433"></a> </span>
+<span id="cb1-434"><a href="#cb1-434"></a>   input::Bindings     m_bindings<span class="ot">;</span></span>
+<span id="cb1-435"><a href="#cb1-435"></a>+</span>
+<span id="cb1-436"><a href="#cb1-436"></a>+  int64_t             color_inactive_fg<span class="ot">;</span></span>
+<span id="cb1-437"><a href="#cb1-437"></a>+  int64_t             color_inactive_bg<span class="ot">;</span></span>
+<span id="cb1-438"><a href="#cb1-438"></a>+  int64_t             color_dead_fg<span class="ot">;</span></span>
+<span id="cb1-439"><a href="#cb1-439"></a>+  int64_t             color_dead_bg<span class="ot">;</span></span>
+<span id="cb1-440"><a href="#cb1-440"></a>+  int64_t             color_active_fg<span class="ot">;</span></span>
+<span id="cb1-441"><a href="#cb1-441"></a>+  int64_t             color_active_bg<span class="ot">;</span></span>
+<span id="cb1-442"><a href="#cb1-442"></a>+  int64_t             color_finished_fg<span class="ot">;</span></span>
+<span id="cb1-443"><a href="#cb1-443"></a>+  int64_t             color_finished_bg<span class="ot">;</span></span>
+<span id="cb1-444"><a href="#cb1-444"></a> }<span class="ot">;</span></span>
+<span id="cb1-445"><a href="#cb1-445"></a> </span>
+<span id="cb1-446"><a href="#cb1-446"></a> }</span></code></pre></div>
+<hr />
+</details>
+<p>Скачиваем и распаковываем исходники с официального сайта rtorrent. Нам нужна версия <code>0.9.6</code>, так как в репозитории Debian 9 именно такая версия:</p>
+<pre><code>$ wget -qO - http://rtorrent.net/downloads/rtorrent-0.9.6.tar.gz | tar zxvf -
+</code></pre>
+<p>Патч <code>rtorrent-0.9.6_color.patch</code> необходимо положить в папку с нашими исходниками <code>rtorrent-0.9.6</code>:</p>
+<pre><code>$ mv rtorrent-0.9.6_color.patch /home/user_name/rtorrent-0.9.6/
+</code></pre>
+<p>Теперь переходим в папку с исходниками, накладываем наш патч и собираем rtorrent:</p>
+<hr />
+<pre><code>$ cd rtorrent-0.9.6
+$ patch -uNp1 -i rtorrent-0.9.6_color.patch
+$ sed &#39;/AM_PATH_CPPUNIT/d&#39; -i configure.ac
+$ ./autogen.sh
+$ CPPFLAGS=&quot;-I/usr/include/ncursesw/&quot; ./configure --with-xmlrpc-c --prefix=/usr
+$ make
+$ sudo make install
+</code></pre>
+<hr />
+<blockquote>
+<p>Если сборка заканчивается неудачей - это свидетельствует об отсутствии в вашей системе необходимых библиотек. Их нужно будет доустановить, после чего запустить сборку повторно.</p>
+</blockquote>
+<p>Теперь остаётся задать необходимые цвета в конфигурационном файле rtorrent’a <code>.rtorrent.rc</code>:</p>
+<hr />
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Colors</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Colors: 0 = black  1 = red  </span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#         2 = green  3 = yellow </span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#         4 = blue   5 = magenta </span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#         6 = cyan   7 = white</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">color_active_fg</span>   = 3</span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="ex">color_inactive_fg</span> = 2</span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="ex">color_dead_fg</span>     = 1</span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="ex">color_finished_fg</span> = 6</span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="ex">color_active_bg</span>   = 4</span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="ex">color_inactive_bg</span> = 0</span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="ex">color_dead_bg</span>     = 0</span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="ex">color_finished_bg</span> = 0</span></code></pre></div>
+<hr />
+<p>Запускаем rtorrent и смотрим результат:</p>
+<p><img src="http://images2.imagebam.com/b9/6f/81/8fbe551008897814.png" /></p>]]></description>
+    <pubDate>Sun, 11 Nov 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-11-11-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>ncdc – консольный клиент DC++</title>
     <link>https://chubaduba.github.io//posts/2018-07-22-1.html</link>
     <description><![CDATA[<p>Многие скажут, что <a href="https://ru.wikipedia.org/wiki/Direct_Connect">Direct Connect</a> давно умер, но как не странно, лично я переодически этим пользуюсь. Тем более, под Linux сущетвует лёгковесный, шустрый и надёжный консольный клиент <a href="https://dev.yorhel.nl/ncdc">ncdc</a>. Сегодня речь пойдёт о его настройке и использовании в Debian GNU/Linux.</p>
@@ -58,6 +688,993 @@ $ sudo ufw allow 21000
 <p>Переход между окнами осуществляется нажатием клавиши <code>Alt</code> и цифры, соответствующей номеру окна. Писать о всех возможных командах и доступных горячих клавишах смысла не вижу, так как всё это подробно описано в <a href="https://dev.yorhel.nl/ncdc/man">мануале</a> на сайте разработчика программы.</p>]]></description>
     <pubDate>Sun, 22 Jul 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-07-22-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Использование сервиса pastebin.</title>
+    <link>https://chubaduba.github.io//posts/2018-05-28-1.html</link>
+    <description><![CDATA[<p>Очень часто, при решении каких-то вопросов, связанных с использованием Linux, люди, пытающиеся вам помочь, просят, чтобы вы показали им какой-либо файл с логами или результат работы (выхлоп) команды, введённой в терминале. Первое, что придёт вам на ум в этой ситуации - это сделать скриншот своего экрана или вообще взять и сфотографировать свой монитор. Согласистесь, очень часто на форумах, на которых пользователи Linux ищут ответы на свои вопросы можно увидеть вот такие фотографии:</p>
+<p><img src="http://images2.imagebam.com/1f/95/29/9c2c63827428223.JPG" /></p>
+<p>Хорошо, если фотография хорошего качества, вся информация полностью умещается на мониторе и удобно читаемая. Но такое бывает далеко не всегда. Сегодня речь пойдёт о работе с сервисом <code>pasebin</code>, который позволяет загружать отрывки текста, фрагменты исходного кода и т.д. для возможности просмотра окружающими.</p>
+<p>Для работы с сервисом установим в нашу систему два пакета <a href="https://packages.debian.org/stretch/pastebinit">pastebinit</a> и <a href="https://packages.debian.org/stretch/xclip">xclip</a>. <code>pastebinit</code> - это инструмент командной строки для отправки данных на сайт, который позволяет пользователям размещать отрывки текста для публичного просмотра, а <code>xclip</code> — это утилита, предоставляющая интерфейс к буферу обмена из командной строки:</p>
+<pre><code>$ sudo apt-get install pastebinit
+$ sudo apt-get install xclip
+</code></pre>
+<p>Чтобы посмотреть с какими сервисами работает <code>pastebinit</code>, нужно в терминале ввести команду:</p>
+<pre><code>$ pastebinit -l
+</code></pre>
+<p><img src="http://images2.imagebam.com/c5/d4/44/88c0c8851554954.png" /></p>
+<p>Стоит отметить, что на самом деле, не со всеми сервисами из этого списка <code>pastebinit</code> работает. Причины этому две: либо сам сервис не работает (недоступен), либо у сервиса поменялся API и <code>pastebinit</code> перестал корректно с ним работать. Какой сервис выбрать для себя дело сугубо ваших предпочтений. Я пользуюсь сервисом по умолчанию <code>paste.debian.net</code>.</p>
+<blockquote>
+<p>В Debian 9 Stratch <code>pastebinit</code> имеет ошибки, которые не позволяют ему корректно работать с сервисом <code>paste.debian.net</code>. Поэтому рекомендую поставить более свежую версию пакета из Debian testing или Debian sid.</p>
+</blockquote>
+<p>Чтобы каждый раз не вводить в терминале длинные команды, создадим <code>alias</code>, обзовём его <code>paste</code>, который будем использовать когда нужно будет что-то скопировать. Добавляем в наш файл <code>~/.bashrc</code> строчку :</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">alias</span> paste=<span class="st">&#39;pastebinit -b paste.debian.net -a ChubaDuba | xclip -selection &quot;clipboard&quot; &#39;</span></span></code></pre></div>
+<p>параметр <code>-a</code> задаёт имя автора. Параметр не обязательный, если вы его не будите прописывать, то автоматически вам будет присвоено имя <code>anonymous</code>.</p>
+<p>Теперь всё готово для работы. Посмотрим на практике как это работает.<br />
+Например, нам нужно показать вывод команды <code>lspci</code>. Открываем терминал и вводим следующую команду:</p>
+<pre><code>$ lspci | paste
+</code></pre>
+<p>После её выполнения в буфере обмена у нас будет ссылка, перейдя по которой можно увидеть результат работы введённой нами команды. В нашем примере <code>lspci</code>. Остаётся поделиться этой ссылкой, нажав клавиши <code>Ctrl + v</code> там, где нам нужно: на форуме, чате или отправить её по e-mail. Если перейти по этой ссылке, откроется страничка выбранного нами ресурса, на которой в удобной для просмотра форме будет показан результат работы вводимой нами команды:</p>
+<p><a href="http://www.imagebam.com/image/dffeb7895532484" target="_blank"><img src="http://thumbs2.imagebam.com/e1/fe/50/dffeb7895532484.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Mon, 28 May 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-05-28-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Xmonad. Чем сделать скриншот?</title>
+    <link>https://chubaduba.github.io//posts/2018-04-02-1.html</link>
+    <description><![CDATA[<p>Cогласитесь, частенько возникает ситуация, когда необходимо сделать скриншот экрана. Сегодня поговорим как это сделать в xmonad без использования таких монстров как <a href="http://shutter-project.org/">shutter</a>, <a href="https://git.gnome.org/browse/gnome-screenshot">gnome-screenshot</a>, <a href="https://www.kde.org/applications/graphics/ksnapshot">ksnapshot</a> и т.д., которые при установке тянут за собой кучу пакетов.</p>
+<p>Существует маленькая консольная утилита, специально разработанная для создания скриншотов. Называется она <a href="http://freshmeat.sourceforge.net/projects/scrot">scrot</a>.</p>
+<p>В репозиториях Debian она конечно есть, устанавливается с минимумом зависимостей командой:</p>
+<pre><code>$ sudo apt-get install scrot
+</code></pre>
+<p>Сначала определимся, куда мы будем складывать свои скриншоты. Я создал папку <code>~/Изображения/ScreenShots</code>.</p>
+<p>Чтобы постоянно не лезть в консоль и не вводить руками команды, напишем скрипт, который будет создавать скриншот и сохранять его в папке, которую мы заранее подготовили. А запуск скрипта повесим на нужную нам клавишу.</p>
+<blockquote>
+<p>Ознакомиться со всеми возможными параметрами запуска утилиты можно на <a href="https://www.systutorials.com/docs/linux/man/1-scrot/">этой страничке</a>.</p>
+</blockquote>
+<p>Вот такой скрипт я использую:</p>
+<hr />
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="va">name=</span><span class="kw">`</span><span class="fu">date</span> +%x-%X-%N.png<span class="kw">`</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="ex">scrot</span> ~/Изображения/ScreenShots/<span class="va">$name</span> -q 100 -d 10</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="ex">mpv</span> ~/путь_до_звукового_файла/photosound.mp3</span></code></pre></div>
+<hr />
+<p>где<br />
+<code>name</code> - формат имени создаваемого файла;<br />
+<code>q</code> - качество картинки;<br />
+<code>d</code>- отсрочка выполнения в секундах.</p>
+<p>Иногда бывают ситуации, когда в нужный момент нажать клавишу для создания скриншота не получится. Например, когда открыто какое-нибудь окно, которое блокирует нажатие любых клавиш. Ну а чтобы понимать создался ли у вас скриншот, я добавил звуковое оповещение. Звуковой файл проигрывает консольный плеер <a href="https://mpv.io/">mpv</a>. У вас это может быть любое приложение или утилита, способная издавать звуки. Сам звуковой файл тоже может быть любым. Я для себя выбрал <a href="https://mega.nz/#!5VFhCTQK!uH3bBX4etq8496Zmd4asDHbWbHVksLgTFWsWW0Ydchw">звук затвора фотоаппарата</a>.</p>
+<p>Осталось назначить клавишу, по нажатию на которую будет запускаться наш скрипт. Я выбрал клавишу <code>PrtSc</code>. Определяем код клавиши с помошью утилиты <code>xev</code> и редактируем наш файл <code>xmonad.hs</code>:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a>myKeys <span class="ot">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2"></a>         <span class="op">...</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>         , ((<span class="dv">0</span>    , <span class="bn">0xff61</span>), spawn <span class="st">&quot;путь_до_нашего_скрипта&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>         <span class="op">...</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>         ]</span></code></pre></div>
+<hr />
+<blockquote>
+<p>Я обычно делаю скриншот целого экрана. Всё равно, практически всегда, открываю созданный скриншот в редакторе <code>Gimp</code> и делаю нужные мне изменения. Если у вас есть необходимость постоянно делать скриншот выделенной области экрана, то работу scrot в таком режиме можно настроить, используя параметр <code>-s</code>.</p>
+</blockquote>]]></description>
+    <pubDate>Mon, 02 Apr 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-04-02-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Xmonad+xmobar+ALSA.</title>
+    <link>https://chubaduba.github.io//posts/2018-03-25-1.html</link>
+    <description><![CDATA[<p>Сегодня речь пойдёт о настройке в <code>xmonad</code> горячих клавиш для управления громкостью, а также о выводе в <code>xmobar</code> некоторой информации о звуковых настройках в системе.</p>
+<blockquote>
+<p>Всё нижеописанное справедливо для <a href="http://www.alsa-project.org/main/index.php/Main_Page">ALSA</a>.</p>
+</blockquote>
+<p>После того как я отказался от <a href="https://ru.wikipedia.org/wiki/Desktop_environment">DE</a> и стал использовать только <a href="https://ru.wikipedia.org/wiki/X_window_manager">WM</a>, управление громкостью сводилось к открытию <a href="https://en.wikipedia.org/wiki/Alsamixer">alsamixer</a> и последующей регулировке необходимых параметров. Скажем так, стандартный вариант у многих пользователей, которые не используют DE на своём компьютере:</p>
+<p><img src="/images/alsamixer.png" /></p>
+<p>Всё как бы хорошо, но согласитесь, во время просмотра какого-нибудь очередного сериальчика, для того чтобы сделать чуть потише или громче, нужно было делать все эти манипуляции. Про жену вообще молчу! Первое время фраза: “Сделай чуть погромче”, вводила её в лёгкий ступор. Поэтому я решил всё это дело как-то облагородить. Вот, что у меня получилось…</p>
+<p>Первое, что пришло на ум, это назначить в xmonad горячие клавиши для быстрого запуска <code>alsamixer</code>. Сделал:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="op">...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">import</span> <span class="dt">XMonad.Util.EZConfig</span>            (additionalKeys)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="op">...</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>myConfig <span class="ot">=</span> defaultConfig</span>
+<span id="cb1-5"><a href="#cb1-5"></a>         { modMask <span class="ot">=</span> mod4Mask</span>
+<span id="cb1-6"><a href="#cb1-6"></a>         , <span class="op">...</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>         } <span class="ot">`additionalKeys`</span> myKeys</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="op">...</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>myKeys <span class="ot">=</span> [</span>
+<span id="cb1-10"><a href="#cb1-10"></a>         <span class="op">...</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>         , ((mod4Mask <span class="op">.|.</span> controlMask,    xK_a), spawn <span class="st">&quot;urxvt -e alsamixer&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12"></a>         ]</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="op">...</span></span></code></pre></div>
+<p>По прошествии некоторого времени, в интернете было найдено решение как в xmonad назначить горячие клавиши для уменьшения (увеличения) громкости и для включения и выключения режима <code>Mute</code>. На моей<br />
+клавиатуре есть специальные клавиши для громкости и для Mute. Если на вашей их нет, то назначить действия можно на любые, которые вам нравятся. Редактируем конфиг <code>xmonad</code>, добавляем наши клавиши:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>myKeys <span class="ot">=</span> [</span>
+<span id="cb2-3"><a href="#cb2-3"></a>         <span class="op">...</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>         , ((<span class="dv">0</span>    , <span class="bn">0x1008ff11</span>), spawn <span class="st">&quot;amixer set Master 2-&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>         , ((<span class="dv">0</span>    , <span class="bn">0x1008ff13</span>), spawn <span class="st">&quot;amixer set Master 2+&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>         , ((<span class="dv">0</span>    , <span class="bn">0x1008ff12</span>), spawn <span class="st">&quot;amixer set Master toggle&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>         ]</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="op">...</span></span></code></pre></div>
+<blockquote>
+<p>Код нужной клавиши можно определить с помощью утилиты <a href="https://linux.die.net/man/1/xev">xev</a>, набрав в терминале команду <code>xev | grep keycode</code>, и после этого нажать нужную клавишу.</p>
+</blockquote>
+<p>Стало совсем хорошо! И жена уже не в ступоре :)</p>
+<p>Но как говорится, аппетит приходит во время еды. Захотелось реализовать ещё несколько нужных мне фишек. Дело в том, что на данный момент у нас в хозяйстве моноблок <a href="http://static.highspeedbackbone.net/pdf/Lenovo%20C325%20All-In-One%20PC%20Data%20Sheet.pdf">Lenovo C325</a>, у которого есть встроенные динамики. Частенько бывает так, что музыку мы слушаем (а это с женой мы очень любим!) через внешний <a href="http://ldsound.ru/odissej-u-010-stereo-hi-fi/">усилитель</a> и <a href="http://ldsound.ru/75-as-001-kliver/">колонки</a>, подключая моноблок через выход на наушники к усилителю. И не раз было так, что звук идёт и через динамики моноблока, и через внешние колонки. Приходилось открывать <code>alsamixer</code> и выключать звук из динамиков моноблока. Просто, но опять же напряжно, тем более, если дома гости и т.д. Это первое, что хотелось бы сделать. Второе, вывести в <code>xmobar</code> показания уровня громкости.</p>
+<p>Реализовать я это решил с помощью скриптов, а результат их работы вывести в xmobar. Первым делом написал вот такой скрипт и обозвал его <code>vol</code>:</p>
+<hr />
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="va">vol=$(</span><span class="ex">amixer</span> get Master <span class="kw">|</span> <span class="fu">awk</span> -F<span class="st">&#39;[]%[]&#39;</span> <span class="st">&#39;/%/ {if ($7 == &quot;off&quot;) \</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">	 { print &quot;MM&quot; } else { print $2 }}&#39;</span> <span class="kw">|</span> <span class="fu">head</span> -n 1<span class="va">)</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="va">COLOR=</span><span class="st">&quot;#DBA3A2&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="va">volume=</span><span class="st">&quot;[on]&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(d)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="kw">fi</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>   <span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(dh)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>   <span class="kw">fi</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a>      <span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>         <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(d)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>      <span class="kw">else</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a>           <span class="kw">if [[</span> <span class="va">$Volume_h</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a>              <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;(h)&lt;/fc&gt;&lt;fc=#8CD0D3&gt;</span><span class="va">$vol</span><span class="st">%&lt;/fc&gt;&quot;</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>           <span class="kw">else</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>              <span class="bu">echo</span> <span class="st">&quot;&lt;fc=#8CD0D3&gt;MM&lt;/fc&gt;&quot;</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>           <span class="kw">fi</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>      <span class="kw">fi</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="bu">exit</span> 0</span></code></pre></div>
+<hr />
+<p>Этот скрипт выводит на экран текущий уровень громкости в процентах и показывает какой выходной канал является активным на данный момент. Всего может быть семь вариантов:</p>
+<ul>
+<li><code>(d)80%</code> - звук идёт через динамики;</li>
+<li><code>(h)80%</code> - звук идёт через наушники;</li>
+<li><code>(d)MM%</code> - звук идёт через динамики, режим Mute;</li>
+<li><code>(h)MM%</code> - звук идёт через наушники; режим Mute;</li>
+<li><code>(dh)80%</code> - звук идёт через динамики и наушники;</li>
+<li><code>(dh)MM%</code> - звук идёт через динамики и наушники, режим Mute.</li>
+</ul>
+<blockquote>
+<p>С утра, проснувшись с бодуна<br />
+Mеня трясёт и глючит…<br />
+© Сергей Шнуров</p>
+</blockquote>
+<p>Согласитесь, что в жизни всякое бывает, и такое тоже. И на этот случай я предусмотрел ещё один вариант:</p>
+<ul>
+<li><code>MM</code> - динамики и наушники отключены.</li>
+</ul>
+<p>Выводим результат работы скрипта в xmobar. Вносим изменения в файл конфигурации <code>.xmobarrc</code>:</p>
+<pre><code>...
+commands = [
+           ...
+           Run Com &quot;/путь_до_нашего_скрипта/vol&quot; [] &quot;vol&quot; 10,
+           ...
+           ]
+...
+, template = &quot; %StdinReader% }{ ... %vol% ...}
+</code></pre>
+<p>Теперь в xmobar’е есть информация о текущем уровне громкости и и звуковом канале. И мы можем с помощью горячих клавиш уменьшать или увеличивать громкость, либо выключить её совсем, включив режим Mute.</p>
+<p>Настала очередь для второй хотелки - переключателе между выходами с динамиков на наушники и наоборот. Для этого я написал второй скрипт, обозвав его <code>alsamixer</code>:</p>
+<hr />
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="va">volume=</span><span class="st">&quot;[on]&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="va">Volume_s=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Speaker Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>         </span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="va">Volume_h=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">amixer</span> get Headphone Playback Volume <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;6!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>         <span class="fu">sed</span> -r <span class="st">&#39;s/^[^B]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^[]+//&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>   <span class="ex">amixer</span> sset Headphone mute</span>
+<span id="cb5-13"><a href="#cb5-13"></a>   <span class="ex">amixer</span> sset Speaker unmute</span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="kw">fi</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="kw">if [[</span> <span class="va">$Volume_s</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span> <span class="kw">&amp;&amp; [[</span> <span class="va">$Volume_h</span> <span class="ot">!=</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>   <span class="ex">amixer</span> sset Headphone unmute</span>
+<span id="cb5-19"><a href="#cb5-19"></a>   <span class="ex">amixer</span> sset Speaker mute</span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="kw">else</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22"></a>     <span class="kw">if [[</span> <span class="va">$Volume_h</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$volume</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>        <span class="ex">amixer</span> sset Headphone mute</span>
+<span id="cb5-24"><a href="#cb5-24"></a>        <span class="ex">amixer</span> sset Speaker unmute</span>
+<span id="cb5-25"><a href="#cb5-25"></a>     <span class="kw">fi</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="kw">fi</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="bu">exit</span> 0</span></code></pre></div>
+<hr />
+<p>Тут всё просто. Если включены динамики, то скрипт отрабатывает на их выключение и включение наушников. Также и наоборот, с наушников на динамики. В случае, когда в <code>xmobar</code> будет значение <code>MM</code>, скрипт включит динамики. Осталось определить горячую клавишу, по нажатию которой, будет выполняться скрипт. Редактируем <code>xmonad.hs</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="op">...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>myKeys <span class="ot">=</span> [</span>
+<span id="cb6-3"><a href="#cb6-3"></a>         <span class="op">...</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>         , ((<span class="dv">0</span>   , <span class="bn">0x0</span>), spawn <span class="st">&quot;/путь_до_нашего_скрипта/alsamixer&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>         <span class="op">...</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>         ]</span></code></pre></div>
+<p>На этом сегодня всё. Вопрос об управлении громкостью и её визуальном контроле в системе без использования каких-либо дополнительных программ снят.</p>]]></description>
+    <pubDate>Sun, 25 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-03-25-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Мой выбор - Alpine e-mail клиент.</title>
+    <link>https://chubaduba.github.io//posts/2018-03-21-1.html</link>
+    <description><![CDATA[<p>В своё время, когда в качестве рабочего окружения я использовал <code>Gnome 2</code>, работу почтового клиента выполнял <a href="http://www.claws-mail.org/">Claws Mail</a>. Почтовик, кстати, отличный, всё что от него требовалось, выполнял на 100%. Но после отказа от использования на десктопе рабочих окружений, встал вопрос о его замене на что-то более легковесное, с минимумом зависимостей и консольное. Консольное по той причине, что считаю отправку и получение электронной почты задачей тривиальной, которая должна решаться легко и быстро.</p>
+<p>И такое решение было найдено! Консольный почтовый клиент <a href="https://www.washington.edu/alpine/">Alpine</a>, который разработали в <a href="https://www.washington.edu/">Вашингтонском Университете</a>. В репозиториях Debian он есть, устанавливается обычным способом:</p>
+<pre><code>$ sudo apt-get install alpine
+</code></pre>
+<p>После успешной установки, запустить программу можно из терминала командой:</p>
+<pre><code>$ alpine
+</code></pre>
+<figure>
+<img src="/images/alpine.png" alt="" /><figcaption>Alpine. Главное окно.</figcaption>
+</figure>
+<p>Стоит отметить, что программа не имеет русского интерфейса, но это не мешает комфортно ей пользоваться. Я не буду в этом посте подробно описывать настройки и работу Alpine. Заинтересовавшимся найти эту информацию в интернете не составит труда. А вот разместить ссылку на видеоролик, в котором показано как настроить Alpine на работу с почтовым ящиком <code>Gmail</code>, думаю будет не лишним, пусть на забугорном языке, но всё очень подробно показано:</p>
+<iframe width="100%" height="240" src="https://www.youtube.com/embed/SNYLDDx4Mro" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>]]></description>
+    <pubDate>Wed, 21 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-03-21-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Тема Zenburn для Sublime Text 2</title>
+    <link>https://chubaduba.github.io//posts/2018-03-19-1.html</link>
+    <description><![CDATA[<p>Файл с темой нужно положить в <em>~/.config/sublime-text-2/Packages/Color Scheme - Default/</em>.</p>
+<details>
+<p><summary><code>Zenburn.tmTheme</code></summary></p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">&lt;plist</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>	<span class="kw">&lt;key&gt;</span>author<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>	<span class="kw">&lt;string&gt;</span>Modified by ChubaDuba<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>	<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>	<span class="kw">&lt;string&gt;</span>zenburn<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>	<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>	<span class="kw">&lt;array&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>				<span class="kw">&lt;string&gt;</span>#3F3F3F<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>				<span class="kw">&lt;key&gt;</span>caret<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>				<span class="kw">&lt;string&gt;</span>#DBA3A2<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>				<span class="kw">&lt;string&gt;</span>#DCDCCC<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>				<span class="kw">&lt;key&gt;</span>invisibles<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>				<span class="kw">&lt;string&gt;</span>#4F4F4F<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>				<span class="kw">&lt;key&gt;</span>lineHighlight<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>				<span class="kw">&lt;string&gt;</span>#303030<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>				<span class="kw">&lt;key&gt;</span>selection<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>				<span class="kw">&lt;string&gt;</span>#1E2320<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>			<span class="kw">&lt;string&gt;</span>Comment<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>			<span class="kw">&lt;string&gt;</span>comment<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>				<span class="kw">&lt;string&gt;</span>#87AE86<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a>			<span class="kw">&lt;string&gt;</span>preprocessor<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>			<span class="kw">&lt;string&gt;</span>meta.preprocessor, punctuation.definition.preprocessor<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-45"><a href="#cb1-45"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a>				<span class="kw">&lt;string&gt;</span>#E8BC92<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-50"><a href="#cb1-50"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-51"><a href="#cb1-51"></a>			<span class="kw">&lt;string&gt;</span>phpdoc<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-52"><a href="#cb1-52"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-53"><a href="#cb1-53"></a>			<span class="kw">&lt;string&gt;</span>keyword.other.phpdoc<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-55"><a href="#cb1-55"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-56"><a href="#cb1-56"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-57"><a href="#cb1-57"></a>				<span class="kw">&lt;string&gt;</span>#568E4D<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-58"><a href="#cb1-58"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-59"><a href="#cb1-59"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-60"><a href="#cb1-60"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-61"><a href="#cb1-61"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-62"><a href="#cb1-62"></a>			<span class="kw">&lt;string&gt;</span>comment punctuation (<span class="dv">&amp;#x2f;</span>*, #, <span class="dv">&amp;#x2f;&amp;#x2f;</span>)<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-63"><a href="#cb1-63"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-64"><a href="#cb1-64"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.comment, punctuation.whitespace.comment<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-65"><a href="#cb1-65"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-66"><a href="#cb1-66"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-67"><a href="#cb1-67"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-68"><a href="#cb1-68"></a>				<span class="kw">&lt;string&gt;</span>#A0CFA1<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-69"><a href="#cb1-69"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-71"><a href="#cb1-71"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-72"><a href="#cb1-72"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-73"><a href="#cb1-73"></a>			<span class="kw">&lt;string&gt;</span>embedded ruby in string delimiters<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-74"><a href="#cb1-74"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-75"><a href="#cb1-75"></a>			<span class="kw">&lt;string&gt;</span>punctuation.section.embedded<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-76"><a href="#cb1-76"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-77"><a href="#cb1-77"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-78"><a href="#cb1-78"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-79"><a href="#cb1-79"></a>				<span class="kw">&lt;string&gt;</span>#898989<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-80"><a href="#cb1-80"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-81"><a href="#cb1-81"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-82"><a href="#cb1-82"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-83"><a href="#cb1-83"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-84"><a href="#cb1-84"></a>			<span class="kw">&lt;string&gt;</span>embedded ruby in string<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-85"><a href="#cb1-85"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-86"><a href="#cb1-86"></a>			<span class="kw">&lt;string&gt;</span>source.ruby.embedded<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-87"><a href="#cb1-87"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-88"><a href="#cb1-88"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-89"><a href="#cb1-89"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-90"><a href="#cb1-90"></a>				<span class="kw">&lt;string&gt;</span>#CC9495<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-91"><a href="#cb1-91"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-92"><a href="#cb1-92"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-93"><a href="#cb1-93"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-94"><a href="#cb1-94"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-95"><a href="#cb1-95"></a>			<span class="kw">&lt;string&gt;</span>Directive<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-96"><a href="#cb1-96"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-97"><a href="#cb1-97"></a>			<span class="kw">&lt;string&gt;</span>keyword.other.directive<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-98"><a href="#cb1-98"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-99"><a href="#cb1-99"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-100"><a href="#cb1-100"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-101"><a href="#cb1-101"></a>				<span class="kw">&lt;string&gt;</span>#DEDEDE<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-102"><a href="#cb1-102"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-103"><a href="#cb1-103"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-104"><a href="#cb1-104"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-105"><a href="#cb1-105"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-106"><a href="#cb1-106"></a>			<span class="kw">&lt;string&gt;</span>Line-number directives<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-107"><a href="#cb1-107"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-108"><a href="#cb1-108"></a>			<span class="kw">&lt;string&gt;</span>keyword.other.directive.line-number<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-109"><a href="#cb1-109"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-110"><a href="#cb1-110"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-111"><a href="#cb1-111"></a>				<span class="kw">&lt;key&gt;</span>fontStyle<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-112"><a href="#cb1-112"></a>				<span class="kw">&lt;string&gt;</span>underline<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-113"><a href="#cb1-113"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-114"><a href="#cb1-114"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-115"><a href="#cb1-115"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-116"><a href="#cb1-116"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-117"><a href="#cb1-117"></a>			<span class="kw">&lt;string&gt;</span>Characters<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-118"><a href="#cb1-118"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-119"><a href="#cb1-119"></a>			<span class="kw">&lt;string&gt;</span>constant.character<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-120"><a href="#cb1-120"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-121"><a href="#cb1-121"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-122"><a href="#cb1-122"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-123"><a href="#cb1-123"></a>				<span class="kw">&lt;string&gt;</span>#DBA3A2<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-124"><a href="#cb1-124"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-125"><a href="#cb1-125"></a>				<span class="kw">&lt;string&gt;&lt;/string&gt;</span></span>
+<span id="cb1-126"><a href="#cb1-126"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-127"><a href="#cb1-127"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-128"><a href="#cb1-128"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-129"><a href="#cb1-129"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-130"><a href="#cb1-130"></a>			<span class="kw">&lt;string&gt;</span>String<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-131"><a href="#cb1-131"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-132"><a href="#cb1-132"></a>			<span class="kw">&lt;string&gt;</span>string, string.unquoted<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-133"><a href="#cb1-133"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-134"><a href="#cb1-134"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-135"><a href="#cb1-135"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-136"><a href="#cb1-136"></a>				<span class="kw">&lt;string&gt;</span>#D68686<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-137"><a href="#cb1-137"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-138"><a href="#cb1-138"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-139"><a href="#cb1-139"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-140"><a href="#cb1-140"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-141"><a href="#cb1-141"></a>			<span class="kw">&lt;string&gt;</span>Heredoc<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-142"><a href="#cb1-142"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-143"><a href="#cb1-143"></a>			<span class="kw">&lt;string&gt;</span>string.unquoted.heredoc<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-144"><a href="#cb1-144"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-145"><a href="#cb1-145"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-146"><a href="#cb1-146"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-147"><a href="#cb1-147"></a>				<span class="kw">&lt;string&gt;</span>#D6D6D6<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-148"><a href="#cb1-148"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-149"><a href="#cb1-149"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-150"><a href="#cb1-150"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-151"><a href="#cb1-151"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-152"><a href="#cb1-152"></a>			<span class="kw">&lt;string&gt;</span>Number<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-153"><a href="#cb1-153"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-154"><a href="#cb1-154"></a>			<span class="kw">&lt;string&gt;</span>support.constant.numeric, constant.numeric<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-155"><a href="#cb1-155"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-156"><a href="#cb1-156"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-157"><a href="#cb1-157"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-158"><a href="#cb1-158"></a>				<span class="kw">&lt;string&gt;</span>#87D6D5<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-159"><a href="#cb1-159"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-160"><a href="#cb1-160"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-161"><a href="#cb1-161"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-162"><a href="#cb1-162"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-163"><a href="#cb1-163"></a>			<span class="kw">&lt;string&gt;</span>Built-in constant<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-164"><a href="#cb1-164"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-165"><a href="#cb1-165"></a>			<span class="kw">&lt;string&gt;</span>constant, support.constant<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-166"><a href="#cb1-166"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-167"><a href="#cb1-167"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-168"><a href="#cb1-168"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-169"><a href="#cb1-169"></a>				<span class="kw">&lt;string&gt;</span>#D6D6AE<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-170"><a href="#cb1-170"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-171"><a href="#cb1-171"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-172"><a href="#cb1-172"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-173"><a href="#cb1-173"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-174"><a href="#cb1-174"></a>			<span class="kw">&lt;string&gt;</span>User-defined constant<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-175"><a href="#cb1-175"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-176"><a href="#cb1-176"></a>			<span class="kw">&lt;string&gt;</span>constant.character, constant.other<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-177"><a href="#cb1-177"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-178"><a href="#cb1-178"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-179"><a href="#cb1-179"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-180"><a href="#cb1-180"></a>				<span class="kw">&lt;string&gt;</span>#CC9495<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-181"><a href="#cb1-181"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-182"><a href="#cb1-182"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-183"><a href="#cb1-183"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-184"><a href="#cb1-184"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-185"><a href="#cb1-185"></a>			<span class="kw">&lt;string&gt;</span>Other constant<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-186"><a href="#cb1-186"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-187"><a href="#cb1-187"></a>			<span class="kw">&lt;string&gt;</span>variable.other.constant<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-188"><a href="#cb1-188"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-189"><a href="#cb1-189"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-190"><a href="#cb1-190"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-191"><a href="#cb1-191"></a>				<span class="kw">&lt;string&gt;</span>#D6D6AE<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-192"><a href="#cb1-192"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-193"><a href="#cb1-193"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-194"><a href="#cb1-194"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-195"><a href="#cb1-195"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-196"><a href="#cb1-196"></a>			<span class="kw">&lt;string&gt;</span>Language Keyword<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-197"><a href="#cb1-197"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-198"><a href="#cb1-198"></a>			<span class="kw">&lt;string&gt;</span>keyword, keyword.control , meta.selector.css , entity.other.attribute-name<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-199"><a href="#cb1-199"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-200"><a href="#cb1-200"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-201"><a href="#cb1-201"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-202"><a href="#cb1-202"></a>				<span class="kw">&lt;string&gt;</span>#FED6AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-203"><a href="#cb1-203"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-204"><a href="#cb1-204"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-205"><a href="#cb1-205"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-206"><a href="#cb1-206"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-207"><a href="#cb1-207"></a>			<span class="kw">&lt;string&gt;</span>Instance Variable<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-208"><a href="#cb1-208"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-209"><a href="#cb1-209"></a>			<span class="kw">&lt;string&gt;</span>variable.other.readwrite.instance<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-210"><a href="#cb1-210"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-211"><a href="#cb1-211"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-212"><a href="#cb1-212"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-213"><a href="#cb1-213"></a>				<span class="kw">&lt;string&gt;</span>#FED6AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-214"><a href="#cb1-214"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-215"><a href="#cb1-215"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-216"><a href="#cb1-216"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-217"><a href="#cb1-217"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-218"><a href="#cb1-218"></a>			<span class="kw">&lt;string&gt;</span>Module Keyword<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-219"><a href="#cb1-219"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-220"><a href="#cb1-220"></a>			<span class="kw">&lt;string&gt;</span>entity.name.module,support.other.module<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-221"><a href="#cb1-221"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-222"><a href="#cb1-222"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-223"><a href="#cb1-223"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-224"><a href="#cb1-224"></a>				<span class="kw">&lt;string&gt;</span>#C4BF9F<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-225"><a href="#cb1-225"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-226"><a href="#cb1-226"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-227"><a href="#cb1-227"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-228"><a href="#cb1-228"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-229"><a href="#cb1-229"></a>			<span class="kw">&lt;string&gt;</span>Operators<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-230"><a href="#cb1-230"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-231"><a href="#cb1-231"></a>			<span class="kw">&lt;string&gt;</span>keyword.operator<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-232"><a href="#cb1-232"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-233"><a href="#cb1-233"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-234"><a href="#cb1-234"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-235"><a href="#cb1-235"></a>				<span class="kw">&lt;string&gt;</span>#DCDCCC<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-236"><a href="#cb1-236"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-237"><a href="#cb1-237"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-238"><a href="#cb1-238"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-239"><a href="#cb1-239"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-240"><a href="#cb1-240"></a>			<span class="kw">&lt;string&gt;</span>Floating-point infix operators<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-241"><a href="#cb1-241"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-242"><a href="#cb1-242"></a>			<span class="kw">&lt;string&gt;</span>source.ocaml keyword.operator.symbol.infix.floating-point<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-243"><a href="#cb1-243"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-244"><a href="#cb1-244"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-245"><a href="#cb1-245"></a>				<span class="kw">&lt;key&gt;</span>fontStyle<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-246"><a href="#cb1-246"></a>				<span class="kw">&lt;string&gt;</span>underline<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-247"><a href="#cb1-247"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-248"><a href="#cb1-248"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-249"><a href="#cb1-249"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-250"><a href="#cb1-250"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-251"><a href="#cb1-251"></a>			<span class="kw">&lt;string&gt;</span>Floating-point prefix operators<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-252"><a href="#cb1-252"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-253"><a href="#cb1-253"></a>			<span class="kw">&lt;string&gt;</span>source.ocaml keyword.operator.symbol.prefix.floating-point<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-254"><a href="#cb1-254"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-255"><a href="#cb1-255"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-256"><a href="#cb1-256"></a>				<span class="kw">&lt;key&gt;</span>fontStyle<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-257"><a href="#cb1-257"></a>				<span class="kw">&lt;string&gt;</span>underline<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-258"><a href="#cb1-258"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-259"><a href="#cb1-259"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-260"><a href="#cb1-260"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-261"><a href="#cb1-261"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-262"><a href="#cb1-262"></a>			<span class="kw">&lt;string&gt;</span>Storage Types<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-263"><a href="#cb1-263"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-264"><a href="#cb1-264"></a>			<span class="kw">&lt;string&gt;</span>storage.type , storage.modifier , support.type<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-265"><a href="#cb1-265"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-266"><a href="#cb1-266"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-267"><a href="#cb1-267"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-268"><a href="#cb1-268"></a>				<span class="kw">&lt;string&gt;</span>#F0DFAF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-269"><a href="#cb1-269"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-270"><a href="#cb1-270"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-271"><a href="#cb1-271"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-272"><a href="#cb1-272"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-273"><a href="#cb1-273"></a>			<span class="kw">&lt;string&gt;</span>Variant Types<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-274"><a href="#cb1-274"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-275"><a href="#cb1-275"></a>			<span class="kw">&lt;string&gt;</span>entity.name.class.variant<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-276"><a href="#cb1-276"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-277"><a href="#cb1-277"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-278"><a href="#cb1-278"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-279"><a href="#cb1-279"></a>				<span class="kw">&lt;string&gt;</span>#4080A0<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-280"><a href="#cb1-280"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-281"><a href="#cb1-281"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-282"><a href="#cb1-282"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-283"><a href="#cb1-283"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-284"><a href="#cb1-284"></a>			<span class="kw">&lt;string&gt;</span>Storage<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-285"><a href="#cb1-285"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-286"><a href="#cb1-286"></a>			<span class="kw">&lt;string&gt;</span>storage<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-287"><a href="#cb1-287"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-288"><a href="#cb1-288"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-289"><a href="#cb1-289"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-290"><a href="#cb1-290"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-291"><a href="#cb1-291"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-292"><a href="#cb1-292"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-293"><a href="#cb1-293"></a>			<span class="kw">&lt;string&gt;</span>Type name<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-294"><a href="#cb1-294"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-295"><a href="#cb1-295"></a>			<span class="kw">&lt;string&gt;</span>entity.name.type , entity.other<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-296"><a href="#cb1-296"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-297"><a href="#cb1-297"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-298"><a href="#cb1-298"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-299"><a href="#cb1-299"></a>				<span class="kw">&lt;string&gt;</span>#D6D6D6<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-300"><a href="#cb1-300"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-301"><a href="#cb1-301"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-302"><a href="#cb1-302"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-303"><a href="#cb1-303"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-304"><a href="#cb1-304"></a>			<span class="kw">&lt;string&gt;</span>Inherited class<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-305"><a href="#cb1-305"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-306"><a href="#cb1-306"></a>			<span class="kw">&lt;string&gt;</span>entity.other.inherited-class<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-307"><a href="#cb1-307"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-308"><a href="#cb1-308"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-309"><a href="#cb1-309"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-310"><a href="#cb1-310"></a>				<span class="kw">&lt;string&gt;</span>#C4BF9F<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-311"><a href="#cb1-311"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-312"><a href="#cb1-312"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-313"><a href="#cb1-313"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-314"><a href="#cb1-314"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-315"><a href="#cb1-315"></a>			<span class="kw">&lt;string&gt;</span>Type name<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-316"><a href="#cb1-316"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-317"><a href="#cb1-317"></a>			<span class="kw">&lt;string&gt;</span>storage.type.user-defined , meta.property-list<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-318"><a href="#cb1-318"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-319"><a href="#cb1-319"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-320"><a href="#cb1-320"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-321"><a href="#cb1-321"></a>				<span class="kw">&lt;string&gt;</span>#F0DFAF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-322"><a href="#cb1-322"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-323"><a href="#cb1-323"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-324"><a href="#cb1-324"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-325"><a href="#cb1-325"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-326"><a href="#cb1-326"></a>			<span class="kw">&lt;string&gt;</span>Class type name<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-327"><a href="#cb1-327"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-328"><a href="#cb1-328"></a>			<span class="kw">&lt;string&gt;</span>entity.name.type , entity.name.type.class , entity.other.attribute-name.class.css , support.class<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-329"><a href="#cb1-329"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-330"><a href="#cb1-330"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-331"><a href="#cb1-331"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-332"><a href="#cb1-332"></a>				<span class="kw">&lt;string&gt;</span>#EC93D3<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-333"><a href="#cb1-333"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-334"><a href="#cb1-334"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-335"><a href="#cb1-335"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-336"><a href="#cb1-336"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-337"><a href="#cb1-337"></a>			<span class="kw">&lt;string&gt;</span>Function argument<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-338"><a href="#cb1-338"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-339"><a href="#cb1-339"></a>			<span class="kw">&lt;string&gt;</span>variable.parameter<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-340"><a href="#cb1-340"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-341"><a href="#cb1-341"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-342"><a href="#cb1-342"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-343"><a href="#cb1-343"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-344"><a href="#cb1-344"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-345"><a href="#cb1-345"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-346"><a href="#cb1-346"></a>			<span class="kw">&lt;string&gt;</span>Invalid<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-347"><a href="#cb1-347"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-348"><a href="#cb1-348"></a>			<span class="kw">&lt;string&gt;</span>invalid<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-349"><a href="#cb1-349"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-350"><a href="#cb1-350"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-351"><a href="#cb1-351"></a>				<span class="kw">&lt;key&gt;</span>fontStyle<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-352"><a href="#cb1-352"></a>				<span class="kw">&lt;string&gt;</span> italic underline<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-353"><a href="#cb1-353"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-354"><a href="#cb1-354"></a>				<span class="kw">&lt;string&gt;</span>#FFCCEE<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-355"><a href="#cb1-355"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-356"><a href="#cb1-356"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-357"><a href="#cb1-357"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-358"><a href="#cb1-358"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-359"><a href="#cb1-359"></a>			<span class="kw">&lt;string&gt;</span>html attribute<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-360"><a href="#cb1-360"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-361"><a href="#cb1-361"></a>			<span class="kw">&lt;string&gt;</span>entity.other.attribute-name.html<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-362"><a href="#cb1-362"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-363"><a href="#cb1-363"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-364"><a href="#cb1-364"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-365"><a href="#cb1-365"></a>				<span class="kw">&lt;string&gt;</span>#D6D7AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-366"><a href="#cb1-366"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-367"><a href="#cb1-367"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-368"><a href="#cb1-368"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-369"><a href="#cb1-369"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-370"><a href="#cb1-370"></a>			<span class="kw">&lt;string&gt;</span>html entity<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-371"><a href="#cb1-371"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-372"><a href="#cb1-372"></a>			<span class="kw">&lt;string&gt;</span>entity.name.tag<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-373"><a href="#cb1-373"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-374"><a href="#cb1-374"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-375"><a href="#cb1-375"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-376"><a href="#cb1-376"></a>				<span class="kw">&lt;string&gt;</span>#D6D7AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-377"><a href="#cb1-377"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-378"><a href="#cb1-378"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-379"><a href="#cb1-379"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-380"><a href="#cb1-380"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-381"><a href="#cb1-381"></a>			<span class="kw">&lt;string&gt;</span><span class="dv">&amp;lt;</span>?php<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-382"><a href="#cb1-382"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-383"><a href="#cb1-383"></a>			<span class="kw">&lt;string&gt;</span>punctuation.section.embedded.begin.php,punctuation.section.embedded.end.php<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-384"><a href="#cb1-384"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-385"><a href="#cb1-385"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-386"><a href="#cb1-386"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-387"><a href="#cb1-387"></a>				<span class="kw">&lt;string&gt;</span>#898989<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-388"><a href="#cb1-388"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-389"><a href="#cb1-389"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-390"><a href="#cb1-390"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-391"><a href="#cb1-391"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-392"><a href="#cb1-392"></a>			<span class="kw">&lt;string&gt;</span>php function<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-393"><a href="#cb1-393"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-394"><a href="#cb1-394"></a>			<span class="kw">&lt;string&gt;</span>support.function.construct<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-395"><a href="#cb1-395"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-396"><a href="#cb1-396"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-397"><a href="#cb1-397"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-398"><a href="#cb1-398"></a>				<span class="kw">&lt;string&gt;</span>#FED6AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-399"><a href="#cb1-399"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-400"><a href="#cb1-400"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-401"><a href="#cb1-401"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-402"><a href="#cb1-402"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-403"><a href="#cb1-403"></a>			<span class="kw">&lt;string&gt;</span>$variable prefix<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-404"><a href="#cb1-404"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-405"><a href="#cb1-405"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.variable<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-406"><a href="#cb1-406"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-407"><a href="#cb1-407"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-408"><a href="#cb1-408"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-409"><a href="#cb1-409"></a>				<span class="kw">&lt;string&gt;</span>#FED6AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-410"><a href="#cb1-410"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-411"><a href="#cb1-411"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-412"><a href="#cb1-412"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-413"><a href="#cb1-413"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-414"><a href="#cb1-414"></a>			<span class="kw">&lt;string&gt;</span>function<span class="dv">&amp;#x2f;</span>method<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-415"><a href="#cb1-415"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-416"><a href="#cb1-416"></a>			<span class="kw">&lt;string&gt;</span>support.function,meta.function-name,entity.name.function<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-417"><a href="#cb1-417"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-418"><a href="#cb1-418"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-419"><a href="#cb1-419"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-420"><a href="#cb1-420"></a>				<span class="kw">&lt;string&gt;</span>#F0DFAF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-421"><a href="#cb1-421"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-422"><a href="#cb1-422"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-423"><a href="#cb1-423"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-424"><a href="#cb1-424"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-425"><a href="#cb1-425"></a>			<span class="kw">&lt;string&gt;</span>built-in function<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-426"><a href="#cb1-426"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-427"><a href="#cb1-427"></a>			<span class="kw">&lt;string&gt;</span>support.function<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-428"><a href="#cb1-428"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-429"><a href="#cb1-429"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-430"><a href="#cb1-430"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-431"><a href="#cb1-431"></a>				<span class="kw">&lt;string&gt;</span>#84AAD9<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-432"><a href="#cb1-432"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-433"><a href="#cb1-433"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-434"><a href="#cb1-434"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-435"><a href="#cb1-435"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-436"><a href="#cb1-436"></a>			<span class="kw">&lt;string&gt;</span>braces<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-437"><a href="#cb1-437"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-438"><a href="#cb1-438"></a>			<span class="kw">&lt;string&gt;</span>meta.brace<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-439"><a href="#cb1-439"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-440"><a href="#cb1-440"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-441"><a href="#cb1-441"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-442"><a href="#cb1-442"></a>				<span class="kw">&lt;string&gt;</span>#78CECC80<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-443"><a href="#cb1-443"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-444"><a href="#cb1-444"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-445"><a href="#cb1-445"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-446"><a href="#cb1-446"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-447"><a href="#cb1-447"></a>			<span class="kw">&lt;string&gt;</span>string begin<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-448"><a href="#cb1-448"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-449"><a href="#cb1-449"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.string.begin,punctuation.definition.string.end<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-450"><a href="#cb1-450"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-451"><a href="#cb1-451"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-452"><a href="#cb1-452"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-453"><a href="#cb1-453"></a>				<span class="kw">&lt;string&gt;</span>#D6D6D680<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-454"><a href="#cb1-454"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-455"><a href="#cb1-455"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-456"><a href="#cb1-456"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-457"><a href="#cb1-457"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-458"><a href="#cb1-458"></a>			<span class="kw">&lt;string&gt;</span>html tag begin<span class="dv">&amp;#x2f;</span>end<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-459"><a href="#cb1-459"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-460"><a href="#cb1-460"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.tag.begin.html,punctuation.definition.tag.end.html,meta.tag.structure.any.html<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-461"><a href="#cb1-461"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-462"><a href="#cb1-462"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-463"><a href="#cb1-463"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-464"><a href="#cb1-464"></a>				<span class="kw">&lt;string&gt;</span>#FED5AE94<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-465"><a href="#cb1-465"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-466"><a href="#cb1-466"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-467"><a href="#cb1-467"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-468"><a href="#cb1-468"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-469"><a href="#cb1-469"></a>			<span class="kw">&lt;string&gt;</span>yaml entity<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-470"><a href="#cb1-470"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-471"><a href="#cb1-471"></a>			<span class="kw">&lt;string&gt;</span>entity.name.tag.yaml<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-472"><a href="#cb1-472"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-473"><a href="#cb1-473"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-474"><a href="#cb1-474"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-475"><a href="#cb1-475"></a>				<span class="kw">&lt;string&gt;</span>#FED6AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-476"><a href="#cb1-476"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-477"><a href="#cb1-477"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-478"><a href="#cb1-478"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-479"><a href="#cb1-479"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-480"><a href="#cb1-480"></a>			<span class="kw">&lt;string&gt;</span>unquoted yaml string<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-481"><a href="#cb1-481"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-482"><a href="#cb1-482"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.entry<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-483"><a href="#cb1-483"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-484"><a href="#cb1-484"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-485"><a href="#cb1-485"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-486"><a href="#cb1-486"></a>				<span class="kw">&lt;string&gt;</span>#D6D6D6<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-487"><a href="#cb1-487"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-488"><a href="#cb1-488"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-489"><a href="#cb1-489"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-490"><a href="#cb1-490"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-491"><a href="#cb1-491"></a>			<span class="kw">&lt;string&gt;</span>SQL<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-492"><a href="#cb1-492"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-493"><a href="#cb1-493"></a>			<span class="kw">&lt;string&gt;</span>keyword.other.DML.sql, keyword.other.data-integrity.sql<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-494"><a href="#cb1-494"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-495"><a href="#cb1-495"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-496"><a href="#cb1-496"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-497"><a href="#cb1-497"></a>				<span class="kw">&lt;string&gt;</span>#B7B7B7<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-498"><a href="#cb1-498"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-499"><a href="#cb1-499"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-500"><a href="#cb1-500"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-501"><a href="#cb1-501"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-502"><a href="#cb1-502"></a>			<span class="kw">&lt;string&gt;</span>other SQL<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-503"><a href="#cb1-503"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-504"><a href="#cb1-504"></a>			<span class="kw">&lt;string&gt;</span>source.sql, constant.other.database-name.sql, constant.other.table-name.sql, keyword.operator.star<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-505"><a href="#cb1-505"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-506"><a href="#cb1-506"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-507"><a href="#cb1-507"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-508"><a href="#cb1-508"></a>				<span class="kw">&lt;string&gt;</span>#95BFF3<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-509"><a href="#cb1-509"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-510"><a href="#cb1-510"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-511"><a href="#cb1-511"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-512"><a href="#cb1-512"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-513"><a href="#cb1-513"></a>			<span class="kw">&lt;string&gt;</span>diff<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-514"><a href="#cb1-514"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-515"><a href="#cb1-515"></a>			<span class="kw">&lt;string&gt;</span>source.diff<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-516"><a href="#cb1-516"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-517"><a href="#cb1-517"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-518"><a href="#cb1-518"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-519"><a href="#cb1-519"></a>				<span class="kw">&lt;string&gt;</span>#393939<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-520"><a href="#cb1-520"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-521"><a href="#cb1-521"></a>				<span class="kw">&lt;string&gt;</span>#DCDCCC<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-522"><a href="#cb1-522"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-523"><a href="#cb1-523"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-524"><a href="#cb1-524"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-525"><a href="#cb1-525"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-526"><a href="#cb1-526"></a>			<span class="kw">&lt;string&gt;</span>diff.toc<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-527"><a href="#cb1-527"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-528"><a href="#cb1-528"></a>			<span class="kw">&lt;string&gt;</span>source.diff meta.diff.comment, source.diff meta.toc-list.comment.diff<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-529"><a href="#cb1-529"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-530"><a href="#cb1-530"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-531"><a href="#cb1-531"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-532"><a href="#cb1-532"></a>				<span class="kw">&lt;string&gt;&lt;/string&gt;</span></span>
+<span id="cb1-533"><a href="#cb1-533"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-534"><a href="#cb1-534"></a>				<span class="kw">&lt;string&gt;</span>#DCDCCC<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-535"><a href="#cb1-535"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-536"><a href="#cb1-536"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-537"><a href="#cb1-537"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-538"><a href="#cb1-538"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-539"><a href="#cb1-539"></a>			<span class="kw">&lt;string&gt;</span>diff from-file<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-540"><a href="#cb1-540"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-541"><a href="#cb1-541"></a>			<span class="kw">&lt;string&gt;</span>meta.diff.header.from-file<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-542"><a href="#cb1-542"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-543"><a href="#cb1-543"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-544"><a href="#cb1-544"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-545"><a href="#cb1-545"></a>				<span class="kw">&lt;string&gt;</span>#393939<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-546"><a href="#cb1-546"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-547"><a href="#cb1-547"></a>				<span class="kw">&lt;string&gt;</span>#DBA3A2<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-548"><a href="#cb1-548"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-549"><a href="#cb1-549"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-550"><a href="#cb1-550"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-551"><a href="#cb1-551"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-552"><a href="#cb1-552"></a>			<span class="kw">&lt;string&gt;</span>diff to-file<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-553"><a href="#cb1-553"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-554"><a href="#cb1-554"></a>			<span class="kw">&lt;string&gt;</span>meta.diff.header.to-file<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-555"><a href="#cb1-555"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-556"><a href="#cb1-556"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-557"><a href="#cb1-557"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-558"><a href="#cb1-558"></a>				<span class="kw">&lt;string&gt;</span>#393939<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-559"><a href="#cb1-559"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-560"><a href="#cb1-560"></a>				<span class="kw">&lt;string&gt;</span>#60B38A<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-561"><a href="#cb1-561"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-562"><a href="#cb1-562"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-563"><a href="#cb1-563"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-564"><a href="#cb1-564"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-565"><a href="#cb1-565"></a>			<span class="kw">&lt;string&gt;</span>diff range<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-566"><a href="#cb1-566"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-567"><a href="#cb1-567"></a>			<span class="kw">&lt;string&gt;</span>meta.diff.range.unified<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-568"><a href="#cb1-568"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-569"><a href="#cb1-569"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-570"><a href="#cb1-570"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-571"><a href="#cb1-571"></a>				<span class="kw">&lt;string&gt;</span>#393939<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-572"><a href="#cb1-572"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-573"><a href="#cb1-573"></a>				<span class="kw">&lt;string&gt;</span>#8CD0D3<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-574"><a href="#cb1-574"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-575"><a href="#cb1-575"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-576"><a href="#cb1-576"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-577"><a href="#cb1-577"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-578"><a href="#cb1-578"></a>			<span class="kw">&lt;string&gt;</span>diff inserted<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-579"><a href="#cb1-579"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-580"><a href="#cb1-580"></a>			<span class="kw">&lt;string&gt;</span>markup.inserted.diff<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-581"><a href="#cb1-581"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-582"><a href="#cb1-582"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-583"><a href="#cb1-583"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-584"><a href="#cb1-584"></a>				<span class="kw">&lt;string&gt;</span>#393939<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-585"><a href="#cb1-585"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-586"><a href="#cb1-586"></a>				<span class="kw">&lt;string&gt;</span>#60B38A<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-587"><a href="#cb1-587"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-588"><a href="#cb1-588"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-589"><a href="#cb1-589"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-590"><a href="#cb1-590"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-591"><a href="#cb1-591"></a>			<span class="kw">&lt;string&gt;</span>diff deleted<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-592"><a href="#cb1-592"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-593"><a href="#cb1-593"></a>			<span class="kw">&lt;string&gt;</span>markup.deleted.diff<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-594"><a href="#cb1-594"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-595"><a href="#cb1-595"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-596"><a href="#cb1-596"></a>				<span class="kw">&lt;key&gt;</span>background<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-597"><a href="#cb1-597"></a>				<span class="kw">&lt;string&gt;</span>#393939<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-598"><a href="#cb1-598"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-599"><a href="#cb1-599"></a>				<span class="kw">&lt;string&gt;</span>#DBA3A2<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-600"><a href="#cb1-600"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-601"><a href="#cb1-601"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-602"><a href="#cb1-602"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-603"><a href="#cb1-603"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-604"><a href="#cb1-604"></a>			<span class="kw">&lt;string&gt;</span>regex<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-605"><a href="#cb1-605"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-606"><a href="#cb1-606"></a>			<span class="kw">&lt;string&gt;</span>string.regexp<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-607"><a href="#cb1-607"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-608"><a href="#cb1-608"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-609"><a href="#cb1-609"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-610"><a href="#cb1-610"></a>				<span class="kw">&lt;string&gt;</span>#C76F41<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-611"><a href="#cb1-611"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-612"><a href="#cb1-612"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-613"><a href="#cb1-613"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-614"><a href="#cb1-614"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-615"><a href="#cb1-615"></a>			<span class="kw">&lt;string&gt;</span>regex - repitition<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-616"><a href="#cb1-616"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-617"><a href="#cb1-617"></a>			<span class="kw">&lt;string&gt;</span>string.regexp.arbitrary-repitition<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-618"><a href="#cb1-618"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-619"><a href="#cb1-619"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-620"><a href="#cb1-620"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-621"><a href="#cb1-621"></a>				<span class="kw">&lt;string&gt;</span>#9E6A5F<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-622"><a href="#cb1-622"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-623"><a href="#cb1-623"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-624"><a href="#cb1-624"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-625"><a href="#cb1-625"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-626"><a href="#cb1-626"></a>			<span class="kw">&lt;string&gt;</span>regex - repitition {}<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-627"><a href="#cb1-627"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-628"><a href="#cb1-628"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.arbitrary-repitition<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-629"><a href="#cb1-629"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-630"><a href="#cb1-630"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-631"><a href="#cb1-631"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-632"><a href="#cb1-632"></a>				<span class="kw">&lt;string&gt;</span>#FFFFFF5E<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-633"><a href="#cb1-633"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-634"><a href="#cb1-634"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-635"><a href="#cb1-635"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-636"><a href="#cb1-636"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-637"><a href="#cb1-637"></a>			<span class="kw">&lt;string&gt;</span>regex - character class<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-638"><a href="#cb1-638"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-639"><a href="#cb1-639"></a>			<span class="kw">&lt;string&gt;</span>string.regexp.character-class<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-640"><a href="#cb1-640"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-641"><a href="#cb1-641"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-642"><a href="#cb1-642"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-643"><a href="#cb1-643"></a>				<span class="kw">&lt;string&gt;</span>#CB8E81<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-644"><a href="#cb1-644"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-645"><a href="#cb1-645"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-646"><a href="#cb1-646"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-647"><a href="#cb1-647"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-648"><a href="#cb1-648"></a>			<span class="kw">&lt;string&gt;</span>regex - character class []<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-649"><a href="#cb1-649"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-650"><a href="#cb1-650"></a>			<span class="kw">&lt;string&gt;</span>punctuation.definition.character-class<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-651"><a href="#cb1-651"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-652"><a href="#cb1-652"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-653"><a href="#cb1-653"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-654"><a href="#cb1-654"></a>				<span class="kw">&lt;string&gt;</span>#FFFFFF5E<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-655"><a href="#cb1-655"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-656"><a href="#cb1-656"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-657"><a href="#cb1-657"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-658"><a href="#cb1-658"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-659"><a href="#cb1-659"></a>			<span class="kw">&lt;string&gt;</span>markdown inline code<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-660"><a href="#cb1-660"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-661"><a href="#cb1-661"></a>			<span class="kw">&lt;string&gt;</span>markup.raw.inline.markdown<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-662"><a href="#cb1-662"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-663"><a href="#cb1-663"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-664"><a href="#cb1-664"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-665"><a href="#cb1-665"></a>				<span class="kw">&lt;string&gt;</span>#FED6AF<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-666"><a href="#cb1-666"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-667"><a href="#cb1-667"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-668"><a href="#cb1-668"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-669"><a href="#cb1-669"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-670"><a href="#cb1-670"></a>			<span class="kw">&lt;string&gt;</span>markdown heading<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-671"><a href="#cb1-671"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-672"><a href="#cb1-672"></a>			<span class="kw">&lt;string&gt;</span>markup.heading.markdown,punctuation.definition.heading<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-673"><a href="#cb1-673"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-674"><a href="#cb1-674"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-675"><a href="#cb1-675"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-676"><a href="#cb1-676"></a>				<span class="kw">&lt;string&gt;</span>#DCDCCC<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-677"><a href="#cb1-677"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-678"><a href="#cb1-678"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-679"><a href="#cb1-679"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-680"><a href="#cb1-680"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-681"><a href="#cb1-681"></a>			<span class="kw">&lt;string&gt;</span>markdown list<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-682"><a href="#cb1-682"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-683"><a href="#cb1-683"></a>			<span class="kw">&lt;string&gt;</span>markup.list<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-684"><a href="#cb1-684"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-685"><a href="#cb1-685"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-686"><a href="#cb1-686"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-687"><a href="#cb1-687"></a>				<span class="kw">&lt;string&gt;</span>#DEDEDE<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-688"><a href="#cb1-688"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-689"><a href="#cb1-689"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-690"><a href="#cb1-690"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-691"><a href="#cb1-691"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-692"><a href="#cb1-692"></a>			<span class="kw">&lt;string&gt;</span>SublimeLinter Warning<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-693"><a href="#cb1-693"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-694"><a href="#cb1-694"></a>			<span class="kw">&lt;string&gt;</span>sublimelinter.mark.warning<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-695"><a href="#cb1-695"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-696"><a href="#cb1-696"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-697"><a href="#cb1-697"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-698"><a href="#cb1-698"></a>				<span class="kw">&lt;string&gt;</span>#DDB700<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-699"><a href="#cb1-699"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-700"><a href="#cb1-700"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-701"><a href="#cb1-701"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-702"><a href="#cb1-702"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-703"><a href="#cb1-703"></a>			<span class="kw">&lt;string&gt;</span>SublimeLinter Gutter Mark<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-704"><a href="#cb1-704"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-705"><a href="#cb1-705"></a>			<span class="kw">&lt;string&gt;</span>sublimelinter.gutter-mark<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-706"><a href="#cb1-706"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-707"><a href="#cb1-707"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-708"><a href="#cb1-708"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-709"><a href="#cb1-709"></a>				<span class="kw">&lt;string&gt;</span>#DCDCCC<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-710"><a href="#cb1-710"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-711"><a href="#cb1-711"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-712"><a href="#cb1-712"></a>		<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-713"><a href="#cb1-713"></a>			<span class="kw">&lt;key&gt;</span>name<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-714"><a href="#cb1-714"></a>			<span class="kw">&lt;string&gt;</span>SublimeLinter Error<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-715"><a href="#cb1-715"></a>			<span class="kw">&lt;key&gt;</span>scope<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-716"><a href="#cb1-716"></a>			<span class="kw">&lt;string&gt;</span>sublimelinter.mark.error<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-717"><a href="#cb1-717"></a>			<span class="kw">&lt;key&gt;</span>settings<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-718"><a href="#cb1-718"></a>			<span class="kw">&lt;dict&gt;</span></span>
+<span id="cb1-719"><a href="#cb1-719"></a>				<span class="kw">&lt;key&gt;</span>foreground<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-720"><a href="#cb1-720"></a>				<span class="kw">&lt;string&gt;</span>#DBA3A2<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-721"><a href="#cb1-721"></a>			<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-722"><a href="#cb1-722"></a>		<span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-723"><a href="#cb1-723"></a>	<span class="kw">&lt;/array&gt;</span></span>
+<span id="cb1-724"><a href="#cb1-724"></a>	<span class="kw">&lt;key&gt;</span>uuid<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-725"><a href="#cb1-725"></a>	<span class="kw">&lt;string&gt;</span>A34A7407-68B9-48E5-883E-E551F7561026<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-726"><a href="#cb1-726"></a>	<span class="kw">&lt;key&gt;</span>colorSpaceName<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-727"><a href="#cb1-727"></a>	<span class="kw">&lt;string&gt;</span>sRGB<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-728"><a href="#cb1-728"></a>	<span class="kw">&lt;key&gt;</span>semanticClass<span class="kw">&lt;/key&gt;</span></span>
+<span id="cb1-729"><a href="#cb1-729"></a>	<span class="kw">&lt;string&gt;</span>theme.dark.zenburn<span class="kw">&lt;/string&gt;</span></span>
+<span id="cb1-730"><a href="#cb1-730"></a><span class="kw">&lt;/dict&gt;</span></span>
+<span id="cb1-731"><a href="#cb1-731"></a><span class="kw">&lt;/plist&gt;</span></span></code></pre></div>
+<hr />
+</details>
+<figure>
+<img src="/images/zenburn_sublime.png" alt="" /><figcaption>Sublime Text 2</figcaption>
+</figure>]]></description>
+    <pubDate>Mon, 19 Mar 2018 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2018-03-19-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

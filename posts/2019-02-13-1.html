@@ -25,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -44,10 +45,10 @@
 <p>С некоторыми изменениями данный layout можно использовать в связке с такими клиентами как Gajim и Psi+</p>
 </blockquote>
 <p>Добавляем в наш <code>~/.xmonad/xmonad.hs</code> следующие модули:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">XMonad.Layout.IM</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">Data.Ratio</span> ((%))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Layout.IM</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">import</span> <span class="dt">Data.Ratio</span> ((%))</span></code></pre></div>
 <p>И теперь в секции где мы перечисляем все наши layout’ы непосредственно добавляем сам layout:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1">myLayouts <span class="fu">=</span> <span class="fu">...|||...|||</span> withIM (<span class="dv">1</span><span class="fu">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a>myLayouts <span class="ot">=</span> <span class="op">...|||...|||</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></span></code></pre></div>
 <blockquote>
 <p>В настройках Tkabber нужно снять галочку с “Использовать интерфес с закладками”.</p>
 </blockquote>

@@ -25,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -48,23 +49,23 @@
 <pre class="haskel"><code>import XMonad.Layout.Spacing
 </code></pre>
 <p>После чего модифицируем секцию <code>Layouts</code>. В моём случае это выглядит так:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Layouts</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">myLayouts <span class="fu">=</span> minimize (avoidStruts tiled</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">           <span class="fu">|||</span> threecolmid</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">           <span class="fu">|||</span> onebig</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">           <span class="fu">|||</span> imTkabber</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">           <span class="fu">|||</span> full)</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"> <span class="kw">where</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">    tiled   <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    nmaster <span class="fu">=</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    ratio   <span class="fu">=</span> <span class="dv">1</span><span class="fu">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">    delta   <span class="fu">=</span> <span class="dv">3</span><span class="fu">/</span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">-- basic layouts</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">full        <span class="fu">=</span> noBorders <span class="dt">Full</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">onebig      <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="fu">/</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">threecolmid <span class="fu">=</span> smartSpacing <span class="dv">5</span> <span class="fu">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="fu">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="fu">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">imTkabber   <span class="fu">=</span> withIM (<span class="dv">1</span><span class="fu">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">-- Layouts</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>myLayouts <span class="ot">=</span> minimize (avoidStruts tiled</span>
+<span id="cb2-3"><a href="#cb2-3"></a>           <span class="op">|||</span> threecolmid</span>
+<span id="cb2-4"><a href="#cb2-4"></a>           <span class="op">|||</span> onebig</span>
+<span id="cb2-5"><a href="#cb2-5"></a>           <span class="op">|||</span> imTkabber</span>
+<span id="cb2-6"><a href="#cb2-6"></a>           <span class="op">|||</span> full)</span>
+<span id="cb2-7"><a href="#cb2-7"></a> <span class="kw">where</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>    tiled   <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">ResizableTall</span> nmaster delta ratio []</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    nmaster <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    ratio   <span class="ot">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    delta   <span class="ot">=</span> <span class="dv">3</span><span class="op">/</span><span class="dv">100</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">-- basic layouts</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>full        <span class="ot">=</span> noBorders <span class="dt">Full</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>onebig      <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">OneBig</span> (<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>) (<span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a>threecolmid <span class="ot">=</span> smartSpacing <span class="dv">5</span> <span class="op">$</span> <span class="dt">ThreeColMid</span> <span class="dv">1</span> (<span class="dv">3</span><span class="op">/</span><span class="dv">100</span>) (<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb2-17"><a href="#cb2-17"></a>imTkabber   <span class="ot">=</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></span></code></pre></div>
 <p>Если в какой-то компановке вам не нужны отступы, то просто не прописывайте их. Например, я в компановке окон <code>imTkabber</code> отступы не использую.</p>
 <p>Остаётся сохранить <code>xmonad.hs</code> и перекомпилировать наш <code>xmonad</code>.</p>
 <blockquote>

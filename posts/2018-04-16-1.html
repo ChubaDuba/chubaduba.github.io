@@ -16,8 +16,7 @@
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
 
         <!-- Metadata. -->
-        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
-                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
         <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
     
                  
@@ -26,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -50,22 +50,22 @@
 <p>Как автоматизировать обновление списка пакетов командой <code>apt-get update</code> можно почитать <a href="https://chubaduba.github.io/posts/2018-04-08-1.html">тут</a>.</p>
 <p>Остаётся написать скрипт который будет выводить количество возможных обновлений. После недолгих раздумий у меня получился вот такой скрипт:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#! /bin/bash</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="va">NEWCOLOR=</span><span class="st">&quot;#DBA3A2&quot;</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="va">HOLDS=</span>2 </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="va">UPDATES=$(</span><span class="ex">aptitude</span> search <span class="st">&quot;~U&quot;</span> <span class="kw">|</span> <span class="fu">wc</span> -l<span class="va">)</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="va">PKGS=$(($UPDATES</span>-<span class="va">$HOLDS))</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$PKGS</span> <span class="ot">==</span> 0<span class="bu"> ]</span>; <span class="kw">then</span> <span class="bu">exit</span> 0</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">else</span>   </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$NEWCOLOR</span><span class="st">&gt;updates:</span><span class="va">$PKGS</span><span class="st">&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw">fi</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="va">NEWCOLOR=</span><span class="st">&quot;#DBA3A2&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="va">HOLDS=</span>2 </span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="va">UPDATES=$(</span><span class="ex">aptitude</span> search <span class="st">&quot;~U&quot;</span> <span class="kw">|</span> <span class="fu">wc</span> -l<span class="va">)</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="va">PKGS=$(($UPDATES</span>-<span class="va">$HOLDS))</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$PKGS</span> <span class="ot">==</span> 0<span class="bu"> ]</span>; <span class="kw">then</span> <span class="bu">exit</span> 0</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="kw">else</span>   </span>
+<span id="cb3-13"><a href="#cb3-13"></a>   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$NEWCOLOR</span><span class="st">&gt;updates:</span><span class="va">$PKGS</span><span class="st">&lt;/fc&gt;&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="kw">fi</span></span></code></pre></div>
 <hr />
-<p>В принципе, тут всё просто. Единственное, стоит обратить внимание на переменную <code>HOLDS</code>, задающую количество пакетов, которым запрещено обновляться при регулярном обновлении системы. Если у вас в системе таких пакетов нет, то данной переменной нужно присвоить значение ноль.</p>
+<p>В принципе, тут всё просто. Единственное, стоит обрать внимание на переменную <code>HOLDS</code>, задающую количество пакетов, которым запрещено обновляться при регулярном обновлении системы. Если у вас в системе таких пакетов нет, то данной переменной нужно присвоить значение ноль.</p>
 <p>Если обновлений нет, скрипт завершает свою работу. Если обновления есть, скрипт будет выводить количество обновлений:</p>
 <p><img src="http://images2.imagebam.com/dc/cd/24/8acab6821982123.png" /></p>
 <p>Остаётся лишь добавить отображение результата выполнения скрипта в <code>xmobar</code>. Добавляем в <code>xmobarrc</code>:</p>

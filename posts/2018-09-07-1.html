@@ -25,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -41,8 +42,7 @@
 
 <p>Если вы как и я не используете в своей системе окружение рабочего стола, а пользуетесь каким-либо оконным менеджером, то рано или поздно столкнётесь с таким вопросом как организовать автоматическое монтирование USB флешек, карточек SD и дисков СD.</p>
 <p>Существует много способов реализовать это. В сети можно найти кучу информации по этому вопросу. Сегодня я расскажу как решил эту задачу у себя в системе.</p>
-<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на 
-чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написанный на языке Python.</p>
+<p>Для монтирования я решил использовать <a href="https://packages.debian.org/stretch/udisks2">udisks2</a>. Чтобы не возникало проблем с правами на чтение и запись примонтированного устройства, потребуется установить пакет <a href="https://packages.debian.org/stretch/policykit-1">policykit-1</a>. Само монтирование будет осуществлять утилита <a href="https://packages.debian.org/stretch/udiskie">udiskie</a> - это фронтенд для <code>Udisks</code> написаный на языке Python.</p>
 <blockquote>
 <p>Страничку разработчика udiskie можно посмотреть <a href="https://github.com/coldfix/udiskie">тут</a>.</p>
 </blockquote>
@@ -62,8 +62,7 @@ ENV{ID_FS_USAGE}==&quot;filesystem|other|crypto&quot;, ENV{UDISKS_FILESYSTEM_SHA
 <p>На этом настройку монтирования можно считать законченной.</p>
 
 <div id="comment">
-<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/35"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" 
-width="256" /></a>
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/35"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
 </div>
     <div style="clear: both"></div>
     <div id="footer">

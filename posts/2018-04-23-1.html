@@ -16,8 +16,7 @@
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
 
         <!-- Metadata. -->
-        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
-                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
         <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
     
                  
@@ -26,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -45,26 +45,26 @@
 <p>Скрипт работает только в том случае, если в качестве аудиоплеера вы используете <a href="http://moc.daper.net">MOC</a>.</p>
 </blockquote>
 <hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#! /bin/bash</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="va">TCOL=</span><span class="st">&quot;#8C8C8C&quot;</span>    </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="va">ACOL=</span><span class="st">&quot;#E0AF8F&quot;</span>    </a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="va">DCOL=</span><span class="st">&quot;#637482&quot;</span>    </a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="va">PCOL=</span><span class="st">&quot;#4F4F4F&quot;</span>    </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="va">MOCSTATE=$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +8<span class="va">)</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$MOCSTATE</span> <span class="ot">==</span> <span class="st">&quot;PLAY&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="co"># MOC на воспроизведении</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$ACOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +4 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st">&lt;/fc&gt; &lt;fc=</span><span class="va">$DCOL</span><span class="st">&gt;-&lt;/fc&gt; &lt;fc=</span><span class="va">$TCOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">       <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw">elif</span><span class="bu"> [</span> <span class="va">$MOCSTATE</span> <span class="ot">==</span> <span class="st">&quot;PAUSE&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="co"># MOC на паузе</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$PCOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +4 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st"> - </span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="kw">fi</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="va">TCOL=</span><span class="st">&quot;#8C8C8C&quot;</span>    </span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="va">ACOL=</span><span class="st">&quot;#E0AF8F&quot;</span>    </span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="va">DCOL=</span><span class="st">&quot;#637482&quot;</span>    </span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="va">PCOL=</span><span class="st">&quot;#4F4F4F&quot;</span>    </span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="va">MOCSTATE=$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +8<span class="va">)</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$MOCSTATE</span> <span class="ot">==</span> <span class="st">&quot;PLAY&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="co"># MOC на воспроизведении</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$ACOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +4 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st">&lt;/fc&gt; &lt;fc=</span><span class="va">$DCOL</span><span class="st">&gt;-&lt;/fc&gt; &lt;fc=</span><span class="va">$TCOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>       <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">elif</span><span class="bu"> [</span> <span class="va">$MOCSTATE</span> <span class="ot">==</span> <span class="st">&quot;PAUSE&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="co"># MOC на паузе</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>  <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$PCOL</span><span class="st">&gt;</span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +4 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>       <span class="fu">tail</span> -c +9<span class="va">)</span><span class="st"> - </span><span class="va">$(</span><span class="ex">mocp</span> --info <span class="kw">|</span> <span class="fu">tail</span> -n +5 <span class="kw">|</span> <span class="fu">head</span> -n 1 <span class="kw">|</span> <span class="fu">tail</span> -c +12<span class="va">)</span><span class="st">&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="kw">fi</span></span></code></pre></div>
 <hr />
 <p><a href="http://www.imagebam.com/image/2fea4c832464493"><img src="http://thumbs2.imagebam.com/7e/0c/a9/2fea4c832464493.jpg" alt="ImageBam image upload"></a></p>
 

@@ -7,8 +7,95 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sat, 04 Apr 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 12 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>FFmpeg + Winff. Как перекодировать аудио дорожку видеофайла в формат MP3.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-12-1.html</link>
+    <description><![CDATA[<p>Я, как и многие, в связи с переходом на цифровое телевидение, купил для своих старых телеков ТВ приставки. При выборе делал упор на качество сигнала, а на другие “навороты” особо не смотрел. Как известно, практически во всех этих приставках есть видео плеер, который позволяет смотреть видео с USB носителей. Но не все приставки умеют проигрывать видеофайлы, у которых звук записан в формате не <code>mp3</code>. Т.е. картинка есть, а звука нет.</p>
+<p>Как же перекодировать в Debian отдельно аудио дорожку в формат mp3, а формат видео оставить без изменений?</p>
+<p>Я попробовал два варианта. Первый - это программа <a href="http://avidemux.sourceforge.net/">Avidemux</a>. В Debian её можно найти, если подключить репозиторий <a href="http://www.deb-multimedia.org/">deb-multimedia</a>. Скажу сразу, что именно с моей задачей она справлялась нелучшим образом, а может я просто не осилил её. В готовом файле звук постоянно или отставал от видео, или наоборот - опережал. В настройках есть пункт, в котором можно указать в милисекундах время синхронизации. Но от чего это время зависит, я так и не понял. А если перекодировать многосерийный сериал и для каждого файла подбирать этот параметр, то это становится жутко не удобно.</p>
+<p>Поэтому для себя я остановился на втором варианте - это <a href="https://packages.debian.org/stretch/ffmpeg">ffmpeg</a> и графическая оболочка для него <a href="https://packages.debian.org/stretch/winff">winff</a>. В репозитории есть два варианта оболочки: для <code>Qt</code> и <code>GTK2</code>. Я буду использовать второй. Устанавливаем:</p>
+<hr />
+<pre><code>$ sudo apt-get install winff-gtk2
+</code></pre>
+<hr />
+<blockquote>
+<p>Для работы с разными кодеками, они долны быть установлены у вас в системе. Например, для кодирования аудио в формат <code>mp3</code> должен быть установлен пакет <a href="https://packages.debian.org/stretch/lame">lame</a>.</p>
+</blockquote>
+<p>Запускаем редактор командой:</p>
+<pre><code>winff-gtk2
+</code></pre>
+<figure>
+<img src="https://images2.imagebam.com/19/16/ea/5c06ce1339910329.png" alt="" /><figcaption>Главное окно видео редактора Winnf</figcaption>
+</figure>
+<p>Чтобы при использовании редактора постоянно не вводить мудрёные команды для <code>ffmpeg</code>, существуют готовые настройки, так называемые <code>пресеты</code>, которые можно редактировать в соответствии с вашими задачами:</p>
+<p><img src="https://images2.imagebam.com/9b/09/65/d79ed41339876707.png" /></p>
+<figure>
+<img src="https://images2.imagebam.com/dd/80/b4/be1a6a1339911770.png" alt="" /><figcaption>Окно редактирования пресетов</figcaption>
+</figure>
+<p>В категорию <code>Audio</code> я добавил два пресета: <code>AVI with MP3 audio</code> и <code>MKV with MP3 audio</code>:</p>
+<p><img src="https://images2.imagebam.com/d5/52/01/795af61339912978.png" /></p>
+<p>Отличаются они друг от друга только параметром <code>Расширение  выходного файла</code>, а параметр <code>Командная строка</code> у них одинаковый и имеет такой вид:</p>
+<hr />
+<pre><code>-vcodec copy -acodec libmp3lame -ar 44100 -ac 2 -ab 192k
+</code></pre>
+<hr />
+<figure>
+<img src="https://images2.imagebam.com/58/7e/4a/c25f501339914927.png" alt="" /><figcaption>Пресет “AVI with MP3 audio”</figcaption>
+</figure>
+<figure>
+<img src="https://images2.imagebam.com/86/0f/ec/8e7da81339915463.png" alt="" /><figcaption>Пресет “MKV with MP3 audio”</figcaption>
+</figure>
+<p>Пресеты готовы, можно приступать к кодированию. Добавляем файл и в соответствии с его расширением выбераем пресет:</p>
+<p><img src="https://images2.imagebam.com/58/c8/9b/44d7f31339917943.png" /></p>
+<p>Ради интереса посмотрим в терминале какую звуковую дорожку имеет этот файл:</p>
+<pre><code>chubaduba:~$ mediainfo video_1.mkv | sed -n &#39;/Audio/,$p&#39;
+Audio
+ID                      : 2
+Format                  : AAC
+Format/Info             : Advanced Audio Codec
+Format profile          : LC
+Codec ID                : A_AAC
+Duration                : 49 min 23 s
+Channel(s)              : 2 channels
+Channel positions       : Front: L R
+Sampling rate           : 48.0 kHz
+Frame rate              : 46.875 FPS (1024 spf)
+Compression mode        : Lossy
+Delay relative to video : 9 ms
+Default                 : Yes
+Forced                  : No
+ </code></pre>
+<p>Нажимаем кнопку <code>Преобразовать</code> и ждём результат… В настройках можно выбрать с каким приоритетом будет проходить процесс кодирования. Отмечу, что при выбранном приоритете “Нормальный” <code>Winff</code> справляется с задачей быстрее, чем <code>Avidemux</code>.</p>
+<p>Посмотрим характеристики аудио новоиспечённого файла:</p>
+<pre><code>chubaduba:~/temp$ mediainfo video_1.mkv | sed -n &#39;/Audio/,$p&#39;
+Audio
+ID                      : 2
+Format                  : MPEG Audio
+Format version          : Version 1
+Format profile          : Layer 3
+Mode                    : Joint stereo
+Mode extension          : MS Stereo
+Codec ID                : A_MPEG/L3
+Codec ID/Hint           : MP3
+Duration                : 49 min 23 s
+Bit rate mode           : Constant
+Bit rate                : 192 kb/s
+Channel(s)              : 2 channels
+Sampling rate           : 44.1 kHz
+Compression mode        : Lossy
+Stream size             : 67.8 MiB (11%)
+Writing library         : Lavc57.64.101 libmp3lame
+Default                 : Yes
+Forced                  : No
+DURATION                : 00:49:23.843000000
+</code></pre>
+<p>Остаётся записать файл на флешку, воткнуть её в приставку, развалиться на диване и посмотреть наше видео :)</p>]]></description>
+    <pubDate>Sun, 12 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-12-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Xmobar. Мониторинг статуса подключения к сети интернет (online/offline).</title>
     <link>https://chubaduba.github.io//posts/2020-04-04-1.html</link>
     <description><![CDATA[<p>Последнее время периодически стал отваливаться интернет. Решил автоматизировать процедуру проверки, а результат проверки вывести в <code>xmobar</code> с помощью скрипта:</p>
@@ -258,23 +345,6 @@ $ sudo apt-get install tor
 <p><a href="http://www.imagebam.com/image/08044c1125477374"><img src="http://thumbs2.imagebam.com/ae/df/c5/08044c1125477374.jpg" alt="imagebam.com"></a></p>]]></description>
     <pubDate>Wed, 13 Feb 2019 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2019-02-13-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Debian. "--no-install-recommends"</title>
-    <link>https://chubaduba.github.io//posts/2019-02-01-1.html</link>
-    <description><![CDATA[<p>По умолчанию пакетный менеджер Debian’а при установке выбранного вами пакета устанавливает все рекомендованные пакеты. Чтобы этого не происходило, нужно использовать следующую команду:</p>
-<pre><code>apt-get --no-install-recommends &lt;package-name&gt;
-</code></pre>
-<p>Чтобы постоянно не вводить ключ <code>--no-install-recommends</code> можно создать правило для пакетного менеджера <code>/etc/apt/apt.conf.d/10norecommends</code>:</p>
-<pre><code>APT::Install-Recommends &quot;0&quot;;
-APT::Install-Suggests &quot;0&quot;;
-</code></pre>
-<p>После внесения изменений устанавливать пакеты без рекомендованных зависимостей можно обычной командой:</p>
-<pre><code>apt-get install &lt;package-name&gt;
-</code></pre>]]></description>
-    <pubDate>Fri, 01 Feb 2019 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2019-02-01-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

@@ -16,8 +16,7 @@
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
 
         <!-- Metadata. -->
-        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
-                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
         <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
     
                  
@@ -26,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -66,34 +66,34 @@ commands = [
 <p><img src="../images/2018-03-15-3.jpg" /></p>
 <p>Теперь лента у нас есть. Как видно, в ней присутствует прогноз на три дня. Мне же нужен только завтрашний день. Пишем скрипт, который будет выдавать нам прогноз только на завтрашний день. Обзавём скрипт <code>weather</code>:</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="va">s1=</span><span class="st">&quot;OK&quot;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="va">COLOR=</span><span class="st">&quot;#709180&quot;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="va">CITY_URL=</span><span class="st">&quot;http://old.meteoinfo.ru/rss/forecasts/34630&quot;</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="va">SITE=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">curl</span> -Is <span class="va">$CITY_URL</span> <span class="kw">|</span> <span class="fu">head</span> -1 <span class="kw">|</span> <span class="fu">grep</span> -Eo <span class="st">'.{3}$'</span><span class="kw">`</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">if [[</span> <span class="va">$SITE</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$s1</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">     <span class="va">TOMORROW_TEMP=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">              <span class="fu">grep</span> -w <span class="st">'Температура'</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'2!d'</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">              <span class="fu">sed</span> -r <span class="st">'s/^[^Т]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^д]+//'</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">              <span class="fu">sed</span> -r <span class="st">'s/°.+//'</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/днём //'</span><span class="kw">`</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">     <span class="va">POSSIBILITY_RAIN=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">              <span class="fu">grep</span> -w <span class="st">'Вероятность'</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'2!d'</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">              <span class="fu">sed</span> -r <span class="st">'s/^[^ф]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^к]+//'</span> <span class="kw">|</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">              <span class="fu">sed</span> <span class="st">'s/ков //'</span> <span class="kw">|</span> <span class="fu">grep</span> -o <span class="st">'^[^&lt;]*'</span><span class="kw">`</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">              </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">     </a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">     <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;</span><span class="va">$TOMORROW_TEMP</span><span class="st">°C(</span><span class="va">$POSSIBILITY_RAIN</span><span class="st">)&lt;/fc&gt;&quot;</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">     </a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="kw">else</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">     <span class="bu">echo</span> <span class="st">&quot;n/a&quot;</span></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="kw">fi</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="va">s1=</span><span class="st">&quot;OK&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="va">COLOR=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="va">CITY_URL=</span><span class="st">&quot;http://old.meteoinfo.ru/rss/forecasts/34630&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="va">SITE=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">curl</span> -Is <span class="va">$CITY_URL</span> <span class="kw">|</span> <span class="fu">head</span> -1 <span class="kw">|</span> <span class="fu">grep</span> -Eo <span class="st">'.{3}$'</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="kw">if [[</span> <span class="va">$SITE</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$s1</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>     <span class="va">TOMORROW_TEMP=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>              <span class="fu">grep</span> -w <span class="st">'Температура'</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'2!d'</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>              <span class="fu">sed</span> -r <span class="st">'s/^[^Т]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^д]+//'</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>              <span class="fu">sed</span> -r <span class="st">'s/°.+//'</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/днём //'</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a>     <span class="va">POSSIBILITY_RAIN=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>              <span class="fu">grep</span> -w <span class="st">'Вероятность'</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'2!d'</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>              <span class="fu">sed</span> -r <span class="st">'s/^[^ф]+//'</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">'s/^[^к]+//'</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>              <span class="fu">sed</span> <span class="st">'s/ков //'</span> <span class="kw">|</span> <span class="fu">grep</span> -o <span class="st">'^[^&lt;]*'</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>              </span>
+<span id="cb2-22"><a href="#cb2-22"></a>     </span>
+<span id="cb2-23"><a href="#cb2-23"></a>     <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR</span><span class="st">&gt;</span><span class="va">$TOMORROW_TEMP</span><span class="st">°C(</span><span class="va">$POSSIBILITY_RAIN</span><span class="st">)&lt;/fc&gt;&quot;</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>     </span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="kw">else</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a>     <span class="bu">echo</span> <span class="st">&quot;n/a&quot;</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="kw">fi</span></span></code></pre></div>
 <hr />
 <p>Результатом работы скрипта будет строчка:</p>
 <pre><code>4°C(71%)</code></pre>

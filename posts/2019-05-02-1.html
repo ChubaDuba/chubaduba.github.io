@@ -25,11 +25,12 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
@@ -50,10 +51,10 @@
 <pre><code>$ sudo apt-get install kbdd
 </code></pre>
 <p>Ну и теперь остаётся настроить сам <code>xmobar</code>. Для этого открываем файл конфигурации <code>.xmobarrc</code> и добавляем в секцию <code>commands</code> строчку:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="dt">Run</span> <span class="dt">Kbd</span> [(<span class="st">&quot;us&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;usa&lt;/fc&gt;&quot;</span>), (<span class="st">&quot;ru&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;rus&lt;/fc&gt;&quot;</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">Run</span> <span class="dt">Kbd</span> [(<span class="st">&quot;us&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;usa&lt;/fc&gt;&quot;</span>), (<span class="st">&quot;ru&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;rus&lt;/fc&gt;&quot;</span>)]</span></code></pre></div>
 <p>Здесь я указал каким цветом будет отображать индикатор при разных раскладках. Если вам это не нужно, параметр <code>&lt;fc&gt;&lt;/fc&gt;</code> можно не использовать.</p>
 <p>В <code>template</code>, в нужном нам месте, добавляем вывод индикатора на экран:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">, template <span class="fu">=</span> <span class="fu">...</span> <span class="fu">%</span>kbd<span class="fu">%</span> <span class="fu">...</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>, template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>kbd<span class="op">%</span> <span class="op">...</span></span></code></pre></div>
 <p>Сохраняем файл <code>.xmobarrc</code> и перезагружаем <code>xmobar</code>. Теперь у нас есть индикатор раскладки:</p>
 <p><a href="http://www.imagebam.com/image/7cee4e1211317614"><img src="http://thumbs2.imagebam.com/ce/2a/36/7cee4e1211317614.jpg" alt="imagebam.com"></a> <a href="http://www.imagebam.com/image/4f5c911211317634"><img src="http://thumbs2.imagebam.com/0b/dd/cd/4f5c911211317634.jpg" alt="imagebam.com"></a></p>
 

@@ -16,8 +16,7 @@
         <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
 
         <!-- Metadata. -->
-        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,резюме,фотосъемка собак в Ростове,xmonad,Debian,
-                                       xmobar,homepage,домашняя страница,предметная фотография в Ростове,zenburn, zenburn color" />
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
         <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
     
                  
@@ -26,18 +25,19 @@
                
         <div id="navigation">
             <h5>Б&lambda;ог</h5>
-            <a href="../" style="font-size: 18px; color: #94BFF2">Обо мне</a>
-            <a href="../posts.html" style="font-size: 18px; color: #94BFF2">Архив</a>
-            <a href="../contact.html" style="font-size: 18px; color: #94BFF2">Контакты</a>
-            <a href="../photos.html" style="font-size: 18px; color: #94BFF2">Фотоб&lambda;ог</a>
-            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 18px; color: #EC93D3">Flickr</a>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
         </div>
 
         <div id="content">
     <h1>Xmonad. Чем сделать скриншот?</h1>
 <div class="soft">
     Как настроить создание скриншотов в xmonad.<br />
-    Posted in: <a href="../tags/scrot.html">scrot</a>, <a href="../tags/xmonad.html">xmonad</a>.
+    Posted in: <a href="../tags/soft.html">soft</a>, <a href="../tags/xmonad.html">xmonad</a>.
 </div>
 
 <p>Cогласитесь, частенько возникает ситуация, когда необходимо сделать скриншот экрана. Сегодня поговорим как это сделать в xmonad без использования таких монстров как <a href="http://shutter-project.org/">shutter</a>, <a href="https://git.gnome.org/browse/gnome-screenshot">gnome-screenshot</a>, <a href="https://www.kde.org/applications/graphics/ksnapshot">ksnapshot</a> и т.д., которые при установке тянут за собой кучу пакетов.</p>
@@ -52,12 +52,12 @@
 </blockquote>
 <p>Вот такой скрипт я использую:</p>
 <hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="va">name=</span><span class="kw">`</span><span class="fu">date</span> +%x-%X-%N.png<span class="kw">`</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="ex">scrot</span> ~/Изображения/ScreenShots/<span class="va">$name</span> -q 100 -d 10</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="ex">mpv</span> ~/путь_до_звукового_файла/photosound.mp3</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="va">name=</span><span class="kw">`</span><span class="fu">date</span> +%x-%X-%N.png<span class="kw">`</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="ex">scrot</span> ~/Изображения/ScreenShots/<span class="va">$name</span> -q 100 -d 10</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="ex">mpv</span> ~/путь_до_звукового_файла/photosound.mp3</span></code></pre></div>
 <hr />
 <p>где<br />
 <code>name</code> - формат имени создаваемого файла;<br />
@@ -66,11 +66,11 @@
 <p>Иногда бывают ситуации, когда в нужный момент нажать клавишу для создания скриншота не получится. Например, когда открыто какое-нибудь окно, которое блокирует нажатие любых клавиш. Ну а чтобы понимать создался ли у вас скриншот, я добавил звуковое оповещение. Звуковой файл проигрывает консольный плеер <a href="https://mpv.io/">mpv</a>. У вас это может быть любое приложение или утилита, способная издавать звуки. Сам звуковой файл тоже может быть любым. Я для себя выбрал <a href="https://mega.nz/#!5VFhCTQK!uH3bBX4etq8496Zmd4asDHbWbHVksLgTFWsWW0Ydchw">звук затвора фотоаппарата</a>.</p>
 <p>Осталось назначить клавишу, по нажатию на которую будет запускаться наш скрипт. Я выбрал клавишу <code>PrtSc</code>. Определяем код клавиши с помошью утилиты <code>xev</code> и редактируем наш файл <code>xmonad.hs</code>:</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1">myKeys <span class="fu">=</span> [</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">         , ((<span class="dv">0</span>    , <span class="bn">0xff61</span>), spawn <span class="st">&quot;путь_до_нашего_скрипта&quot;</span>)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="fu">...</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">         ]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a>myKeys <span class="ot">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2"></a>         <span class="op">...</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>         , ((<span class="dv">0</span>    , <span class="bn">0xff61</span>), spawn <span class="st">&quot;путь_до_нашего_скрипта&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>         <span class="op">...</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>         ]</span></code></pre></div>
 <hr />
 <blockquote>
 <p>Я обычно делаю скриншот целого экрана. Всё равно, практически всегда, открываю созданный скриншот в редакторе <code>Gimp</code> и делаю нужные мне изменения. Если у вас есть необходимость постоянно делать скриншот выделенной области экрана, то работу scrot в таком режиме можно настроить, используя параметр <code>-s</code>.</p>
