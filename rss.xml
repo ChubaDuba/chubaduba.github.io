@@ -7,8 +7,30 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 12 Apr 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Wed, 15 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Teamviewer в топку!</title>
+    <link>https://chubaduba.github.io//posts/2020-04-15-1.html</link>
+    <description><![CDATA[<p>Уже на протяжении нескольких лет в <a href="https://www.teamviewer.com/ru/">Teamviewer</a> присутствует баг, а может это их фирменная <a href="https://www.youtube.com/watch?v=w9laH3q1hBM">фисечка</a>? Дело в том, что по непонятным причинам современный <code>Teamviewer</code> требует в системе <i>обязательного</i> присутствия установленного <a href="https://wiki.debian.org/DisplayManager">DM (Display Manager)</a>. Говоря простым языком, если вход в графический интерфейс выполняется без использования <code>Display  Manager</code>, а настроен, например, <a href="https://chubaduba.github.io/posts/2018-03-06-1.html">таким образом</a>, или вы просто пользуетесь командой <code>startx</code>, то <code>Teamviewer</code> работать не будет Он тупо не запустится! Пользоваться или не пользоваться программой с таким ограничением, решать только вам. Я давно отказался от его использования. Последняя установленная на моём ПК версия была <code>v10.0.223993</code>.</p>
+<p>Сейчас я использую <a href="https://anydesk.com/ru">AnyDesk</a>. Отличный вариант, если нет возможности настроить <code>VNC</code> на удалённом компьютере. Мультиплатформенный - можно установить на: <code>Windows</code>, <code>macOS</code>, <code>iOS</code>, <code>Android</code>, <code>Linux</code>, <code>FreeBSD</code>, <code>Raspberry Pi</code>, <code>Chrome OS</code>. В работе точно не хуже <code>Teamviewer'a</code>. Одним словом рекомендую попробовать!</p>
+<blockquote>
+<p>Пока не разобрался почему AnyDesk полностью не подхватывает мою тёмную тему GTK2, ниже на скриншоте это можно заметить. Но, как говорится, на ход поршней это не влияет…</p>
+</blockquote>
+<p>В <code>Debian</code> его можно установить по фэншую - из репозитория. Добавляем в наш источник пакетов репозиторий, добавляем ключ, обновляемся и устанавливаем программу:</p>
+<hr />
+<pre><code># wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
+# echo &quot;deb http://deb.anydesk.com/ all main&quot; &gt; /etc/apt/sources.list.d/anydesk-stable.list
+# apt-get update
+# apt-get install anydesk
+</code></pre>
+<hr />
+<p>Запуск программы осуществляется командой <code>anydesk</code>.</p>
+<p><a href="http://www.imagebam.com/image/f707371340444636"><img src="https://thumbs2.imagebam.com/d8/cb/1b/f707371340444636.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Wed, 15 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-15-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>FFmpeg + Winff. Как перекодировать аудио дорожку видеофайла в формат MP3.</title>
     <link>https://chubaduba.github.io//posts/2020-04-12-1.html</link>
     <description><![CDATA[<p>Я, как и многие, в связи с переходом на цифровое телевидение, купил для своих старых телеков ТВ приставки. При выборе делал упор на качество сигнала, а на другие “навороты” особо не смотрел. Как известно, практически во всех этих приставках есть видео плеер, который позволяет смотреть видео с USB носителей. Но не все приставки умеют проигрывать видеофайлы, у которых звук записан в формате не <code>mp3</code>. Т.е. картинка есть, а звука нет.</p>
@@ -325,26 +347,6 @@ $ sudo apt-get install tor
 <p><a href="http://www.imagebam.com/image/7cee4e1211317614"><img src="http://thumbs2.imagebam.com/ce/2a/36/7cee4e1211317614.jpg" alt="imagebam.com"></a> <a href="http://www.imagebam.com/image/4f5c911211317634"><img src="http://thumbs2.imagebam.com/0b/dd/cd/4f5c911211317634.jpg" alt="imagebam.com"></a></p>]]></description>
     <pubDate>Thu, 02 May 2019 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2019-05-02-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>XMonad.Layout.IM - отличный layout для Tkabber.</title>
-    <link>https://chubaduba.github.io//posts/2019-02-13-1.html</link>
-    <description><![CDATA[<p>Если вы активно используете клиент мгновенного обмена сообщениями Tkabber, то непременно оцените удобство использования <a href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Layout-IM.html">Xmonad.Layout.IM</a>.</p>
-<blockquote>
-<p>С некоторыми изменениями данный layout можно использовать в связке с такими клиентами как Gajim и Psi+</p>
-</blockquote>
-<p>Добавляем в наш <code>~/.xmonad/xmonad.hs</code> следующие модули:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Layout.IM</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">import</span> <span class="dt">Data.Ratio</span> ((%))</span></code></pre></div>
-<p>И теперь в секции где мы перечисляем все наши layout’ы непосредственно добавляем сам layout:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a>myLayouts <span class="ot">=</span> <span class="op">...|||...|||</span> withIM (<span class="dv">1</span><span class="op">%</span><span class="dv">7</span>) (<span class="dt">ClassName</span> <span class="st">&quot;Tkabber&quot;</span>) <span class="dt">Grid</span></span></code></pre></div>
-<blockquote>
-<p>В настройках Tkabber нужно снять галочку с “Использовать интерфес с закладками”.</p>
-</blockquote>
-<p><a href="http://www.imagebam.com/image/08044c1125477374"><img src="http://thumbs2.imagebam.com/ae/df/c5/08044c1125477374.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Wed, 13 Feb 2019 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2019-02-13-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

@@ -34,92 +34,31 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом soft</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-04-15-1.html">Teamviewer в топку!</a>”
-            ‒ <span class="soft">15 Апреля, 2020</span><br />
-            Устанавливаем AnyDesk
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-04-12-1.html">FFmpeg + Winff. Как перекодировать аудио дорожку видеофайла в формат MP3.</a>”
-            ‒ <span class="soft">12 Апреля, 2020</span><br />
-            Кодируем аудио дорожку видеофайла в формат mp3
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-04-02-1.html">Сервис systemd для noip2.</a>”
-            ‒ <span class="soft"> 2 Апреля, 2020</span><br />
-            Systemd Service for no-ip.com dynamic ip updater
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-03-16-1.html">Audacious Winamp v.1.x skin.</a>”
-            ‒ <span class="soft">16 Марта, 2020</span><br />
-            Скин для аудио проигрывателя Audacious
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-11-11-1.html">Rtorrent color patch.</a>”
-            ‒ <span class="soft">11 Ноября, 2018</span><br />
-            Как в Debian 9 Stretch сделать rtorrent цветным.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-07-22-1.html">ncdc – консольный клиент DC++</a>”
-            ‒ <span class="soft">22 Июля, 2018</span><br />
-            Настройка и использование.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-05-28-1.html">Использование сервиса pastebin.</a>”
-            ‒ <span class="soft">28 Мая, 2018</span><br />
-            Как поделиться логами и другой информацией
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-02-1.html">Xmonad. Чем сделать скриншот?</a>”
-            ‒ <span class="soft"> 2 Апреля, 2018</span><br />
-            Как настроить создание скриншотов в xmonad.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-25-1.html">Xmonad+xmobar+ALSA.</a>”
-            ‒ <span class="soft">25 Марта, 2018</span><br />
-            Громкость звука. Настраиваем управление и отображение.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-21-1.html">Мой выбор - Alpine e-mail клиент.</a>”
-            ‒ <span class="soft">21 Марта, 2018</span><br />
-            Консольный почтовик.
-        </p>
-    </li>
-    
-</ul>
+    <h1>Teamviewer в топку!</h1>
+<div class="soft">
+    Устанавливаем AnyDesk<br />
+    Posted in: <a href="../tags/soft.html">soft</a>.
+</div>
 
+<p>Уже на протяжении нескольких лет в <a href="https://www.teamviewer.com/ru/">Teamviewer</a> присутствует баг, а может это их фирменная <a href="https://www.youtube.com/watch?v=w9laH3q1hBM">фисечка</a>? Дело в том, что по непонятным причинам современный <code>Teamviewer</code> требует в системе <i>обязательного</i> присутствия установленного <a href="https://wiki.debian.org/DisplayManager">DM (Display Manager)</a>. Говоря простым языком, если вход в графический интерфейс выполняется без использования <code>Display  Manager</code>, а настроен, например, <a href="https://chubaduba.github.io/posts/2018-03-06-1.html">таким образом</a>, или вы просто пользуетесь командой <code>startx</code>, то <code>Teamviewer</code> работать не будет Он тупо не запустится! Пользоваться или не пользоваться программой с таким ограничением, решать только вам. Я давно отказался от его использования. Последняя установленная на моём ПК версия была <code>v10.0.223993</code>.</p>
+<p>Сейчас я использую <a href="https://anydesk.com/ru">AnyDesk</a>. Отличный вариант, если нет возможности настроить <code>VNC</code> на удалённом компьютере. Мультиплатформенный - можно установить на: <code>Windows</code>, <code>macOS</code>, <code>iOS</code>, <code>Android</code>, <code>Linux</code>, <code>FreeBSD</code>, <code>Raspberry Pi</code>, <code>Chrome OS</code>. В работе точно не хуже <code>Teamviewer'a</code>. Одним словом рекомендую попробовать!</p>
+<blockquote>
+<p>Пока не разобрался почему AnyDesk полностью не подхватывает мою тёмную тему GTK2, ниже на скриншоте это можно заметить. Но, как говорится, на ход поршней это не влияет…</p>
+</blockquote>
+<p>В <code>Debian</code> его можно установить по фэншую - из репозитория. Добавляем в наш источник пакетов репозиторий, добавляем ключ, обновляемся и устанавливаем программу:</p>
+<hr />
+<pre><code># wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
+# echo &quot;deb http://deb.anydesk.com/ all main&quot; &gt; /etc/apt/sources.list.d/anydesk-stable.list
+# apt-get update
+# apt-get install anydesk
+</code></pre>
+<hr />
+<p>Запуск программы осуществляется командой <code>anydesk</code>.</p>
+<p><a href="http://www.imagebam.com/image/f707371340444636"><img src="https://thumbs2.imagebam.com/d8/cb/1b/f707371340444636.jpg" alt="imagebam.com"></a></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/50"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>

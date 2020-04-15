@@ -726,7 +726,7 @@ ENV{ID_FS_USAGE}==&quot;filesystem|other|crypto&quot;, ENV{UDISKS_FILESYSTEM_SHA
 <pre><code>//include &quot;kpdl(comma)&quot;
 </code></pre>
 <p>Остаётся заменить запятую на точку в OpenOffice. Для этого я поменял параметр в настройках языка в “Локальные настройки” на “Английский (США)”:</p>
-<p><a href="http://www.imagebam.com/image/afa0a2947510294" target="_blank"><img src="https://thumbs2.imagebam.com/a0/3b/5c/afa0a2947510294.jpg" alt="ImageBam image upload"></a></p>]]></description>
+<p><a href="http://www.imagebam.com/image/afa0a2947510294"><img src="https://thumbs2.imagebam.com/a0/3b/5c/afa0a2947510294.jpg" alt="ImageBam image upload"></a></p>]]></description>
     <pubDate>Mon, 06 Aug 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-08-06-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
@@ -788,7 +788,7 @@ $ sudo apt-get install xclip
 <pre><code>$ lspci | paste
 </code></pre>
 <p>После её выполнения в буфере обмена у нас будет ссылка, перейдя по которой можно увидеть результат работы введённой нами команды. В нашем примере <code>lspci</code>. Остаётся поделиться этой ссылкой, нажав клавиши <code>Ctrl + v</code> там, где нам нужно: на форуме, чате или отправить её по e-mail. Если перейти по этой ссылке, откроется страничка выбранного нами ресурса, на которой в удобной для просмотра форме будет показан результат работы вводимой нами команды:</p>
-<p><a href="http://www.imagebam.com/image/dffeb7895532484" target="_blank"><img src="http://thumbs2.imagebam.com/e1/fe/50/dffeb7895532484.jpg" alt="imagebam.com"></a></p>]]></description>
+<p><a href="http://www.imagebam.com/image/dffeb7895532484"><img src="http://thumbs2.imagebam.com/e1/fe/50/dffeb7895532484.jpg" alt="imagebam.com"></a></p>]]></description>
     <pubDate>Mon, 28 May 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-05-28-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
