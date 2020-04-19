@@ -7,8 +7,53 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/zenburn.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 29 Jan 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 19 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Тема Zenburn для плеера MOC.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-19-1.html</link>
+    <description><![CDATA[<pre><code>background		        = default	default
+frame			        = white		default
+window_title		        = white		default
+directory		        = green		default	bold
+selected_directory	        = white		blue	bold
+playlist		        = white		default	bold
+selected_playlist	        = white		blue	bold
+file			        = white		default
+selected_file		        = white		blue
+marked_file		        = red		default	bold
+marked_selected_file	        = green		blue	bold
+info			        = blue		default	bold
+status			        = white		default
+title			        = white		default	bold
+state			        = white		default	bold
+current_time	        	= white		default	bold
+time_left		        = white		default	bold
+total_time		        = white		default	bold
+time_total_frames	        = white		default
+sound_parameters	        = red		default	bold
+legend			        = white		default
+disabled		        = blue		default	bold
+enabled			        = white		default	bold
+empty_mixer_bar	                = white		default
+filled_mixer_bar                = yellow	default
+empty_time_bar	                = white		default
+filled_time_bar	                = black		blue
+entry			        = white		default
+entry_title		        = black		cyan
+error			        = red		default	bold
+message			        = green		default	bold
+plist_time		        = white		default	bold
+
+</code></pre>
+<p>Настройки терминала можно посмотреть <a href="https://chubaduba.github.io/posts/2018-02-23-1.html">тут</a>.</p>
+<figure>
+<img src="https://images2.imagebam.com/b5/3f/96/73d0f71340935923.png" alt="" /><figcaption>Плеер MOC</figcaption>
+</figure>]]></description>
+    <pubDate>Sun, 19 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-19-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Тема Zenburn для WeeСhat.</title>
     <link>https://chubaduba.github.io//posts/2019-01-29-1.html</link>
     <description><![CDATA[<p><code>~/.weechat/weechat.conf</code>:</p>

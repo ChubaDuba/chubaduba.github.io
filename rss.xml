@@ -7,8 +7,53 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Wed, 15 Apr 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 19 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Тема Zenburn для плеера MOC.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-19-1.html</link>
+    <description><![CDATA[<pre><code>background		        = default	default
+frame			        = white		default
+window_title		        = white		default
+directory		        = green		default	bold
+selected_directory	        = white		blue	bold
+playlist		        = white		default	bold
+selected_playlist	        = white		blue	bold
+file			        = white		default
+selected_file		        = white		blue
+marked_file		        = red		default	bold
+marked_selected_file	        = green		blue	bold
+info			        = blue		default	bold
+status			        = white		default
+title			        = white		default	bold
+state			        = white		default	bold
+current_time	        	= white		default	bold
+time_left		        = white		default	bold
+total_time		        = white		default	bold
+time_total_frames	        = white		default
+sound_parameters	        = red		default	bold
+legend			        = white		default
+disabled		        = blue		default	bold
+enabled			        = white		default	bold
+empty_mixer_bar	                = white		default
+filled_mixer_bar                = yellow	default
+empty_time_bar	                = white		default
+filled_time_bar	                = black		blue
+entry			        = white		default
+entry_title		        = black		cyan
+error			        = red		default	bold
+message			        = green		default	bold
+plist_time		        = white		default	bold
+
+</code></pre>
+<p>Настройки терминала можно посмотреть <a href="https://chubaduba.github.io/posts/2018-02-23-1.html">тут</a>.</p>
+<figure>
+<img src="https://images2.imagebam.com/b5/3f/96/73d0f71340935923.png" alt="" /><figcaption>Плеер MOC</figcaption>
+</figure>]]></description>
+    <pubDate>Sun, 19 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-19-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Teamviewer в топку!</title>
     <link>https://chubaduba.github.io//posts/2020-04-15-1.html</link>
     <description><![CDATA[<p>Уже на протяжении нескольких лет в <a href="https://www.teamviewer.com/ru/">Teamviewer</a> присутствует баг, а может это их фирменная <a href="https://www.youtube.com/watch?v=w9laH3q1hBM">фисечка</a>? Дело в том, что по непонятным причинам современный <code>Teamviewer</code> требует в системе <i>обязательного</i> присутствия установленного <a href="https://wiki.debian.org/DisplayManager">DM (Display Manager)</a>. Говоря простым языком, если вход в графический интерфейс выполняется без использования <code>Display  Manager</code>, а настроен, например, <a href="https://chubaduba.github.io/posts/2018-03-06-1.html">таким образом</a>, или вы просто пользуетесь командой <code>startx</code>, то <code>Teamviewer</code> работать не будет Он тупо не запустится! Пользоваться или не пользоваться программой с таким ограничением, решать только вам. Я давно отказался от его использования. Последняя установленная на моём ПК версия была <code>v10.0.223993</code>.</p>
@@ -323,30 +368,6 @@ $ sudo apt-get install tor
 <p><a href="http://www.imagebam.com/image/6c72731264837784"><img src="http://thumbs2.imagebam.com/69/d0/d0/6c72731264837784.jpg" alt="imagebam.com"></a></p>]]></description>
     <pubDate>Sun, 30 Jun 2019 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2019-06-30-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Xmobar. Индикатор раскладки клавиатуры.</title>
-    <link>https://chubaduba.github.io//posts/2019-05-02-1.html</link>
-    <description><![CDATA[<p>По умолчанию <code>xmobar</code> не показывает индикатор раскладки клавиатуры, но это легко исправить, проведя несложные настройки.</p>
-<p>Для начала зададим комбинацию клавиш, при нажатии которой будет переключаться язык на клавиатуре. Я по привычке использую левый <code>Alt+Shift</code>. Изменим в файле <code>/etc/default/keyboard</code> параметр <code>XKBOPTIONS</code> на то, что нам нужно:</p>
-<pre><code>XKBOPTIONS=&quot;grp:alt_shift_toggle,grp_led:scroll&quot;
-</code></pre>
-<blockquote>
-<p>Чтобы изменения вступили в силу, нужно перезагрузить систему.</p>
-</blockquote>
-<p>Ещё нам потребуется установить в систему пакет <a href="https://packages.debian.org/stretch/kbdd">kbdd</a>:</p>
-<pre><code>$ sudo apt-get install kbdd
-</code></pre>
-<p>Ну и теперь остаётся настроить сам <code>xmobar</code>. Для этого открываем файл конфигурации <code>.xmobarrc</code> и добавляем в секцию <code>commands</code> строчку:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">Run</span> <span class="dt">Kbd</span> [(<span class="st">&quot;us&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;usa&lt;/fc&gt;&quot;</span>), (<span class="st">&quot;ru&quot;</span>, <span class="st">&quot;&lt;fc=#ffeeba&gt;rus&lt;/fc&gt;&quot;</span>)]</span></code></pre></div>
-<p>Здесь я указал каким цветом будет отображать индикатор при разных раскладках. Если вам это не нужно, параметр <code>&lt;fc&gt;&lt;/fc&gt;</code> можно не использовать.</p>
-<p>В <code>template</code>, в нужном нам месте, добавляем вывод индикатора на экран:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>, template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>kbd<span class="op">%</span> <span class="op">...</span></span></code></pre></div>
-<p>Сохраняем файл <code>.xmobarrc</code> и перезагружаем <code>xmobar</code>. Теперь у нас есть индикатор раскладки:</p>
-<p><a href="http://www.imagebam.com/image/7cee4e1211317614"><img src="http://thumbs2.imagebam.com/ce/2a/36/7cee4e1211317614.jpg" alt="imagebam.com"></a> <a href="http://www.imagebam.com/image/4f5c911211317634"><img src="http://thumbs2.imagebam.com/0b/dd/cd/4f5c911211317634.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Thu, 02 May 2019 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2019-05-02-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
