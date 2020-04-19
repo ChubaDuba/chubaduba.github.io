@@ -7,8 +7,18 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 19 Apr 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Mon, 20 Apr 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Бλог + Telegram.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-20-1.html</link>
+    <description><![CDATA[<p><img src="https://images2.imagebam.com/a0/67/86/ca8d691340992219.png" /></p>
+<p>Всех приветствую!<br />
+С сегодняшнего дня в <code>Telegram</code> начал свою работу новостной канал <code>Бλог'а</code>. Канал доступен по адресу <code>t.me/chubadubablog</code>.</p>]]></description>
+    <pubDate>Mon, 20 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-20-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Тема Zenburn для плеера MOC.</title>
     <link>https://chubaduba.github.io//posts/2020-04-19-1.html</link>
     <description><![CDATA[<pre><code>background		        = default	default
@@ -314,60 +324,6 @@ $ sudo apt-get install tor
 <p>Остаётся перекомпилировать и перезагрузить <code>xmonad</code>, чтобы все изменения вступили в силу. Теперь при нажатии комбинации клавиш <code>mod4Mask + Ctrl + i</code> у нас будет запускаться браузер <code>Lynx</code> трафик которого будет идти через <code>Tor</code>.</p>]]></description>
     <pubDate>Sat, 21 Sep 2019 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2019-09-21-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Xmonad. XMonad.Actions.Search</title>
-    <link>https://chubaduba.github.io//posts/2019-06-30-1.html</link>
-    <description><![CDATA[<p><a href="http://hackage.haskell.org/package/xmonad-contrib-0.15/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a> - удобный инструмент для быстрого поиска информации в internet. Как видно из описания, модуль поддерживает большое количество поисковых движков. Я сравнительно часто пользуюсь тремя:</p>
-<p><code>deb</code> - Debian package search;<br />
-<code>duckduckgo</code> - DuckDuckGo search engine;<br />
-<code>youtube</code> - Youtube video search.</p>
-<p>поэтому и добавил функционал только для них.</p>
-<p>Чтобы всё это у нас заработало, первым делом добавим модуль <code>XMonad.Actions.Search</code> в наш файл конфигурации <code>xmonad.hs</code>:</p>
-<hr />
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">import</span> <span class="dt">XMonad.Actions.Search</span></span></code></pre></div>
-<hr />
-<p>Второе, что необходимо сделать - это сконфигурировать окно, в которое мы будем вводить поисковый запрос. Добавляем в <code>xmonad.hs</code>:</p>
-<hr />
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">-- Search Prompt</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>mySearchConfig <span class="ot">=</span> def</span>
-<span id="cb2-3"><a href="#cb2-3"></a>        { font                <span class="ot">=</span> myFont</span>
-<span id="cb2-4"><a href="#cb2-4"></a>        , bgColor             <span class="ot">=</span> <span class="st">&quot;#1E2320&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>        , fgColor             <span class="ot">=</span> <span class="st">&quot;#E0AF8F&quot;</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>        , promptBorderWidth   <span class="ot">=</span> <span class="dv">0</span> </span>
-<span id="cb2-7"><a href="#cb2-7"></a>        , position            <span class="ot">=</span> <span class="dt">Top</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>        , historySize         <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>        , historyFilter       <span class="ot">=</span> deleteConsecutive</span>
-<span id="cb2-10"><a href="#cb2-10"></a>        }</span></code></pre></div>
-<hr />
-<p>Здесь ничего объяснять, думаю, не нужно. Все параметры задаются в зависимости от личных предпочтений пользователя.</p>
-<p>И последнее, что нужно сделать - это добавить в конфигурационный файл сочетания горячих клавиш для каждого поискового движка.<br />
-Я выбрал следующие сочетания:</p>
-<p><code>deb</code> - mod4 + Shift + d;<br />
-<code>duckduckgo</code> - mod4 + Shift + s;<br />
-<code>youtube</code> - mod4 + Shift + y.</p>
-<p>Соответственно добавляем в конфиг:</p>
-<hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">-- Search prompt</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_s), promptSearchBrowser mySearchConfig myBrowser duckduckgo)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_y), promptSearchBrowser mySearchConfig myBrowser youtube)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>, ((mod4Mask <span class="op">.|.</span> shiftMask, xK_d), promptSearchBrowser mySearchConfig myBrowser deb)</span></code></pre></div>
-<hr />
-<p>где</p>
-<p><code>mySearchConfig</code> - имя нашего окна, которое мы сконфигурировали ранее; <code>myBrowser</code> - браузер используемый по умолчанию.</p>
-<p>Я пользуюсь браузером <code>Chromium</code> поэтому в <code>hmonad.hs</code> прописал константу:</p>
-<hr />
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>myBrowser <span class="ot">=</span> <span class="st">&quot;chromium&quot;</span></span></code></pre></div>
-<hr />
-<blockquote>
-<p>Если вы используете несколько браузеров, то вместо <code>myBrowser</code> можно прописать имя конкретного браузера. Тогда результаты поискового запроса для каждого движка будут открываться в разных браузерах, согласно тому, что вы указали.</p>
-</blockquote>
-<p>Остаётся перекомпилировать и перезагрузить <code>xmonad</code>, чтобы все изменения вступили в силу.</p>
-<p>А вот как это выглядит, например, при нажатии сочетания клавиш <code>mod4 + Shift + s</code>:</p>
-<p><a href="http://www.imagebam.com/image/6c72731264837784"><img src="http://thumbs2.imagebam.com/69/d0/d0/6c72731264837784.jpg" alt="imagebam.com"></a></p>]]></description>
-    <pubDate>Sun, 30 Jun 2019 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2019-06-30-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
