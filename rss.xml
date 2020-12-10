@@ -7,8 +7,19 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 06 Oct 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Thu, 10 Dec 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Тема Zenburn для Telegram.</title>
+    <link>https://chubaduba.github.io//posts/2020-12-10-1.html</link>
+    <description><![CDATA[<p>Собственно всё в названии темы. Кого не устраивает дефолт, могут попробовать эту. Забрать можно <a href="http://t.me/addtheme/Zenburn_Classic">тут</a>. По мере выявления косяков вношу изменения.</p>
+<figure>
+<img src="https://images2.imagebam.com/ef/3f/36/ace92a1362566097.png" alt="" /><figcaption>Telegram Zenburn color theme</figcaption>
+</figure>]]></description>
+    <pubDate>Thu, 10 Dec 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-12-10-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Погода в xmobar. Обновление.</title>
     <link>https://chubaduba.github.io//posts/2020-10-06-1.html</link>
     <description><![CDATA[<p>Всех приветствую! Сегодня небольшая заметка про погодный скрипт для <code>xmobar</code>.<br />
@@ -298,29 +309,6 @@ P.S. Использую на Audacious v.3.2 (GTK2)</p>
 <p><img src="https://images2.imagebam.com/13/db/1f/a064521337266800.png" /></p>]]></description>
     <pubDate>Mon, 16 Mar 2020 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2020-03-16-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Walk with Canon Magic Drainpipe.</title>
-    <link>https://chubaduba.github.io//posts/2020-02-12-1.html</link>
-    <description><![CDATA[<p>Last week we had a lot of snow, which is a rarity lately. Therefore, my wife and I decided to take a walk in the grove and at the same time take a walk with our old man - <code>Canon Magic Drainpipe</code> (<a href="https://global.canon/en/c-museum/product/ef285.html">Canon EF 80-200mm f/2.8L</a>). All photos below were shot on a <a href="https://global.canon/en/c-museum/product/dslr785.html">Canon 1D Mark II</a>. Shooting modes are indicated for each photograph.</p>
-<figure>
-<img src="https://live.staticflickr.com/65535/49519560918_15191d7793_o.jpg" alt="" /><figcaption>ISO 100, f/8, 80mm, 1/400sec</figcaption>
-</figure>
-<figure>
-<img src="https://live.staticflickr.com/65535/49520296057_8f14e10641_o.jpg" alt="" /><figcaption>ISO 100, f/8, 85mm, 1/500sec</figcaption>
-</figure>
-<figure>
-<img src="https://live.staticflickr.com/65535/49519559058_fa36fc4821_o.jpg" alt="" /><figcaption>ISO 100, f/3.2, 110mm, 1/2000sec</figcaption>
-</figure>
-<figure>
-<img src="https://live.staticflickr.com/65535/49519559983_7c6e1022da_o.jpg" alt="" /><figcaption>ISO 100, f/3.2, 200mm, 1/1250sec</figcaption>
-</figure>
-<figure>
-<img src="https://live.staticflickr.com/65535/49520298812_17231b27d1_o.jpg" alt="" /><figcaption>ISO 100, f/3.2, 200mm, 1/2000sec</figcaption>
-</figure>]]></description>
-    <pubDate>Wed, 12 Feb 2020 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2020-02-12-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 
