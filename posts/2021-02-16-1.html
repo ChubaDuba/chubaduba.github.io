@@ -34,60 +34,37 @@
         </div>
 
         <div id="content">
-    <h1>Посты с тегом bash</h1>
-<ul>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-10-06-1.html">Погода в xmobar. Обновление.</a>”
-            ‒ <span class="soft"> 6 Октября, 2020</span><br />
-            Изменил погодный скрипт для xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2020-04-04-1.html">Xmobar. Мониторинг статуса подключения к сети интернет (online/offline).</a>”
-            ‒ <span class="soft"> 4 Апреля, 2020</span><br />
-            Bash скрипт для xmobar
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-23-1.html">Xmobar. Информация о текущем треке (MOC плеер).</a>”
-            ‒ <span class="soft">23 Апреля, 2018</span><br />
-            Показываем информацию о текущем треке в xmobar.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-04-16-1.html">Вывод в xmobar информации о доступных обновлениях.</a>”
-            ‒ <span class="soft">16 Апреля, 2018</span><br />
-            Как показать в xmobar количество доступных обновлений.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-25-1.html">Xmonad+xmobar+ALSA.</a>”
-            ‒ <span class="soft">25 Марта, 2018</span><br />
-            Громкость звука. Настраиваем управление и отображение.
-        </p>
-    </li>
-    
-    <li>
-        <p>
-            “<a style="font-size: 110%" href="../posts/2018-03-15-1.html">Погода в xmobar</a>”
-            ‒ <span class="soft">15 Марта, 2018</span><br />
-            Как вывести в xmobar информацию о погоде.
-        </p>
-    </li>
-    
-</ul>
+    <h1>Xmonad. Google переводчик в один клик.</h1>
+<div class="soft">
+    Быстрый доступ к сервису Google translate<br />
+    Posted in: <a href="../tags/xmonad.html">xmonad</a>.
+</div>
 
+<p>О том, как можно использовть <code>Scratchpad</code> я уже <a href="https://chubaduba.github.io/posts/2018-04-20-1.html">писал</a>, а сегодня, с помощью него же, организуем быстрый доступ к <code>Google Translate</code> - переводчику Google.</p>
+<blockquote>
+<p>Я буду пользоваться браузером <code>Chromium.</code> Вы можете использовать свой браузер.</p>
+</blockquote>
+<p>Для это вносим следующие изменения в наш <code>xmonad.hs</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">-- Scratchpads</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>scratchpads <span class="ot">=</span> [</span>
+<span id="cb1-3"><a href="#cb1-3"></a>         <span class="op">...</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>         <span class="dt">NS</span> <span class="st">&quot;translate&quot;</span> <span class="st">&quot;chromium --app=http://translate.google.com/#&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>          (className <span class="op">=?</span> <span class="st">&quot;Chromium&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>          (customFloating <span class="op">$</span> <span class="dt">W.RationalRect</span> <span class="dv">0</span> <span class="fl">0.6</span> <span class="dv">1</span> <span class="fl">0.4</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>         <span class="op">...</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>        ]</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="op">...</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">-- Keybindings</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">-- Scratchpads</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>         <span class="op">...</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>         , ((mod4Mask <span class="op">.|.</span> shiftMask,     xK_t), namedScratchpadAction scratchpads <span class="st">&quot;translate&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a>         <span class="op">...</span></span></code></pre></div>
+<p>Вот как это выглядит после нажатия комбинации клавиш, которую вы указали в конфиге: <a href="http://www.imagebam.com/image/d968f11370378788"><img src="https://thumbs2.imagebam.com/bc/74/51/d968f11370378788.jpg" alt="ImageBam image upload"></a></p>
 
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/55"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
     <div style="clear: both"></div>
     <div id="footer">
         <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
