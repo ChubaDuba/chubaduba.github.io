@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>ChubaDuba - Все посты</title>
+        <link>https://chubaduba.github.io/</link>
+        <description><![CDATA[Блог ChubaDuba]]></description>
+        <atom:link href="https://chubaduba.github.io//rss.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Tue, 06 Apr 2021 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Xmobar. Курсы валют.</title>
+    <link>https://chubaduba.github.io//posts/2021-04-06-1.html</link>
+    <description><![CDATA[<p>За основу взят скрипт <code>currencyrates.py</code>, написанный на языке <code>Python</code>. Скрипт не мой, был найден на просторах internet. Поддерживает 169 валют, в том числе основные криптовалюты. вывести можно любые кросс-курсы. Скрипт мне понравился, поэтому я решил использовать его.</p>
+<p><code>currencyrates.py</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/usr/bin/python</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> json,sys,urllib</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">!=</span> <span class="dv">3</span>:</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="bu">print</span>(<span class="st">&quot;Usage: ./currencyrates.py \</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="st">    	comma_separated_currency_list base_currency. \</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="st">    	Example: ./currencyrates.py usd,eur,btc nok&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    sys.exit()</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>currencies <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb1-13"><a href="#cb1-13"></a>basecurrency <span class="op">=</span> sys.argv[<span class="dv">2</span>]</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>currencyurl <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">&quot;http://freecurrencyrates.com/api/action.php?do=cvals&amp;iso=&quot;</span> <span class="op">\</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="op">+</span> currencies.replace(<span class="st">&#39;,&#39;</span>,<span class="st">&#39;&#39;</span>) <span class="op">+</span> <span class="st">&quot;&amp;f=&quot;</span> \</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="op">+</span> basecurrency <span class="op">+</span> <span class="st">&quot;&amp;v=1&amp;s=cbr&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>f <span class="op">=</span> urllib.urlopen(currencyurl)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>obj <span class="op">=</span> json.loads(f.read())</span>
+<span id="cb1-21"><a href="#cb1-21"></a>res<span class="op">=</span><span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="cf">for</span> c <span class="kw">in</span> currencies.split(<span class="st">&#39;,&#39;</span>):</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    res <span class="op">+=</span> c.upper() <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="co">&quot;:{:,.2f}&quot;</span>.<span class="bu">format</span>(<span class="dv">1</span><span class="op">/</span>obj[c.upper()]).replace(<span class="st">&#39;,&#39;</span>,<span class="st">&#39; &#39;</span>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="co"># some unicode currency code replacement (optional)</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;USD&quot;</span>, <span class="st">&quot;$&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;EUR&quot;</span>, <span class="st">&quot;€&quot;</span>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;BTC&quot;</span>, <span class="st">&quot;btc&quot;</span>)</span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a>sys.stdout.write(res)<span class="op">;</span></span></code></pre></div>
+<hr />
+<p>Чтобы было понимание как он работает, приведу несколько команд:</p>
+<p>Текущий курс доллара по отношению к рублю:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>   <span class="ex">./currencyrates.py</span> usd rub</span>
+<span id="cb2-2"><a href="#cb2-2"></a>   $:<span class="ex">74.14</span></span></code></pre></div>
+<p>Текущий курс евро по отношению к рублю:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>   <span class="ex">./currencyrates.py</span> eur rub</span>
+<span id="cb3-2"><a href="#cb3-2"></a>   €:<span class="ex">88.43</span></span></code></pre></div>
+<p>Вывод сразу нескольких валют по отношению к рублю:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>   <span class="ex">./currencyrates.py</span> usd,eur,gbp,uah,nok rub</span>
+<span id="cb4-2"><a href="#cb4-2"></a>   $:<span class="ex">74.14</span> €:88.43 GBP:93.76 UAH:2.36 NOK:7.54</span></code></pre></div>
+<p>Остаётся только применить его к нашему <code>xmobar</code>. Для этого я создал <code>bash</code>скрипт <code>currency</code> с таким содержимым:</p>
+<hr />
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>   <span class="va">COLORUSD=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>   <span class="va">COLOREUR=</span><span class="st">&quot;#C3C19C&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>   <span class="va">USD=</span><span class="kw">`</span><span class="ex">~/.xmonad/scripts/currencyrates.py</span> usd rub<span class="kw">`</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>   <span class="va">EUR=</span><span class="kw">`</span><span class="ex">~/.xmonad/scripts/currencyrates.py</span> eur rub<span class="kw">`</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLORUSD</span><span class="st">&gt;</span><span class="va">$USD</span><span class="st">&lt;/fc&gt; &lt;fc=</span><span class="va">$COLOREUR</span><span class="st">&gt;</span><span class="va">$EUR</span><span class="st">&lt;/fc&gt;&quot;</span></span></code></pre></div>
+<hr />
+<blockquote>
+<p>Пропишите свои пути до скриптов <code>currencyrates.py</code> и <code>currency</code>!.</p>
+</blockquote>
+<p>Следующим шагом редактируем наш <code>.xmobarrc</code>. Добавляем в него:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a>   commands <span class="ot">=</span> <span class="op">...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>              <span class="op">...</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>              , <span class="dt">Run</span> <span class="dt">Com</span> <span class="st">&quot;/home/chubaduba/.xmonad/scripts/currency&quot;</span> [] <span class="st">&quot;currency&quot;</span> <span class="dv">7200</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>              <span class="op">...</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>   , template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>currency<span class="op">%</span> <span class="op">...</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span></code></pre></div>
+<p>Сохраняемся, перезагружаем <code>xmobar</code> и смотрим результат:</p>
+<p><a href="http://www.imagebam.com/image/ef9e2b1372829377"><img src="https://thumbs2.imagebam.com/b4/55/a7/ef9e2b1372829377.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Tue, 06 Apr 2021 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2021-04-06-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Xmonad. Google переводчик в один клик.</title>
+    <link>https://chubaduba.github.io//posts/2021-02-16-1.html</link>
+    <description><![CDATA[<p>О том, как можно использовть <code>Scratchpad</code> я уже <a href="https://chubaduba.github.io/posts/2018-04-20-1.html">писал</a>, а сегодня, с помощью него же, организуем быстрый доступ к <code>Google Translate</code> - переводчику Google.</p>
+<blockquote>
+<p>Я буду пользоваться браузером <code>Chromium.</code> Вы можете использовать свой браузер.</p>
+</blockquote>
+<p>Для это вносим следующие изменения в наш <code>xmonad.hs</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">-- Scratchpads</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>scratchpads <span class="ot">=</span> [</span>
+<span id="cb1-3"><a href="#cb1-3"></a>         <span class="op">...</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>         <span class="dt">NS</span> <span class="st">&quot;translate&quot;</span> <span class="st">&quot;chromium --app=http://translate.google.com/#&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>          (className <span class="op">=?</span> <span class="st">&quot;Chromium&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>          (customFloating <span class="op">$</span> <span class="dt">W.RationalRect</span> <span class="dv">0</span> <span class="fl">0.6</span> <span class="dv">1</span> <span class="fl">0.4</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>         <span class="op">...</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>        ]</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="op">...</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">-- Keybindings</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">-- Scratchpads</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>         <span class="op">...</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>         , ((mod4Mask <span class="op">.|.</span> shiftMask,     xK_t), namedScratchpadAction scratchpads <span class="st">&quot;translate&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a>         <span class="op">...</span></span></code></pre></div>
+<p>Вот как это выглядит после нажатия комбинации клавиш, которую вы указали в конфиге: <a href="http://www.imagebam.com/image/d968f11370378788"><img src="https://thumbs2.imagebam.com/bc/74/51/d968f11370378788.jpg" alt="ImageBam image upload"></a></p>]]></description>
+    <pubDate>Tue, 16 Feb 2021 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2021-02-16-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Тема Zenburn для Telegram.</title>
+    <link>https://chubaduba.github.io//posts/2020-12-10-1.html</link>
+    <description><![CDATA[<p>Собственно всё в названии топика. Кого не устраивает дефолт, могут попробовать эту. Забрать можно <a href="http://t.me/addtheme/Zenburn_Classic">тут</a>. По мере выявления косяков вношу изменения.</p>
+<figure>
+<img src="https://images2.imagebam.com/ef/3f/36/ace92a1362566097.png" alt="" /><figcaption>Telegram Zenburn color theme</figcaption>
+</figure>]]></description>
+    <pubDate>Thu, 10 Dec 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-12-10-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Погода в xmobar. Обновление.</title>
+    <link>https://chubaduba.github.io//posts/2020-10-06-1.html</link>
+    <description><![CDATA[<p>Всех приветствую! Сегодня небольшая заметка про погодный скрипт для <code>xmobar</code>.<br />
+Про сам скрипт можно почитать в <a href="https://chubaduba.github.io/posts/2018-03-15-1.html">в этом посте</a>. Сегодня его чуть изменил, добавив информацию о направлении и скорости ветра:</p>
+<p><code>weather</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="va">s1=</span><span class="st">&quot;OK&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="va">COLOR1=</span><span class="st">&quot;#b2b2a0&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="va">COLOR2=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="va">CITY_URL=</span><span class="st">&quot;http://old.meteoinfo.ru/rss/forecasts/34630&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="va">SITE=</span><span class="st">&quot;</span><span class="kw">`</span><span class="ex">curl</span> -Is <span class="va">$CITY_URL</span> <span class="kw">|</span> <span class="fu">head</span> -1 <span class="kw">|</span> <span class="fu">grep</span> -Eo <span class="st">&#39;.{3}$&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">if [[</span> <span class="va">$SITE</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$s1</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a>     <span class="va">TOMORROW_TEMP=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>              <span class="fu">grep</span> -w <span class="st">&#39;Температура&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;2!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>              <span class="fu">sed</span> -r <span class="st">&#39;s/^[^Т]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^д]+//&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>              <span class="fu">sed</span> -r <span class="st">&#39;s/°.+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/днём //&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a>     <span class="va">POSSIBILITY_RAIN=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>              <span class="fu">grep</span> -w <span class="st">&#39;Вероятность&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;2!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>              <span class="fu">sed</span> -r <span class="st">&#39;s/^[^ф]+//&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> -r <span class="st">&#39;s/^[^к]+//&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>              <span class="fu">sed</span> <span class="st">&#39;s/ков //&#39;</span> <span class="kw">|</span> <span class="fu">grep</span> -o <span class="st">&#39;^[^&lt;]*&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a></span>
+<span id="cb1-23"><a href="#cb1-23"></a>     <span class="va">BREEZE=</span><span class="st">&quot;</span><span class="kw">`</span><span class="fu">wget</span> -O - <span class="va">$CITY_URL</span> <span class="op">2&gt;</span>/dev/null <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>              <span class="fu">grep</span> -w <span class="st">&#39;Ветер&#39;</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;2!d&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>              <span class="fu">sed</span> -r <span class="st">&#39;s/^[^В]+//&#39;</span> <span class="kw">|</span> <span class="fu">grep</span> -o <span class="st">&#39;^[^.]*&#39;</span><span class="kw">`</span><span class="st">&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>              </span>
+<span id="cb1-27"><a href="#cb1-27"></a>     </span>
+<span id="cb1-28"><a href="#cb1-28"></a>     <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLOR1</span><span class="st">&gt;</span><span class="va">$TOMORROW_TEMP</span><span class="st">°C(</span><span class="va">$POSSIBILITY_RAIN</span><span class="st">)&lt;/fc&gt; &lt;fc=</span><span class="va">$COLOR2</span><span class="st">&gt;</span><span class="va">$BREEZE</span><span class="st">&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>     </span>
+<span id="cb1-30"><a href="#cb1-30"></a><span class="kw">else</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32"></a>     <span class="bu">echo</span> <span class="st">&quot;n/a&quot;</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a><span class="kw">fi</span></span></code></pre></div>
+<hr />
+<p><a href="http://www.imagebam.com/image/667f1c1355777785"><img src="https://thumbs2.imagebam.com/64/41/36/667f1c1355777785.jpg" alt="ImageBam image upload"></a></p>]]></description>
+    <pubDate>Tue, 06 Oct 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-10-06-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Curseradio - консольное интернет-радио.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-24-1.html</link>
+    <description><![CDATA[<p>Сегодня хочу поделиться ещё одной консольной программкой, взятой мной на вооружение…</p>
+<p>Называется она <code>curseradio</code>, написана на языке <code>python</code>. Программа воспроизводит каталог OPML потоков интернет-радио. Использует каталог <code>tunein</code> по адресу <a href="http://opml.radiotime.com/">http://opml.radiotime.com/</a>, а также может быть адаптирована для других источников.</p>
+<p>Список радиостанций внушительный! Вы точно сможете найти для себя то, что соответствует вашим интересам: новости, спорт, музыка разных направлений и т.д. Все каналы удобно сгруппированы по тематикам, языкам, музыкальным жанрам и т.д.</p>
+<p>Проект находится по адресу: <a href="https://github.com/chronitis/curseradio">https://github.com/chronitis/curseradio</a></p>
+<figure>
+<img src="https://images2.imagebam.com/4a/04/32/6c71a41341382274.png" alt="" /><figcaption>Curseradio</figcaption>
+</figure>]]></description>
+    <pubDate>Fri, 24 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-24-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Бλог + Telegram.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-20-1.html</link>
+    <description><![CDATA[<p><img src="https://images2.imagebam.com/a0/67/86/ca8d691340992219.png" /></p>
+<p>Всех приветствую!<br />
+С сегодняшнего дня в <code>Telegram</code> начал свою работу новостной канал <code>Бλог'а</code>. Канал доступен по адресу <code>t.me/chubadubablog</code>.</p>]]></description>
+    <pubDate>Mon, 20 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-20-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Тема Zenburn для плеера MOC.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-19-1.html</link>
+    <description><![CDATA[<pre><code>background		        = default	default
+frame			        = white		default
+window_title		        = white		default
+directory		        = green		default	bold
+selected_directory	        = white		blue	bold
+playlist		        = white		default	bold
+selected_playlist	        = white		blue	bold
+file			        = white		default
+selected_file		        = white		blue
+marked_file		        = red		default	bold
+marked_selected_file	        = green		blue	bold
+info			        = blue		default	bold
+status			        = white		default
+title			        = white		default	bold
+state			        = white		default	bold
+current_time	        	= white		default	bold
+time_left		        = white		default	bold
+total_time		        = white		default	bold
+time_total_frames	        = white		default
+sound_parameters	        = red		default	bold
+legend			        = white		default
+disabled		        = blue		default	bold
+enabled			        = white		default	bold
+empty_mixer_bar	                = white		default
+filled_mixer_bar                = yellow	default
+empty_time_bar	                = white		default
+filled_time_bar	                = black		blue
+entry			        = white		default
+entry_title		        = black		cyan
+error			        = red		default	bold
+message			        = green		default	bold
+plist_time		        = white		default	bold
+
+</code></pre>
+<p>Настройки терминала можно посмотреть <a href="https://chubaduba.github.io/posts/2018-02-23-1.html">тут</a>.</p>
+<figure>
+<img src="https://images2.imagebam.com/b5/3f/96/73d0f71340935923.png" alt="" /><figcaption>Плеер MOC</figcaption>
+</figure>]]></description>
+    <pubDate>Sun, 19 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-19-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Teamviewer в топку!</title>
+    <link>https://chubaduba.github.io//posts/2020-04-15-1.html</link>
+    <description><![CDATA[<p>Уже на протяжении нескольких лет в <a href="https://www.teamviewer.com/ru/">Teamviewer</a> присутствует баг, а может это их фирменная <a href="https://www.youtube.com/watch?v=w9laH3q1hBM">фисечка</a>? Дело в том, что по непонятным причинам современный <code>Teamviewer</code> требует в системе <i>обязательного</i> присутствия установленного <a href="https://wiki.debian.org/DisplayManager">DM (Display Manager)</a>. Говоря простым языком, если вход в графический интерфейс выполняется без использования <code>Display  Manager</code>, а настроен, например, <a href="https://chubaduba.github.io/posts/2018-03-06-1.html">таким образом</a>, или вы просто пользуетесь командой <code>startx</code>, то <code>Teamviewer</code> работать не будет Он тупо не запустится! Пользоваться или не пользоваться программой с таким ограничением, решать только вам. Я давно отказался от его использования. Последняя установленная на моём ПК версия была <code>v10.0.223993</code>.</p>
+<p>Сейчас я использую <a href="https://anydesk.com/ru">AnyDesk</a>. Отличный вариант, если нет возможности настроить <code>VNC</code> на удалённом компьютере. Мультиплатформенный - можно установить на: <code>Windows</code>, <code>macOS</code>, <code>iOS</code>, <code>Android</code>, <code>Linux</code>, <code>FreeBSD</code>, <code>Raspberry Pi</code>, <code>Chrome OS</code>. В работе точно не хуже <code>Teamviewer'a</code>. Одним словом рекомендую попробовать!</p>
+<blockquote>
+<p>Пока не разобрался почему AnyDesk полностью не подхватывает мою тёмную тему GTK2, ниже на скриншоте это можно заметить. Но, как говорится, на ход поршней это не влияет…</p>
+</blockquote>
+<p>В <code>Debian</code> его можно установить по фэншую - из репозитория. Добавляем в наш источник пакетов репозиторий, добавляем ключ, обновляемся и устанавливаем программу:</p>
+<hr />
+<pre><code># wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
+# echo &quot;deb http://deb.anydesk.com/ all main&quot; &gt; /etc/apt/sources.list.d/anydesk-stable.list
+# apt-get update
+# apt-get install anydesk
+</code></pre>
+<hr />
+<p>Запуск программы осуществляется командой <code>anydesk</code>.</p>
+<p><a href="http://www.imagebam.com/image/f707371340444636"><img src="https://thumbs2.imagebam.com/d8/cb/1b/f707371340444636.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Wed, 15 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-15-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>FFmpeg + Winff. Как перекодировать аудио дорожку видеофайла в формат MP3.</title>
+    <link>https://chubaduba.github.io//posts/2020-04-12-1.html</link>
+    <description><![CDATA[<p>Я, как и многие, в связи с переходом на цифровое телевидение, купил для своих старых телеков ТВ приставки. При выборе делал упор на качество сигнала, а на другие “навороты” особо не смотрел. Как известно, практически во всех этих приставках есть видео плеер, который позволяет смотреть видео с USB носителей. Но не все приставки умеют проигрывать видеофайлы, у которых звук записан в формате не <code>mp3</code>. Т.е. картинка есть, а звука нет.</p>
+<p>Как же перекодировать в Debian отдельно аудио дорожку в формат mp3, а формат видео оставить без изменений?</p>
+<p>Я попробовал два варианта. Первый - это программа <a href="http://avidemux.sourceforge.net/">Avidemux</a>. В Debian её можно найти, если подключить репозиторий <a href="http://www.deb-multimedia.org/">deb-multimedia</a>. Скажу сразу, что именно с моей задачей она справлялась нелучшим образом, а может я просто не осилил её. В готовом файле звук постоянно или отставал от видео, или наоборот - опережал. В настройках есть пункт, в котором можно указать в милисекундах время синхронизации. Но от чего это время зависит, я так и не понял. А если перекодировать многосерийный сериал и для каждого файла подбирать этот параметр, то это становится жутко не удобно.</p>
+<p>Поэтому для себя я остановился на втором варианте - это <a href="https://packages.debian.org/stretch/ffmpeg">ffmpeg</a> и графическая оболочка для него <a href="https://packages.debian.org/stretch/winff">winff</a>. В репозитории есть два варианта оболочки: для <code>Qt</code> и <code>GTK2</code>. Я буду использовать второй. Устанавливаем:</p>
+<hr />
+<pre><code>$ sudo apt-get install winff-gtk2
+</code></pre>
+<hr />
+<blockquote>
+<p>Для работы с разными кодеками, они долны быть установлены у вас в системе. Например, для кодирования аудио в формат <code>mp3</code> должен быть установлен пакет <a href="https://packages.debian.org/stretch/lame">lame</a>.</p>
+</blockquote>
+<p>Запускаем редактор командой:</p>
+<pre><code>winff-gtk2
+</code></pre>
+<figure>
+<img src="https://images2.imagebam.com/19/16/ea/5c06ce1339910329.png" alt="" /><figcaption>Главное окно видео редактора Winnf</figcaption>
+</figure>
+<p>Чтобы при использовании редактора постоянно не вводить мудрёные команды для <code>ffmpeg</code>, существуют готовые настройки, так называемые <code>пресеты</code>, которые можно редактировать в соответствии с вашими задачами:</p>
+<p><img src="https://images2.imagebam.com/9b/09/65/d79ed41339876707.png" /></p>
+<figure>
+<img src="https://images2.imagebam.com/dd/80/b4/be1a6a1339911770.png" alt="" /><figcaption>Окно редактирования пресетов</figcaption>
+</figure>
+<p>В категорию <code>Audio</code> я добавил два пресета: <code>AVI with MP3 audio</code> и <code>MKV with MP3 audio</code>:</p>
+<p><img src="https://images2.imagebam.com/d5/52/01/795af61339912978.png" /></p>
+<p>Отличаются они друг от друга только параметром <code>Расширение  выходного файла</code>, а параметр <code>Командная строка</code> у них одинаковый и имеет такой вид:</p>
+<hr />
+<pre><code>-vcodec copy -acodec libmp3lame -ar 44100 -ac 2 -ab 192k
+</code></pre>
+<hr />
+<figure>
+<img src="https://images2.imagebam.com/58/7e/4a/c25f501339914927.png" alt="" /><figcaption>Пресет “AVI with MP3 audio”</figcaption>
+</figure>
+<figure>
+<img src="https://images2.imagebam.com/86/0f/ec/8e7da81339915463.png" alt="" /><figcaption>Пресет “MKV with MP3 audio”</figcaption>
+</figure>
+<p>Пресеты готовы, можно приступать к кодированию. Добавляем файл и в соответствии с его расширением выбераем пресет:</p>
+<p><img src="https://images2.imagebam.com/58/c8/9b/44d7f31339917943.png" /></p>
+<p>Ради интереса посмотрим в терминале какую звуковую дорожку имеет этот файл:</p>
+<pre><code>chubaduba:~$ mediainfo video_1.mkv | sed -n &#39;/Audio/,$p&#39;
+Audio
+ID                      : 2
+Format                  : AAC
+Format/Info             : Advanced Audio Codec
+Format profile          : LC
+Codec ID                : A_AAC
+Duration                : 49 min 23 s
+Channel(s)              : 2 channels
+Channel positions       : Front: L R
+Sampling rate           : 48.0 kHz
+Frame rate              : 46.875 FPS (1024 spf)
+Compression mode        : Lossy
+Delay relative to video : 9 ms
+Default                 : Yes
+Forced                  : No
+ </code></pre>
+<p>Нажимаем кнопку <code>Преобразовать</code> и ждём результат… В настройках можно выбрать с каким приоритетом будет проходить процесс кодирования. Отмечу, что при выбранном приоритете “Нормальный” <code>Winff</code> справляется с задачей быстрее, чем <code>Avidemux</code>.</p>
+<p>Посмотрим характеристики аудио новоиспечённого файла:</p>
+<pre><code>chubaduba:~/temp$ mediainfo video_1.mkv | sed -n &#39;/Audio/,$p&#39;
+Audio
+ID                      : 2
+Format                  : MPEG Audio
+Format version          : Version 1
+Format profile          : Layer 3
+Mode                    : Joint stereo
+Mode extension          : MS Stereo
+Codec ID                : A_MPEG/L3
+Codec ID/Hint           : MP3
+Duration                : 49 min 23 s
+Bit rate mode           : Constant
+Bit rate                : 192 kb/s
+Channel(s)              : 2 channels
+Sampling rate           : 44.1 kHz
+Compression mode        : Lossy
+Stream size             : 67.8 MiB (11%)
+Writing library         : Lavc57.64.101 libmp3lame
+Default                 : Yes
+Forced                  : No
+DURATION                : 00:49:23.843000000
+</code></pre>
+<p>Остаётся записать файл на флешку, воткнуть её в приставку, развалиться на диване и посмотреть наше видео :)</p>]]></description>
+    <pubDate>Sun, 12 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-12-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
+    <title>Xmobar. Мониторинг статуса подключения к сети интернет (online/offline).</title>
+    <link>https://chubaduba.github.io//posts/2020-04-04-1.html</link>
+    <description><![CDATA[<p>Последнее время периодически стал отваливаться интернет. Решил автоматизировать процедуру проверки, а результат проверки вывести в <code>xmobar</code> с помощью скрипта:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="va">color1=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="va">color2=</span><span class="st">&quot;#DC8BC3&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="va">ip=</span><span class="st">&quot;8.8.8.8&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="va">count=</span>3</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="va">default_status=</span><span class="st">&quot;0%&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="va">count_loss=$(</span><span class="fu">ping</span> -c <span class="va">${count}</span> <span class="va">${ip}</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">sed</span> -e <span class="st">&#39;$!{h;d;}&#39;</span> -e x <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">sed</span> -r <span class="st">&#39;s!^[^0]+!!&#39;</span> <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">sed</span> <span class="st">&#39;s/^\(..\).*/\1/&#39;</span><span class="va">)</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">if [[</span> <span class="va">$count_loss</span> <span class="ot">==</span> *<span class="st">&quot;</span><span class="va">$default_status</span><span class="st">&quot;</span>*<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>	<span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$color1</span><span class="st">&gt;online&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">else</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>	<span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$color2</span><span class="st">&gt;offline&lt;/fc&gt;&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="kw">fi</span></span></code></pre></div>
+<p><a href="http://www.imagebam.com/image/aa0d2a1339159850"><img src="https://thumbs2.imagebam.com/10/32/19/aa0d2a1339159850.jpg" alt="ImageBam image upload"></a></p>]]></description>
+    <pubDate>Sat, 04 Apr 2020 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2020-04-04-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+
+    </channel>
+</rss>
