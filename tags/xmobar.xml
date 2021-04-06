@@ -7,8 +7,82 @@
         <description><![CDATA[Блог ChubaDuba]]></description>
         <atom:link href="https://chubaduba.github.io//tags/xmobar.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 06 Oct 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Tue, 06 Apr 2021 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Xmobar. Курсы валют.</title>
+    <link>https://chubaduba.github.io//posts/2021-04-06-1.html</link>
+    <description><![CDATA[<p>За основу взят скрипт <code>currencyrates.py</code>, написанный на языке <code>Python</code>. Скрипт не мой, был найден на просторах internet. Поддерживает 169 валют, в том числе основные криптовалюты. вывести можно любые кросс-курсы. Скрипт мне понравился, поэтому я решил использовать его.</p>
+<p><code>currencyrates.py</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/usr/bin/python</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> json,sys,urllib</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">!=</span> <span class="dv">3</span>:</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="bu">print</span>(<span class="st">&quot;Usage: ./currencyrates.py \</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="st">    	comma_separated_currency_list base_currency. \</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="st">    	Example: ./currencyrates.py usd,eur,btc nok&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    sys.exit()</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>currencies <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb1-13"><a href="#cb1-13"></a>basecurrency <span class="op">=</span> sys.argv[<span class="dv">2</span>]</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>currencyurl <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">&quot;http://freecurrencyrates.com/api/action.php?do=cvals&amp;iso=&quot;</span> <span class="op">\</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="op">+</span> currencies.replace(<span class="st">&#39;,&#39;</span>,<span class="st">&#39;&#39;</span>) <span class="op">+</span> <span class="st">&quot;&amp;f=&quot;</span> \</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="op">+</span> basecurrency <span class="op">+</span> <span class="st">&quot;&amp;v=1&amp;s=cbr&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>f <span class="op">=</span> urllib.urlopen(currencyurl)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>obj <span class="op">=</span> json.loads(f.read())</span>
+<span id="cb1-21"><a href="#cb1-21"></a>res<span class="op">=</span><span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="cf">for</span> c <span class="kw">in</span> currencies.split(<span class="st">&#39;,&#39;</span>):</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    res <span class="op">+=</span> c.upper() <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="co">&quot;:{:,.2f}&quot;</span>.<span class="bu">format</span>(<span class="dv">1</span><span class="op">/</span>obj[c.upper()]).replace(<span class="st">&#39;,&#39;</span>,<span class="st">&#39; &#39;</span>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="co"># some unicode currency code replacement (optional)</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;USD&quot;</span>, <span class="st">&quot;$&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;EUR&quot;</span>, <span class="st">&quot;€&quot;</span>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;BTC&quot;</span>, <span class="st">&quot;btc&quot;</span>)</span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a>sys.stdout.write(res)<span class="op">;</span></span></code></pre></div>
+<hr />
+<p>Чтобы было понимание как он работает, приведу несколько команд:</p>
+<p>Текущий курс доллара по отношению к рублю:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>   <span class="ex">./currencyrates.py</span> usd rub</span>
+<span id="cb2-2"><a href="#cb2-2"></a>   $:<span class="ex">74.14</span></span></code></pre></div>
+<p>Текущий курс евро по отношению к рублю:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>   <span class="ex">./currencyrates.py</span> eur rub</span>
+<span id="cb3-2"><a href="#cb3-2"></a>   €:<span class="ex">88.43</span></span></code></pre></div>
+<p>Вывод сразу нескольких валют по отношению к рублю:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>   <span class="ex">./currencyrates.py</span> usd,eur,gbp,uah,nok rub</span>
+<span id="cb4-2"><a href="#cb4-2"></a>   $:<span class="ex">74.14</span> €:88.43 GBP:93.76 UAH:2.36 NOK:7.54</span></code></pre></div>
+<p>Остаётся только применить его к нашему <code>xmobar</code>. Для этого я создал <code>bash</code>скрипт <code>currency</code> с таким содержимым:</p>
+<hr />
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>   <span class="va">COLORUSD=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>   <span class="va">COLOREUR=</span><span class="st">&quot;#C3C19C&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>   <span class="va">USD=</span><span class="kw">`</span><span class="ex">~/.xmonad/scripts/currencyrates.py</span> usd rub<span class="kw">`</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>   <span class="va">EUR=</span><span class="kw">`</span><span class="ex">~/.xmonad/scripts/currencyrates.py</span> eur rub<span class="kw">`</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLORUSD</span><span class="st">&gt;</span><span class="va">$USD</span><span class="st">&lt;/fc&gt; &lt;fc=</span><span class="va">$COLOREUR</span><span class="st">&gt;</span><span class="va">$EUR</span><span class="st">&lt;/fc&gt;&quot;</span></span></code></pre></div>
+<hr />
+<blockquote>
+<p>Пропишите свои пути до скриптов <code>currencyrates.py</code> и <code>currency</code>!.</p>
+</blockquote>
+<p>Следующим шагом редактируем наш <code>.xmobarrc</code>. Добавляем в него:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a>   commands <span class="ot">=</span> <span class="op">...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>              <span class="op">...</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>              , <span class="dt">Run</span> <span class="dt">Com</span> <span class="st">&quot;/home/chubaduba/.xmonad/scripts/currency&quot;</span> [] <span class="st">&quot;currency&quot;</span> <span class="dv">7200</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>              <span class="op">...</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>   , template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>currency<span class="op">%</span> <span class="op">...</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span></code></pre></div>
+<p>Сохраняемся, перезагружаем <code>xmobar</code> и смотрим результат:</p>
+<p><a href="http://www.imagebam.com/image/ef9e2b1372829377"><img src="https://thumbs2.imagebam.com/b4/55/a7/ef9e2b1372829377.jpg" alt="imagebam.com"></a></p>]]></description>
+    <pubDate>Tue, 06 Apr 2021 00:00:00 UT</pubDate>
+    <guid>https://chubaduba.github.io//posts/2021-04-06-1.html</guid>
+    <dc:creator>ChubaDuba</dc:creator>
+</item>
+<item>
     <title>Погода в xmobar. Обновление.</title>
     <link>https://chubaduba.github.io//posts/2020-10-06-1.html</link>
     <description><![CDATA[<p>Всех приветствую! Сегодня небольшая заметка про погодный скрипт для <code>xmobar</code>.<br />
@@ -461,25 +535,6 @@ commands = [
 </blockquote>]]></description>
     <pubDate>Thu, 15 Mar 2018 00:00:00 UT</pubDate>
     <guid>https://chubaduba.github.io//posts/2018-03-15-1.html</guid>
-    <dc:creator>ChubaDuba</dc:creator>
-</item>
-<item>
-    <title>Иконки для рабочих столов xmonad в xmobar</title>
-    <link>https://chubaduba.github.io//posts/2018-02-27-1.html</link>
-    <description><![CDATA[<p>Какие имена у моих рабочих столов в xmonad, и в какой последовательности они расположены, я уже давно запомнил. Поэтому отображение имени рабочего стола в xmobar для меня стало лишней информацией. Было принято решение заменить имена столов на иконки, тем самым увеличить полезную площадь xmobar.</p>
-<p>Для иконок мне понадобился шрифт, в котором они есть. Вариантов много, я у себя использую шрифт <a href="https://mega.nz/#!dQ1zzBqD!PeismxbJABJINXsMcUrZ3B3kScxLHFKeaeeZ_Ls__U8">Terminus Re33 Nerd</a>. Чтобы определить коды иконок, можно воспользоваться вот этим <a href="http://forall.ru-board.com/Svarga/cyr_letters_gen.html">ресурсом</a>.</p>
-<p>После того как мы определили коды для всех наших выбранных иконок, вносим изменения в файл <code>xmonad.hs</code>:</p>
-<p><img src="/images/2018-02-27-1.png" /></p>
-<p>И теперь нужно прописать наш шрифт в файле <code>.xmobarrc</code>:</p>
-<hr />
-<pre><code>Config { font = &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot;
-       , additionalFonts = [ &quot;xft:Terminus Re33 Nerd:size=14:weight=bold:antialias=true:hinting=true&quot; ]
-       , ...</code></pre>
-<hr />
-<p>После всех этих изменений в xmobar у нас будут отображаться иконки рабочих столов, вместо их названий:</p>
-<p><img src="/images/2018-02-27-2.png" /></p>]]></description>
-    <pubDate>Tue, 27 Feb 2018 00:00:00 UT</pubDate>
-    <guid>https://chubaduba.github.io//posts/2018-02-27-1.html</guid>
     <dc:creator>ChubaDuba</dc:creator>
 </item>
 

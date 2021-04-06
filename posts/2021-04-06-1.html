@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="yandex-verification" content="7ad767e88db9ca81" />
+         
+        <title>ChubaDuba - Home page</title>
+
+        <!-- Stylesheets. -->
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+
+        <!-- RSS. -->
+        <link rel="alternate" type="application/rss+xml" title="ChubaDuba - блог" href="http://chubaduba.github.io/rss.xml" />
+
+        <!-- Metadata. -->
+        <meta name="keywords" content="ChubaDuba,Aleksey Chubakov,Алексей Чубаков,xmonad,Debian,xmobar,homepage,домашняя страница,zenburn" />
+        <meta name="description" content="Персональная страница и блог Алексея Чубакова" />
+    
+                 
+    </head>
+    <body>
+               
+        <div id="navigation">
+            <h5>Б&lambda;ог</h5>
+            <a href="../" style="font-size: 20px; color: #94BFF2">Обо мне</a>
+            <a href="../posts.html" style="font-size: 20px; color: #94BFF2">Архив</a>
+            <a href="../contact.html" style="font-size: 20px; color: #94BFF2">Контакты</a>
+            <a href="../photos.html" style="font-size: 20px; color: #94BFF2">Фотоб&lambda;ог</a>
+            <a href="../donate.html" style="font-size: 20px; color: #709180">Donate</a>
+            <a href="https://www.flickr.com/photos/chubaduba/albums" style="font-size: 20px; color: #EC93D3">Flickr</a>
+        </div>
+
+        <div id="content">
+    <h1>Xmobar. Курсы валют.</h1>
+<div class="soft">
+    Добавляем в xmobar информацию о курсе валют.<br />
+    Posted in: <a href="../tags/xmobar.html">xmobar</a>.
+</div>
+
+<p>За основу взят скрипт <code>currencyrates.py</code>, написанный на языке <code>Python</code>. Скрипт не мой, был найден на просторах internet. Поддерживает 169 валют, в том числе основные криптовалюты. вывести можно любые кросс-курсы. Скрипт мне понравился, поэтому я решил использовать его.</p>
+<p><code>currencyrates.py</code>:</p>
+<hr />
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/usr/bin/python</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> json,sys,urllib</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">!=</span> <span class="dv">3</span>:</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="bu">print</span>(<span class="st">&quot;Usage: ./currencyrates.py \</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="st">    	comma_separated_currency_list base_currency. \</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="st">    	Example: ./currencyrates.py usd,eur,btc nok&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    sys.exit()</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>currencies <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb1-13"><a href="#cb1-13"></a>basecurrency <span class="op">=</span> sys.argv[<span class="dv">2</span>]</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>currencyurl <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">&quot;http://freecurrencyrates.com/api/action.php?do=cvals&amp;iso=&quot;</span> <span class="op">\</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="op">+</span> currencies.replace(<span class="st">','</span>,<span class="st">''</span>) <span class="op">+</span> <span class="st">&quot;&amp;f=&quot;</span> \</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="op">+</span> basecurrency <span class="op">+</span> <span class="st">&quot;&amp;v=1&amp;s=cbr&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>f <span class="op">=</span> urllib.urlopen(currencyurl)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>obj <span class="op">=</span> json.loads(f.read())</span>
+<span id="cb1-21"><a href="#cb1-21"></a>res<span class="op">=</span><span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="cf">for</span> c <span class="kw">in</span> currencies.split(<span class="st">','</span>):</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    res <span class="op">+=</span> c.upper() <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="co">&quot;:{:,.2f}&quot;</span>.<span class="bu">format</span>(<span class="dv">1</span><span class="op">/</span>obj[c.upper()]).replace(<span class="st">','</span>,<span class="st">' '</span>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="co"># some unicode currency code replacement (optional)</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;USD&quot;</span>, <span class="st">&quot;$&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;EUR&quot;</span>, <span class="st">&quot;€&quot;</span>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a>res <span class="op">=</span> res.replace(<span class="st">&quot;BTC&quot;</span>, <span class="st">&quot;btc&quot;</span>)</span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a>sys.stdout.write(res)<span class="op">;</span></span></code></pre></div>
+<hr />
+<p>Чтобы было понимание как он работает, приведу несколько команд:</p>
+<p>Текущий курс доллара по отношению к рублю:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>   <span class="ex">./currencyrates.py</span> usd rub</span>
+<span id="cb2-2"><a href="#cb2-2"></a>   $:<span class="ex">74.14</span></span></code></pre></div>
+<p>Текущий курс евро по отношению к рублю:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>   <span class="ex">./currencyrates.py</span> eur rub</span>
+<span id="cb3-2"><a href="#cb3-2"></a>   €:<span class="ex">88.43</span></span></code></pre></div>
+<p>Вывод сразу нескольких валют по отношению к рублю:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>   <span class="ex">./currencyrates.py</span> usd,eur,gbp,uah,nok rub</span>
+<span id="cb4-2"><a href="#cb4-2"></a>   $:<span class="ex">74.14</span> €:88.43 GBP:93.76 UAH:2.36 NOK:7.54</span></code></pre></div>
+<p>Остаётся только применить его к нашему <code>xmobar</code>. Для этого я создал <code>bash</code>скрипт <code>currency</code> с таким содержимым:</p>
+<hr />
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>   <span class="va">COLORUSD=</span><span class="st">&quot;#709180&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>   <span class="va">COLOREUR=</span><span class="st">&quot;#C3C19C&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>   <span class="va">USD=</span><span class="kw">`</span><span class="ex">~/.xmonad/scripts/currencyrates.py</span> usd rub<span class="kw">`</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>   <span class="va">EUR=</span><span class="kw">`</span><span class="ex">~/.xmonad/scripts/currencyrates.py</span> eur rub<span class="kw">`</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>   <span class="bu">echo</span> <span class="st">&quot;&lt;fc=</span><span class="va">$COLORUSD</span><span class="st">&gt;</span><span class="va">$USD</span><span class="st">&lt;/fc&gt; &lt;fc=</span><span class="va">$COLOREUR</span><span class="st">&gt;</span><span class="va">$EUR</span><span class="st">&lt;/fc&gt;&quot;</span></span></code></pre></div>
+<hr />
+<blockquote>
+<p>Пропишите свои пути до скриптов <code>currencyrates.py</code> и <code>currency</code>!.</p>
+</blockquote>
+<p>Следующим шагом редактируем наш <code>.xmobarrc</code>. Добавляем в него:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a>   commands <span class="ot">=</span> <span class="op">...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>              <span class="op">...</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>              , <span class="dt">Run</span> <span class="dt">Com</span> <span class="st">&quot;/home/chubaduba/.xmonad/scripts/currency&quot;</span> [] <span class="st">&quot;currency&quot;</span> <span class="dv">7200</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>              <span class="op">...</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>   , template <span class="ot">=</span> <span class="op">...</span> <span class="op">%</span>currency<span class="op">%</span> <span class="op">...</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span></code></pre></div>
+<p>Сохраняемся, перезагружаем <code>xmobar</code> и смотрим результат:</p>
+<p><a href="http://www.imagebam.com/image/ef9e2b1372829377"><img src="https://thumbs2.imagebam.com/b4/55/a7/ef9e2b1372829377.jpg" alt="imagebam.com"></a></p>
+
+<div id="comment">
+<a href="https://github.com/ChubaDuba/chubaduba.github.io/issues/56"><img src="../images/comment.png" alt="Комментарий на GitHub" height="34" width="256" /></a>
+</div>
+    <div style="clear: both"></div>
+    <div id="footer">
+        <a href="https://validator.w3.org/check?uri=https://chubaduba.github.io/" style="color: #709180">XHTML</a>
+        Site generated by
+        <a href="http://jaspervdj.be/hakyll" style="color: #DC8BC3">Hakyll</a>
+        <div id="cc">    
+             <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ru" style="color: #E0AF8F">© Aleksey Chubakov, 2018-2021 licensed under CC BY-SA 4.0</a>
+        </div>    
+    </div>
+</div>
+
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter47788555 = new Ya.Metrika({
+                            id:47788555,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true
+                        });
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <!-- /Yandex.Metrika counter -->
+
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-114689555-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->             
+
+        <div style="display: none">ce0f13b2-4a83-4c1c-b2b9-b6d18f4ee6d2</div>
+    </body>
+</html>
